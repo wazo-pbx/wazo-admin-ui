@@ -1,0 +1,26 @@
+Source: wazo-admin-ui
+Section: python
+Priority: extra
+Maintainer: Wazo Maintainers <dev.wazo@gmail.com>
+Build-Depends: debhelper (>= 9), dh-python, dh-systemd (>= 1.5), python-all (>= 2.7), python-setuptools
+Standards-Version: 3.9.6
+X-Python-Version: >= 2.7
+
+Package: wazo-admin-ui
+Architecture: all
+Depends: ${python:Depends},
+         ${misc:Depends},
+         xivo-auth-client,
+         xivo-confd-client,
+         xivo-lib-python,
+         python-cherrypy3,
+         python-flask,
+         python-flask-classful,
+         python-flask-login,
+         python-flask-menu,
+         python-flask-wtf,
+         python-stevedore,
+Description: Wazo admin UI
+ Wazo is a system based on a powerful IPBX, to bring an easy to
+ install solution for telephony and related services.
+ .

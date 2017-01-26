@@ -1,0 +1,37 @@
+{% extends "auth_homepage.html" %}
+{% from "macro.html" import render_field %}
+
+{% block additional_css %}
+    <link rel="stylesheet" href="{{ url_for('login.static', filename='css/login.css') }}">
+{% endblock %}
+
+{% block content %}
+
+  <div class="login-box">
+    <div class="login-box-body">
+      <h3 class="login-box-msg">
+        <strong>Wazo</strong> authentication
+      </h3>
+      <hr>
+      <form action="{{ url_for('login.Login:get') }}" method="post" name="login_user_form">
+        {{ login_user_form.hidden_tag() }}
+        {{ render_field(login_user_form.username, with_icon="user", with_label=False, placeholder="Username") }}
+        {{ render_field(login_user_form.password, with_icon="lock", with_label=False, placeholder="Password") }}
+        <div class="row">
+          <div class="col-xs-4 col-xs-offset-8">
+            {{ render_field(login_user_form.submit, class_="btn btn-primary pull-right", value="Login", with_label=False) }}
+          </div>
+        </div>
+      </form>
+      <div id="messages" class="row">
+        {% include "flashed_messages.html" %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block additional_js %}
+  <script src="{{ url_for('login.static', filename='js/jquery.backstretch.min.js') }}"></script>
+  <script src="{{ url_for('login.static', filename='js/login.js') }}"></script>
+{% endblock %}

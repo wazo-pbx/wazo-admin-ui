@@ -1,0 +1,3 @@
+recursive-include wazo_admin_ui/templates *
+recursive-include wazo_admin_ui/static *
+recursive-include wazo_admin_ui/plugins/* *

@@ -1,0 +1,33 @@
+# This file should not be modified as it may get changed by the maintainer.
+# Add extra configuration files in the extra_config_files directory to override
+# the content from this file
+
+# Extra configuration directory where the config files overriding this file
+# should be.
+extra_config_files: /etc/wazo-admin-ui/conf.d/
+
+# Change the log level to debug level.
+debug: false
+
+# Log file.
+log_filename: /var/log/wazo-admin-ui.log
+
+# PID file.
+pid_filename: /var/run/wazo-admin-ui/wazo-admin-ui.pid
+
+https:
+  listen: 0.0.0.0
+  port: 9296
+  certificate: /usr/share/xivo-certs/server.crt
+  private_key: /usr/share/xivo-certs/server.key
+
+# xivo-auth connection information
+auth:
+  host: 127.0.0.1
+  port: 9497
+  verify_certificate: False
+
+enabled_plugins:
+  - admin
+  - authentification
+  - index
