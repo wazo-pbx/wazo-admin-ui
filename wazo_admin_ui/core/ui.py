@@ -12,6 +12,7 @@ from flask import Flask
 from flask import request
 from flask_babel import Babel
 from flask_menu import Menu
+from flask_session import Session
 from flask_login import LoginManager
 from requests.exceptions import HTTPError
 
@@ -43,6 +44,7 @@ class CoreUI(object):
         self._configure_login()
         self._configure_babel()
         self._configure_menu()
+        self._configure_session()
 
     def get_app(self):
         return app
@@ -97,3 +99,8 @@ class CoreUI(object):
         def get_locale():
             translations = [str(translation) for translation in babel.list_translations()]
             return request.accept_languages.best_match(translations)
+
+    def _configure_session(self):
+        app.config['SESSION_TYPE'] = 'filesystem'
+        sess = Session()
+        sess.init_app(app)

@@ -19,6 +19,7 @@ Depends: ${python:Depends},
          python-flask-classful,
          python-flask-login,
          python-flask-menu,
+         python-flask-session,
          python-flask-wtf,
          python-stevedore,
 Description: Wazo admin UI
