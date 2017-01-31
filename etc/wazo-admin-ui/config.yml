@@ -26,8 +26,3 @@ auth:
   host: 127.0.0.1
   port: 9497
   verify_certificate: False
-
-enabled_plugins:
-  - admin
-  - authentification
-  - index
