@@ -9,6 +9,7 @@ from datetime import timedelta
 
 from cherrypy import wsgiserver
 from flask import Flask
+from flask import request
 from flask_babel import Babel
 from flask_menu import Menu
 from flask_login import LoginManager
