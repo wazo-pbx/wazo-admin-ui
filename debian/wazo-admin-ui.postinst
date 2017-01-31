@@ -2,6 +2,7 @@
 
 set -e
 
+DAEMONNAME='wazo-admin-ui'
 LOG_FILENAME="/var/log/${DAEMONNAME}.log"
 USER='wazo-admin-ui'
 GROUP='www-data'
