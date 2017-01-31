@@ -5,7 +5,7 @@ Before=monit.service
 
 [Service]
 Type=forking
-ExecStartPre=/usr/bin/install -d -o www-data -g www-data /var/run/wazo-admin-ui
+ExecStartPre=/usr/bin/install -d -o wazo-admin-ui -g www-data /var/run/wazo-admin-ui
 ExecStart=/usr/bin/wazo-admin-ui
 PIDFile=/var/run/wazo-admin-ui/wazo-admin-ui.pid
 
