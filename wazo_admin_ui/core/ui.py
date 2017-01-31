@@ -9,6 +9,7 @@ from datetime import timedelta
 
 from cherrypy import wsgiserver
 from flask import Flask
+from flask_babel import Babel
 from flask_menu import Menu
 from flask_login import LoginManager
 from requests.exceptions import HTTPError
@@ -39,6 +40,7 @@ class CoreUI(object):
 
         configure_error_handlers(app)
         self._configure_login()
+        self._configure_babel()
         self._configure_menu()
 
     def get_app(self):
@@ -84,3 +86,13 @@ class CoreUI(object):
     def _configure_menu(self):
         menu = Menu()
         menu.init_app(app)
+
+    def _configure_babel(self):
+        babel = Babel()
+        babel.init_app(app)
+        app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+
+        @babel.localeselector
+        def get_locale():
+            translations = [str(translation) for translation in babel.list_translations()]
+            return request.accept_languages.best_match(translations)

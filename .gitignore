@@ -1,4 +1,5 @@
-*.pyc
-.tox
 *.egg-info/
+*.mo
+*.pyc
 *.pyo
+.tox

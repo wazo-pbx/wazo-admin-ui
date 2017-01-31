@@ -10,7 +10,7 @@
   <div class="login-box">
     <div class="login-box-body">
       <h3 class="login-box-msg">
-        <strong>Wazo</strong> authentication
+        {{ gettext('Wazo authentication') }}
       </h3>
       <hr>
       <form action="{{ url_for('login.Login:get') }}" method="post" name="login_user_form">
