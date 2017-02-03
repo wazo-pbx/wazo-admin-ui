@@ -44,7 +44,7 @@ class CoreUI(object):
         self._configure_login()
         self._configure_babel()
         self._configure_menu()
-        self._configure_session()
+        self._configure_session(global_config['session_file_dir'])
 
     def get_app(self):
         return app
@@ -101,8 +101,8 @@ class CoreUI(object):
             logger.critical(request.accept_languages.best_match(translations))
             return request.accept_languages.best_match(translations)
 
-    def _configure_session(self):
-        app.config['SESSION_FILE_DIR'] = '/var/lib/wazo-admin-ui'
+    def _configure_session(self, session_file_dir):
+        app.config['SESSION_FILE_DIR'] = session_file_dir
         app.config['SESSION_TYPE'] = 'filesystem'
         sess = Session()
         sess.init_app(app)

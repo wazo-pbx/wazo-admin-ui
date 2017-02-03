@@ -19,6 +19,7 @@ _DEFAULT_CONFIG = {
     'user': 'wazo-admin-ui',
     'log_filename': '/var/log/wazo-admin-ui.log',
     'pid_filename': '/var/run/wazo-admin-ui/wazo-admin-ui.pid',
+    'session_file_dir': '/var/lib/wazo-admin-ui/sessions',
     'https': {
         'listen': '0.0.0.0',
         'port': 9296,
