@@ -5,18 +5,13 @@
 
 from setuptools import find_packages
 from setuptools import setup
-from setuptools.command.install_lib import install_lib as _install_lib
-from distutils.command.build import build as _build
+from setuptools.command.build_py import build_py as _build_py
 
 
-class build(_build):
-    sub_commands = [('compile_catalog', None)] + _build.sub_commands
-
-
-class install_lib(_install_lib):
+class build_py(_build_py):
     def run(self):
         self.run_command('compile_catalog')
-        _install_lib.run(self)
+        _build_py.run(self)
 
 
 class BabelWrapper(object):
@@ -45,8 +40,7 @@ setup(
     zip_safe=False,
     scripts=['bin/wazo-admin-ui'],
 
-    cmdclass={'build': build,
-              'install_lib': install_lib,
+    cmdclass={'build_py': build_py,
               'compile_catalog': babel_wrapper.compile_catalog},
 
     entry_points={
