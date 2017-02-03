@@ -98,10 +98,11 @@ class CoreUI(object):
         @babel.localeselector
         def get_locale():
             translations = [str(translation) for translation in babel.list_translations()]
+            logger.critical(request.accept_languages.best_match(translations))
             return request.accept_languages.best_match(translations)
 
     def _configure_session(self):
-        app.config['SESSION_FILE_DIR'] = '/tmp/flask-session'
+        app.config['SESSION_FILE_DIR'] = '/var/lib/wazo-admin-ui'
         app.config['SESSION_TYPE'] = 'filesystem'
         sess = Session()
         sess.init_app(app)
