@@ -101,6 +101,7 @@ class CoreUI(object):
             return request.accept_languages.best_match(translations)
 
     def _configure_session(self):
+        app.config['SESSION_FILE_DIR'] = '/tmp/flask-session'
         app.config['SESSION_TYPE'] = 'filesystem'
         sess = Session()
         sess.init_app(app)
