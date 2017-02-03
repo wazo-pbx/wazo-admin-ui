@@ -5,7 +5,7 @@ set -e
 DAEMONNAME='wazo-admin-ui'
 LOG_FILENAME="/var/log/${DAEMONNAME}.log"
 USER='wazo-admin-ui'
-GROUP="${USER}"
+GROUP="www-data"
 USER_HOME="/var/lib/${USER}"
 
 case "$1" in
@@ -18,6 +18,8 @@ case "$1" in
 				--no-create-home --disabled-login \
 				$USER
 		fi
+
+        adduser --quiet $USER $GROUP
 
 		if [ ! -e "$LOG_FILENAME" ]; then
 			touch "$LOG_FILENAME"
