@@ -21,21 +21,8 @@ class install_lib(_install_lib):
 
 class BabelWrapper(object):
 
-    @property
-    def compile_catalog(self):
-        return self.babel.compile_catalog
-
-    @property
-    def extract_messages(self):
-        return self.babel.extract_messages
-
-    @property
-    def init_catalog(self):
-        return self.babel.init_catalog
-
-    @property
-    def update_catalog(self):
-        return self.babel.update_catalog
+    def compile_catalog(self, *args, **kwargs):
+        return self.babel.compile_catalog(*args, **kwargs)
 
     @property
     def babel(self):
@@ -60,10 +47,7 @@ setup(
 
     cmdclass={'build': build,
               'install_lib': install_lib,
-              'compile_catalog': babel_wrapper.compile_catalog,
-              'extract_messages': babel_wrapper.extract_messages,
-              'init_catalog': babel_wrapper.init_catalog,
-              'update_catalog': babel_wrapper.update_catalog},
+              'compile_catalog': babel_wrapper.compile_catalog},
 
     entry_points={
         'wazo_admin_ui.plugins': [
