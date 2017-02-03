@@ -122,7 +122,6 @@ class CoreUI(object):
         @babel.localeselector
         def get_locale():
             translations = [str(translation) for translation in babel.list_translations()]
-            logger.critical(request.accept_languages.best_match(translations))
             return request.accept_languages.best_match(translations)
 
     def _configure_session(self, session_file_dir):
