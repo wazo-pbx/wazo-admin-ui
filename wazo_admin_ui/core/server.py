@@ -52,7 +52,7 @@ class ReverseProxied(object):
         return self.app(environ, start_response)
 
 
-class CoreUI(object):
+class Server(object):
 
     def __init__(self, global_config):
         self.config = global_config['https']
