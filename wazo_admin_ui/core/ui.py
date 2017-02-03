@@ -28,6 +28,30 @@ app = Flask('wazo_admin_ui')
 auth_verifier = AuthVerifier()
 
 
+class ReverseProxied(object):
+    '''
+    From http://flask.pocoo.org/snippets/35/
+    '''
+
+    def __init__(self, app):
+        self.app = app
+
+    def __call__(self, environ, start_response):
+        script_name = environ.get('HTTP_X_SCRIPT_NAME', '')
+        if script_name:
+            environ['SCRIPT_NAME'] = script_name
+
+            # Cause a problem when script_name and page have the same name
+            # i.e. /admin/admin
+            # Dont know where is usefull to rewrite path_info ...
+
+            # path_info = environ['PATH_INFO']
+            # if path_info.startswith(script_name):
+            #     environ['PATH_INFO'] = path_info[len(script_name):]
+
+        return self.app(environ, start_response)
+
+
 class CoreUI(object):
 
     def __init__(self, global_config):
@@ -52,7 +76,7 @@ class CoreUI(object):
     def run(self):
         bind_addr = (self.config['listen'], self.config['port'])
 
-        wsgi_app = wsgiserver.WSGIPathInfoDispatcher({'/': app})
+        wsgi_app = ReverseProxied(wsgiserver.WSGIPathInfoDispatcher({'/': app}))
         self.server = wsgiserver.CherryPyWSGIServer(bind_addr=bind_addr,
                                                     wsgi_app=wsgi_app)
         self.server.ssl_adapter = http_helpers.ssl_adapter(self.config['certificate'],
