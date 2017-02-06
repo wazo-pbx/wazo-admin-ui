@@ -33,8 +33,8 @@ class ReverseProxied(object):
     From http://flask.pocoo.org/snippets/35/
     '''
 
-    def __init__(self, app):
-        self.app = app
+    def __init__(self, application):
+        self.app = application
 
     def __call__(self, environ, start_response):
         script_name = environ.get('HTTP_X_SCRIPT_NAME', '')

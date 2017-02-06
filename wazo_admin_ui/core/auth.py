@@ -13,5 +13,5 @@ class AuthClient(Client):
         super(AuthClient, self).__init__(**config)
 
     @classmethod
-    def set_config(self, auth_config):
-        self._auth_config = auth_config
+    def set_config(cls, auth_config):
+        cls._auth_config = auth_config
