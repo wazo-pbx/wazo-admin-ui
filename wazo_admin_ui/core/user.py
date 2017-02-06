@@ -5,8 +5,9 @@
 
 class UserUI(object):
 
-    def __init__(self, token):
+    def __init__(self, token, uuid=None):
         self._token = token
+        self.uuid = uuid
 
     def get_id(self):
         return self._token

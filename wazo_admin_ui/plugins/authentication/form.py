@@ -25,9 +25,10 @@ class LoginForm(FlaskForm):
         except HTTPError:
             return False
 
+        user_uuid = response.get('xivo_user_uuid')
         token = response.get('token')
         if not token:
             return False
 
-        self.user = UserUI(token)
+        self.user = UserUI(token, user_uuid)
         return True
