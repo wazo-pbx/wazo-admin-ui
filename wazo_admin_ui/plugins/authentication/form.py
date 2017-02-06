@@ -2,13 +2,22 @@
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
+from __future__ import unicode_literals
+
 from flask_wtf import FlaskForm
 from requests.exceptions import HTTPError
 from wtforms.fields import PasswordField, StringField, SubmitField
-from wtforms.validators import InputRequired
+from wtforms.validators import InputRequired, ValidationError
 
 from wazo_admin_ui.core.auth import AuthClient
 from wazo_admin_ui.core.user import UserUI
+
+
+USERNAME_PASSWORD_ERROR = 'Wrong username and/or password'
+
+
+def unauthorized(error):
+    return error.response is not None and error.response.status_code == 401
 
 
 class LoginForm(FlaskForm):
@@ -22,13 +31,13 @@ class LoginForm(FlaskForm):
         try:
             response = AuthClient(username=self.username.data,
                                   password=self.password.data).token.new('xivo_admin', expiration=3600)
-        except HTTPError:
-            return False
+        except HTTPError as e:
+            if unauthorized(e):
+                self.username.errors.append(USERNAME_PASSWORD_ERROR)
+                self.password.errors.append(USERNAME_PASSWORD_ERROR)
+                return False
+            raise ValidationError('Error with Wazo authentication server: {}:'.format(e.message))
 
-        user_uuid = response.get('xivo_user_uuid')
-        token = response.get('token')
-        if not token:
-            return False
+        self.user = UserUI(response['token'], response['xivo_user_uuid'])
 
-        self.user = UserUI(token, user_uuid)
         return True
