@@ -41,14 +41,6 @@ class ReverseProxied(object):
         if script_name:
             environ['SCRIPT_NAME'] = script_name
 
-            # Cause a problem when script_name and page have the same name
-            # i.e. /admin/admin
-            # Dont know where is usefull to rewrite path_info ...
-
-            # path_info = environ['PATH_INFO']
-            # if path_info.startswith(script_name):
-            #     environ['PATH_INFO'] = path_info[len(script_name):]
-
         return self.app(environ, start_response)
 
 
