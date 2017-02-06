@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: wazo-admin-ui 0.1\n"
 "Report-Msgid-Bugs-To: dev.wazo@gmail.com\n"
 "POT-Creation-Date: 2017-01-31 11:42-0500\n"
-"PO-Revision-Date: 2017-01-31 11:42-0500\n"
+"PO-Revision-Date: 2017-02-06 15:00-0500\n"
 "Last-Translator: Wazo Authors <dev.wazo@gmail.com>\n"
 "Language-Team: en <dev.wazo@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
+#: wazo_admin_ui/plugins/authentication/form.py:17
+msgid "Wrong username and/or password"
+msgstr ""
+
 #: wazo_admin_ui/plugins/authentication/templates/login.html:13
 msgid "Wazo authentication"
+msgstr ""
+
+#: wazo_admin_ui/plugins/authentication/templates/login.html:18
+msgid "Username"
+msgstr ""
+
+#: wazo_admin_ui/plugins/authentication/templates/login.html:19
+msgid "Password"
+msgstr ""
+
+#: wazo_admin_ui/plugins/authentication/templates/login.html:22
+msgid "Login"
 msgstr ""
 

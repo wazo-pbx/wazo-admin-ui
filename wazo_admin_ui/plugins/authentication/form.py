@@ -4,6 +4,7 @@
 
 from __future__ import unicode_literals
 
+from flask_babel import lazy_gettext
 from flask_wtf import FlaskForm
 from requests.exceptions import HTTPError
 from wtforms.fields import PasswordField, StringField, SubmitField
@@ -13,7 +14,7 @@ from wazo_admin_ui.core.auth import AuthClient
 from wazo_admin_ui.core.user import UserUI
 
 
-USERNAME_PASSWORD_ERROR = 'Wrong username and/or password'
+USERNAME_PASSWORD_ERROR = lazy_gettext('Wrong username and/or password')
 
 
 def unauthorized(error):
