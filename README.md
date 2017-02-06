@@ -7,7 +7,7 @@ Wazo admin ui
 
 To extract new translations:
 
-    % pybabel extract --mapping-file=wazo_admin_ui/babel.cfg --output-file=wazo_admin_ui/messages.pot .
+    % pybabel extract --mapping=wazo_admin_ui/babel.cfg --output=wazo_admin_ui/messages.pot wazo_admin_ui/
 
 To create new translation catalog:
 
