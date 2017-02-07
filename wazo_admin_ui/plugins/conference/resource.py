@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
-# Copyright 2017 by Sylvain Boily
+# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
-import logging
-
 from flask import render_template
-from flask import request
 from flask import redirect
 from flask import url_for
 from flask import flash
@@ -17,19 +14,17 @@ from flask_login import login_required
 
 from wazo_admin_ui.core.errors import flash_errors
 
-from .services import ServiceConferences
 from .forms import FormConference
 
-logger = logging.getLogger(__name__)
 
-class Conferences(FlaskView):
+class ConferenceView(FlaskView):
     decorators = [login_required]
+    service = None
 
     @classy_menu_item('.conferences', 'Conferences', order=1, icon="compress")
     def get(self):
         try:
-            c = ServiceConferences()
-            conferences = c.list()
+            conferences = self.service.list()
             form = FormConference()
             return render_template('conferences.html', conferences=conferences, form=form)
         except Exception as e:
@@ -41,8 +36,7 @@ class Conferences(FlaskView):
 
         if form.validate_on_submit():
             try:
-                c = ServiceConferences()
-                c.add(form)
+                self.service.add(form)
                 flash(u'Conference {} has been created'.format(form.name.data), 'success')
             except Exception as e:
                 flash(u'Conference {} has not been created: {}'.format(form.name.data, e), 'error')
@@ -52,8 +46,7 @@ class Conferences(FlaskView):
 
     @route('/view/<id>', methods=['GET', 'POST'])
     def view(self, id):
-        c = ServiceConferences()
-        conference = c.view(id)
+        conference = self.service.view(id)
         extension = None
         if len(conference['extensions']) > 0:
             extension = conference['extensions'][0]
@@ -62,7 +55,7 @@ class Conferences(FlaskView):
 
         if form.validate_on_submit():
             try:
-                c.update(id, form, extension)
+                self.service.update(id, form, extension)
                 flash(u'Conference {} has been updated'.format(form.name.data), 'success')
                 return redirect(url_for('conference.Conferences:get'))
             except Exception as e:
@@ -73,9 +66,8 @@ class Conferences(FlaskView):
         return render_template('view_conference.html', form=form, conference=conference)
 
     def remove(self, id):
-        try :
-            c = ServiceConferences()
-            c.remove(id)
+        try:
+            self.service.remove(id)
             flash(u'Conference {} has been deleted'.format(id), 'success')
         except Exception as e:
             flash(u'Conference {} has not been deleted: {}'.format(id, e), 'error')
