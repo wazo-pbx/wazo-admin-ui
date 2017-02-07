@@ -12,12 +12,12 @@
       <ul class="nav navbar-nav">
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <span class="hidden-xs">{{ current_user.firstname }} {{current_user.lastname }}</span>
+            <span class="hidden-xs">{{ current_user.uuid }}</span>
           </a>
           <ul class="dropdown-menu">
             <li class="user-header">
               <p>
-               {{ current_user.firstname }} {{ current_user.lastname }}
+               {{ current_user.uuid }}
               </p>
             </li>
             <li class="user-footer">
