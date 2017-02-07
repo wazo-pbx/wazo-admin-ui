@@ -23,7 +23,7 @@
             <h3 class="box-title">Conference {{ conference.name }}</h3>
             <div class="box-tools"></div>
           </div>
-          <form class="form-horizontal" method="post" action="">
+          <form class="form-horizontal" method="post" action="{{ url_for('conference.ConferenceView:put', id=conference.id) }}">
             <div class="box-body">
               {{ form.csrf_token() }}
 	      {{ render_field(form.name) }}

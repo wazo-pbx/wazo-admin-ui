@@ -36,7 +36,7 @@ class ConferenceView(FlaskView):
 
         if form.validate_on_submit():
             try:
-                self.service.add(form)
+                self.service.create(form)
                 flash(u'Conference {} has been created'.format(form.name.data), 'success')
             except Exception as e:
                 flash(u'Conference {} has not been created: {}'.format(form.name.data, e), 'error')
@@ -44,9 +44,19 @@ class ConferenceView(FlaskView):
             flash_errors(form)
         return redirect(url_for('conference.ConferenceView:index'))
 
-    @route('/view/<id>', methods=['GET', 'POST'])
-    def view(self, id):
-        conference = self.service.view(id)
+    def get(self, id):
+        conference = self.service.get(id)
+        extension = None
+        if len(conference['extensions']) > 0:
+            extension = conference['extensions'][0]
+            conference['extension'] = extension['exten']
+        form = FormConference(data=conference)
+
+        return render_template('view_conference.html', form=form, conference=conference)
+
+    @route('/put/<id>', methods=['POST'])
+    def put(self, id):
+        conference = self.service.get(id)
         extension = None
         if len(conference['extensions']) > 0:
             extension = conference['extensions'][0]
@@ -62,12 +72,12 @@ class ConferenceView(FlaskView):
                 flash(u'Conference {} has not been updated: {}'.format(form.name.data, e), 'error')
         else:
             flash_errors(form)
-
         return render_template('view_conference.html', form=form, conference=conference)
 
-    def remove(self, id):
+    @route('/delete/<id>', methods=['GET'])
+    def delete(self, id):
         try:
-            self.service.remove(id)
+            self.service.delete(id)
             flash(u'Conference {} has been deleted'.format(id), 'success')
         except Exception as e:
             flash(u'Conference {} has not been deleted: {}'.format(id, e), 'error')

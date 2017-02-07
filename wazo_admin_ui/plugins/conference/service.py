@@ -19,7 +19,7 @@ class ConferenceService(object):
     def list(self):
         return self._confd.conferences.list()
 
-    def view(self, id):
+    def get(self, id):
         return self._confd.conferences.get(id)
 
     def update(self, id, conference, extension):
@@ -45,7 +45,7 @@ class ConferenceService(object):
         elif not conference.extension.data and extension:
             self.remove_extension(extension['id'], id)
 
-    def add(self, conference):
+    def create(self, conference):
         create_conference = {
             'name': conference.name.data,
             'announce_join_leave': conference.announce_join_leave.data,
@@ -86,7 +86,7 @@ class ConferenceService(object):
         self._confd.conferences.relations(conference_id).remove_extension(exten_id)
         self._confd.extensions.delete(exten_id)
 
-    def remove(self, conference_id):
+    def delete(self, conference_id):
         conference = self._confd.conferences.get(conference_id)
         if conference.has_key('extensions'):
             for exten in conference['extensions']:
