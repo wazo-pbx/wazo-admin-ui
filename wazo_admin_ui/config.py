@@ -34,7 +34,7 @@ _DEFAULT_CONFIG = {
     },
     'confd': {
         'host': '127.0.0.1',
-        'port': 9487,
+        'port': 9486,
         'verify_certificate': '/usr/share/xivo-certs/server.crt'
     },
     'enabled_plugins': {

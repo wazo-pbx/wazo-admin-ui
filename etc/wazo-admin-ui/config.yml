@@ -26,3 +26,9 @@ auth:
   host: 127.0.0.1
   port: 9497
   verify_certificate: False
+
+# xivo-confd connection information
+confd:
+  host: 127.0.0.1
+  port: 9486
+  verify_certificate: False
