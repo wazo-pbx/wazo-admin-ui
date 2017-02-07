@@ -22,7 +22,7 @@ class ConferenceView(FlaskView):
     service = None
 
     @classy_menu_item('.conferences', 'Conferences', order=1, icon="compress")
-    def get(self):
+    def index(self):
         try:
             conferences = self.service.list()
             form = FormConference()
@@ -42,7 +42,7 @@ class ConferenceView(FlaskView):
                 flash(u'Conference {} has not been created: {}'.format(form.name.data, e), 'error')
         else:
             flash_errors(form)
-        return redirect(url_for('conference.Conferences:get'))
+        return redirect(url_for('conference.ConferenceView:index'))
 
     @route('/view/<id>', methods=['GET', 'POST'])
     def view(self, id):
@@ -57,7 +57,7 @@ class ConferenceView(FlaskView):
             try:
                 self.service.update(id, form, extension)
                 flash(u'Conference {} has been updated'.format(form.name.data), 'success')
-                return redirect(url_for('conference.Conferences:get'))
+                return redirect(url_for('conference.ConferenceView:index'))
             except Exception as e:
                 flash(u'Conference {} has not been updated: {}'.format(form.name.data, e), 'error')
         else:
@@ -71,4 +71,4 @@ class ConferenceView(FlaskView):
             flash(u'Conference {} has been deleted'.format(id), 'success')
         except Exception as e:
             flash(u'Conference {} has not been deleted: {}'.format(id, e), 'error')
-        return redirect(url_for('conference.Conferences:get'))
+        return redirect(url_for('conference.ConferenceView:index'))
