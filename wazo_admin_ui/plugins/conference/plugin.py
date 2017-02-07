@@ -6,8 +6,8 @@ from flask import Blueprint
 from flask_menu.classy import register_flaskview
 
 
-from .services import ConferenceService
-from .resource import ConferenceView
+from .service import ConferenceService
+from .view import ConferenceView
 
 conference = Blueprint('conference', __name__, template_folder='templates',
                        static_folder='static', static_url_path='/%s' % __name__)

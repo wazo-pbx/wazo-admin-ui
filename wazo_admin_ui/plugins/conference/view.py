@@ -14,7 +14,7 @@ from flask_login import login_required
 
 from wazo_admin_ui.core.errors import flash_errors
 
-from .forms import FormConference
+from .form import FormConference
 
 
 class ConferenceView(FlaskView):
