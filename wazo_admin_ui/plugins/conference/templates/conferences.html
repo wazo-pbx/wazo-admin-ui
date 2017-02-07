@@ -1,0 +1,108 @@
+{% extends "layout.html" %}
+
+{% block content_header %}
+    <section class="content-header">
+      <h1>
+        Conferences
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-compress"></i> Conferences</a></li>
+        <li class="active">List</li>
+      </ol>
+    </section>
+{% endblock %}
+
+{% block content %}
+
+  <section class="content">
+    <div class="col-md-8">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <i class="fa fa-compress"></i>
+          <h3 class="box-title">Conferences</h3>
+          <div class="box-tools">
+            <a href="#" id="add-conference" class="btn btn-box-tool">
+              <i class="fa fa-plus"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="box-body">
+          <table id="table-conferences" class="table table-condensed">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Extensions</th>
+                <th>PIN</th>
+                <th style="width: 80px">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for conference in conferences['items'] %}
+              <tr>
+                <td>{{ conference.name }}</td>
+                <td>
+                  {% for e in conference.extensions %}
+                    <strong>internal:</strong> {{ e.exten }}
+                  {% endfor %}
+                  {% for extensions in conference.incalls %}
+                    {% for e in extensions.extensions %}
+                      <strong>incall:</strong> {{ e.exten }}
+                    {% endfor %}
+                  {% endfor %}
+                  {% if not conference.extensions and not conference.incalls %}
+                    -
+                  {% endif %}
+                </td>
+                <td>{{ conference.pin or '-' }}</td>
+                <td>
+                  <a href="{{ url_for('conference.Conferences:view', id=conference.id) }}" class="btn btn-xs btn-info">
+                    <i class="fa fa-eye"></i>
+                  </a>
+                  <a href="{{ url_for('conference.Conferences:remove', id=conference.id) }}" class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">
+                    <i class="fa fa-minus"></i>
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="box box-info hidden" id="view-add-conference">
+        <div class="box-header with-border">
+          <h3 class="box-title">Add Conference</h3>
+          <div class="pull-right box-tools">
+            <button data-original-title="Remove" type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="">
+              <i class="fa fa-minus"></i>
+           </button>
+         </div>
+        </div>
+
+        <form class="form-horizontal" method="post" action="">
+        <div class="box-body">
+          {{ form.csrf_token() }}
+	  {{ render_field(form.name) }}
+	  {{ render_field(form.extension) }}
+	  {{ render_field(form.pin) }}
+	  {{ render_field(form.admin_pin) }}
+	  {{ render_field(form.announce_join_leave) }}
+	  {{ render_field(form.announce_user_count) }}
+	</div>
+        <div class="box-footer">
+	  {{ render_field(form.submit, class_="btn btn-primary pull-right", value="Add", with_label=False) }}
+        </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+{% endblock %}
+
+{% block additional_js %}
+  <script src="{{ url_for('conference.static', filename='js/conferences.js') }}"></script>
+{% endblock %}
