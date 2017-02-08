@@ -100,7 +100,7 @@ class Server(object):
             token = response.get('token')
             if not token:
                 return None
-            return UserUI(token)
+            return UserUI(token, response.get('auth_id'))
 
     def _configure_menu(self):
         menu = Menu()
