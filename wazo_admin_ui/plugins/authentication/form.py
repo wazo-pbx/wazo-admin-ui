@@ -39,6 +39,6 @@ class LoginForm(FlaskForm):
                 return False
             raise ValidationError('Error with Wazo authentication server: {}:'.format(e.message))
 
-        self.user = UserUI(response['token'], response['xivo_user_uuid'])
+        self.user = UserUI(response['token'], response['auth_id'])
 
         return True
