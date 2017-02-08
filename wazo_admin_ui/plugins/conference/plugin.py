@@ -20,7 +20,7 @@ class Plugin(object):
         config = dependencies['config']
 
         ConferenceView.service = ConferenceService(config['confd'])
-        ConferenceView.register(conference, route_base='/conferences', route_prefix='')
+        ConferenceView.register(conference, route_base='/conferences')
         register_flaskview(conference, ConferenceView)
 
         core.register_blueprint(conference)
