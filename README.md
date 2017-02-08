@@ -23,3 +23,4 @@ using:
 
     % pybabel compile --directory=wazo_admin_ui/translations
 
+
