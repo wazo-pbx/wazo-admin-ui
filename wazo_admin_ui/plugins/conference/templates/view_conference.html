@@ -25,7 +25,7 @@
           </div>
           <form class="form-horizontal" method="post" action="{{ url_for('conference.ConferenceView:put', id=conference.id) }}">
             <div class="box-body">
-              {{ form.csrf_token() }}
+              {{ form.csrf_token }}
 	      {{ render_field(form.name) }}
 	      {{ render_field(form.extension) }}
     	      {{ render_field(form.pin) }}
