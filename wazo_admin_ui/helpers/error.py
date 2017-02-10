@@ -7,24 +7,25 @@ from __future__ import unicode_literals
 import ast
 import re
 
+from flask_babel import lazy_gettext
 
 GENERIC_PATTERN_ERRORS = {'resource-not-found': r'^Resource Not Found',
                           'invalid-data': r'^Input Error'}
 
-GENERIC_MESSAGE_ERRORS = {'resource-not-found': 'Resource not found',
-                          'invalid-data': 'Input error'}
+GENERIC_MESSAGE_ERRORS = {'resource-not-found': lazy_gettext('Resource not found'),
+                          'invalid-data': lazy_gettext('Input error')}
 
 
 SPECIFIC_PATTERN_ERRORS = {'required-field': r'Missing data for required field',
                            'invalid-choice': r'Not a valid choice',
                            'invalid-length': r'Longer than maximum length'}
 
-SPECIFIC_MESSAGE_ERRORS = {'required-field': 'Missing data for required field',
-                           'invalid-choice': 'Not a valid choice',
-                           'invalid-length': 'Longer than maximum length'}
+SPECIFIC_MESSAGE_ERRORS = {'required-field': lazy_gettext('Missing data for required field'),
+                           'invalid-choice': lazy_gettext('Not a valid choice'),
+                           'invalid-length': lazy_gettext('Longer than maximum length')}
 
-RESOURCES = {'conferences': 'conference',
-             'users': 'user'}
+RESOURCES = {'conferences': lazy_gettext('conference'),
+             'users': lazy_gettext('user')}
 
 
 class ErrorTranslator(object):
