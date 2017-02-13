@@ -23,7 +23,7 @@ class ConferenceView(BaseView):
         return super(ConferenceView, self).index()
 
     def _serialize_get(self, conference):
-        main_exten = self._get_main_exten(conference['extensions'])
+        main_exten = self._get_main_exten(conference.get('extensions', {}))
         return self.form(data=conference, extension=main_exten)
 
     def _get_main_exten(self, extensions):
@@ -53,3 +53,32 @@ class ConferenceView(BaseView):
         conference['preprocess_subroutine'] = form.preprocess_subroutine.data
         conference['quiet_join_leave'] = form.quiet_join_leave.data
         return conference, extension
+
+    def map_errors(self, form, conferences=None, extensions=None):
+        # TODO: Should be rework
+
+        if conferences:
+            if 'name' in conferences:
+                form.name.errors.append(conferences['name'])
+            if 'pin' in conferences:
+                form.pin.errors.append(conferences['pin'])
+            if 'admin_pin' in conferences:
+                form.admin_pin.errors.append(conferences['admin_pin'])
+            if 'announce_join_leave' in conferences:
+                form.announce_join_leave.errors.append(conferences['announce_join_leave'])
+            if 'announce_user_count' in conferences:
+                form.announce_join_leave.errors.append(conferences['announce_user_count'])
+            if 'announce_only_user' in conferences:
+                form.announce_only_user.errors.append(conferences['announce_only_user'])
+            if 'music_on_hold' in conferences:
+                form.music_on_hold.errors.append(conferences['music_on_hold'])
+            if 'preprocess_subroutine' in conferences:
+                form.preprocess_subroutine.errors.append(conferences['preprocess_subroutine'])
+            if 'quiet_join_leave' in conferences:
+                form.quiet_join_leave.errors.append(conferences['quiet_join_leave'])
+
+        if extensions:
+            if 'exten' in extensions:
+                form.extension.errors.append(extensions['exten'])
+
+        return form
