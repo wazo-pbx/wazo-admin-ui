@@ -66,7 +66,7 @@ class BaseView(LoginRequiredView):
             self._flash_http_error(error)
             return self._index(form)
 
-        flash('{} has been created'.format(self.resource), 'success')
+        flash('{}: Resource has been created'.format(self.resource), 'success')
         return self._redirect_for('index')
 
     def map_form_to_resources_post(self, form):
@@ -103,7 +103,7 @@ class BaseView(LoginRequiredView):
             self._flash_http_error(error)
             return self._get(id, form)
 
-        flash(u'{} has been updated'.format(self.resource), 'success')
+        flash(u'{}: Resource has been updated'.format(self.resource), 'success')
         return self._redirect_for('index')
 
     def map_form_to_resources_put(form_id, form):
@@ -118,7 +118,7 @@ class BaseView(LoginRequiredView):
     def delete(self, id):
         try:
             self.service.delete(id)
-            flash(u'{} {} has been deleted'.format(self.resource, id), 'success')
+            flash(u'{}: Resource {} has been deleted'.format(self.resource, id), 'success')
         except HTTPError as error:
             self._flash_http_error(error)
 
