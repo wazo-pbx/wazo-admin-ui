@@ -80,7 +80,7 @@ class BaseView(LoginRequiredView):
                     error_fields = e_extractor.extract_fields(response)
                     error_field_ids = e_extractor.extract_specific_error_id_from_fields(error_fields)
                     error_field_messages = e_translator.translate_specific_error_id_from_fields(error_field_ids)
-                    form = self.map_errors(form, **{resource: error_field_messages})
+                    form = self.map_resources_to_form_errors(form, {resource: error_field_messages})
 
                 flash('{generic_error}: {resource} Details: {method} {url}: {response}'.format(
                     generic_error=e_translator.generic_messages.get(error_id, ''),
@@ -107,6 +107,9 @@ class BaseView(LoginRequiredView):
             return self._redirect_for('index')
         form = form or self.map_resources_to_form_get(result)
         return render_template(self.templates['edit'], form=form, result=result)
+
+    def map_resources_to_form_errors(form, resources):
+        pass
 
     @route('/delete/<id>', methods=['GET'])
     def delete(self, id):
