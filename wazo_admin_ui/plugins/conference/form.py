@@ -8,12 +8,12 @@ from wtforms.fields import SubmitField
 from wtforms.fields import TextField
 from wtforms.fields import BooleanField
 
-from wtforms.validators import DataRequired
+from wtforms.validators import InputRequired
 from wtforms.validators import Optional
 
 
 class ConferenceForm(FlaskForm):
-    name = TextField('Name', [DataRequired()])
+    name = TextField('Name', [InputRequired()])
     extension = TextField('Extension', [Optional()])
     announce_join_leave = BooleanField('Announce join leave', default=True)
     announce_only_user = BooleanField('Announce only user', default=True)
