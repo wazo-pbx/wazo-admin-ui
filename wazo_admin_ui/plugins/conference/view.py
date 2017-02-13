@@ -22,7 +22,7 @@ class ConferenceView(BaseView):
     def index(self):
         return super(ConferenceView, self).index()
 
-    def map_resources_to_form_get(self, conference):
+    def _map_resources_to_form_get(self, conference):
         main_exten = self._get_main_exten(conference.get('extensions', {}))
         return self.form(data=conference, extension=main_exten)
 
@@ -31,7 +31,7 @@ class ConferenceView(BaseView):
             return extension['exten']
         return None
 
-    def map_form_to_resources_post(self, form):
+    def _map_form_to_resources_post(self, form):
         conference = {
             'name': form.name.data,
             'announce_join_leave': form.announce_join_leave.data,
@@ -45,7 +45,7 @@ class ConferenceView(BaseView):
         }
         return conference, extension
 
-    def map_form_to_resources_put(self, form, form_id):
+    def _map_form_to_resources_put(self, form, form_id):
         conference, extension = self.map_form_to_resources_post(form)
         conference['id'] = form_id
         conference['announce_only_user'] = form.announce_only_user.data
@@ -54,7 +54,7 @@ class ConferenceView(BaseView):
         conference['quiet_join_leave'] = form.quiet_join_leave.data
         return conference, extension
 
-    def map_resources_to_form_errors(self, form, resources):
+    def _map_resources_to_form_errors(self, form, resources):
         conference = resources.get('conferences')
         if conference:
             if 'name' in conference:
