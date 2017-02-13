@@ -19,82 +19,52 @@ class ConferenceService(object):
     def list(self):
         return self._confd.conferences.list()
 
-    def get(self, id):
-        return self._confd.conferences.get(id)
+    def get(self, conference_id):
+        return self._confd.conferences.get(conference_id)
 
-    def update(self, id_, conference):
-        extension = self._get_main_extension(id_)
-        update_conference = {
-            'id': id_,
-            'name': conference.name.data,
-            'announce_join_leave': conference.announce_join_leave.data,
-            'announce_user_count': conference.announce_user_count.data,
-            'announce_only_user': conference.announce_only_user.data,
-            'music_on_hold': conference.music_on_hold.data,
-            'preprocess_subroutine': conference.preprocess_subroutine.data,
-            'quiet_join_leave': conference.quiet_join_leave.data,
-            'pin': conference.pin.data or None,
-            'admin_pin': conference.admin_pin.data or None
-        }
+    def update(self, conference, extension):
+        existing_extension = self._get_main_extension(conference['id'])
 
-        self._confd.conferences.update(update_conference)
+        self._confd.conferences.update(conference)
 
-        if conference.extension.data and extension:
-            self.update_extension(extension, conference.extension.data, id_)
-        elif conference.extension.data:
-            self.add_extension(conference.extension.data, id_)
-        elif not conference.extension.data and extension:
-            self.remove_extension(extension['id'], id_)
+        if not extension:
+            return
 
-    def _get_main_extension(self, id_):
-        for extension in self._confd.conferences.get(id_)['extensions']:
+        if extension['exten'] and existing_extension:
+            self._update_extension(existing_extension, extension)
+        elif extension['exten']:
+            self._add_extension(conference['id'], extension)
+        elif not extension['exten'] and existing_extension:
+            self._remove_extension(conference['id'], extension['id'])
+
+    def _get_main_extension(self, conference_id):
+        for extension in self._confd.conferences.get(conference_id)['extensions']:
             return extension
         return None
 
-    def create(self, conference):
-        create_conference = {
-            'name': conference.name.data,
-            'announce_join_leave': conference.announce_join_leave.data,
-            'announce_user_count': conference.announce_user_count.data,
-            'pin': conference.pin.data or None,
-            'admin_pin': conference.admin_pin.data or None
-        }
-
-        cnf = self._confd.conferences.create(create_conference)
-        if conference.extension.data and cnf:
-            self.add_extension(conference.extension.data, cnf['id'])
-
-    def add_extension(self, exten, conference_id):
-        search_extension = self._confd.extensions.list(exten=exten, context='default')['items']
-        if len(search_extension) == 0:
-            create_extension = {
-                'exten': exten,
-                'context': 'default'
-            }
-            extension = self._confd.extensions.create(create_extension)
-            if extension:
-                self._confd.conferences.relations(conference_id).add_extension(extension)
-
-    def update_extension(self, extension, new_exten, conference_id):
-        old_extension = extension['exten']
-        exten_id = extension['id']
-        if new_exten != old_extension:
-            search_extension = self._confd.extensions.list(exten=new_exten, context='default')['items']
-            if len(search_extension) == 0:
-                update_extension = {
-                    'id': exten_id,
-                    'exten': new_exten,
-                    'context': 'default'
-                }
-                self._confd.extensions.update(update_extension)
-
-    def remove_extension(self, exten_id, conference_id):
-        self._confd.conferences.relations(conference_id).remove_extension(exten_id)
-        self._confd.extensions.delete(exten_id)
+    def create(self, conference, extension):
+        conference = self._confd.conferences.create(conference)
+        if conference and extension:
+            self._add_extension(conference['id'], extension)
 
     def delete(self, conference_id):
         conference = self._confd.conferences.get(conference_id)
-        if conference.has_key('extensions'):
-            for exten in conference['extensions']:
-                self.remove_extension(exten['id'], conference_id)
+        for extension in conference['extensions']:
+            self._remove_extension(conference_id, extension['id'])
         self._confd.conferences.delete(conference_id)
+
+    def _update_extension(self, existing_extension, extension):
+        if existing_extension['exten'] == extension['exten']:
+            return
+
+        extension['id'] = existing_extension['id']
+        self._confd.extensions.update(extension)
+
+    def _add_extension(self, conference_id, extension):
+        extension = self._confd.extensions.create(extension)
+        if extension:
+            self._confd.conferences(conference_id).add_extension(extension)
+
+    def _remove_extension(self, conference_id, extension_id):
+        self._confd.conferences(conference_id).remove_extension(extension_id)
+        self._confd.extensions.delete(extension_id)
