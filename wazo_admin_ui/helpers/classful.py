@@ -69,7 +69,7 @@ class BaseView(LoginRequiredView):
         flash('{}: Resource has been created'.format(self.resource), 'success')
         return self._redirect_for('index')
 
-    def map_form_to_resources_post(self, form):
+    def _map_form_to_resources_post(self, form):
         return (form.data,)
 
     def get(self, id):
@@ -85,7 +85,7 @@ class BaseView(LoginRequiredView):
         form = form or self.map_resources_to_form_get(result)
         return render_template(self.templates['edit'], form=form, result=result)
 
-    def map_resources_to_form_get(self, obj):
+    def _map_resources_to_form_get(self, obj):
         return self.form(data=obj)
 
     @route('/put/<id>', methods=['POST'])
@@ -106,12 +106,12 @@ class BaseView(LoginRequiredView):
         flash(u'{}: Resource has been updated'.format(self.resource), 'success')
         return self._redirect_for('index')
 
-    def map_form_to_resources_put(form_id, form):
+    def _map_form_to_resources_put(form_id, form):
         result = form.data
         result['id'] = form_id
         return (result,)
 
-    def map_resources_to_form_errors(form, resources):
+    def _map_resources_to_form_errors(form, resources):
         pass
 
     @route('/delete/<id>', methods=['GET'])
