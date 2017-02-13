@@ -22,7 +22,7 @@ class ConferenceView(BaseView):
     def index(self):
         return super(ConferenceView, self).index()
 
-    def _serialize_get(self, conference):
+    def map_resources_to_form_get(self, conference):
         main_exten = self._get_main_exten(conference.get('extensions', {}))
         return self.form(data=conference, extension=main_exten)
 
@@ -31,7 +31,7 @@ class ConferenceView(BaseView):
             return extension['exten']
         return None
 
-    def _deserialize_post(self, form):
+    def map_form_to_resources_post(self, form):
         conference = {
             'name': form.name.data,
             'announce_join_leave': form.announce_join_leave.data,
@@ -45,9 +45,9 @@ class ConferenceView(BaseView):
         }
         return conference, extension
 
-    def _deserialize_put(self, conference_id, form):
-        conference, extension = self._deserialize_post(form)
-        conference['id'] = conference_id
+    def map_form_to_resources_put(self, form, form_id):
+        conference, extension = self.map_form_to_resources_post(form)
+        conference['id'] = form_id
         conference['announce_only_user'] = form.announce_only_user.data
         conference['music_on_hold'] = form.music_on_hold.data
         conference['preprocess_subroutine'] = form.preprocess_subroutine.data
