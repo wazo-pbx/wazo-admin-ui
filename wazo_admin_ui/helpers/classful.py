@@ -11,8 +11,11 @@ from flask import flash
 from flask_classful import FlaskView
 from flask_classful import route
 from flask_login import login_required
+from requests.exceptions import HTTPError
 
 from wazo_admin_ui.core.errors import flash_errors
+from wazo_admin_ui.helpers.error import ConfdErrorExtractor as e_extractor
+from wazo_admin_ui.helpers.error import ErrorTranslator as e_translator
 
 
 class LoginRequiredView(FlaskView):
@@ -30,10 +33,8 @@ class BaseView(LoginRequiredView):
     def index(self):
         try:
             result = self.service.list()
-        except Exception as e:
-            flash('There is a problem to list resources: {}'.format(e), 'error')
+        except HTTPError:
             return redirect(url_for('admin.Admin:get'))
-
         form = self.form()
         return render_template(self.templates['list'], form=form, result=result)
 
@@ -44,9 +45,8 @@ class BaseView(LoginRequiredView):
             objects = self._deserialize_post(form)
             try:
                 self.service.create(*objects)
-            except Exception as e:
-                flash('{} has not been created: {}'.format(self.resource, e), 'error')
-
+            except HTTPError:
+                return self._redirect_for('index')
             flash('{} has been created'.format(self.resource), 'success')
 
         else:
@@ -58,9 +58,7 @@ class BaseView(LoginRequiredView):
         return (form.data,)
 
     def get(self, id):
-        result = self.service.get(id)
-        form = self._serialize_get(result)
-        return render_template(self.templates['edit'], form=form, result=result)
+        return self._get(id)
 
     def _serialize_get(self, obj):
         return self.form(data=obj)
@@ -72,21 +70,43 @@ class BaseView(LoginRequiredView):
             objects = self._deserialize_put(id, form)
             try:
                 self.service.update(*objects)
-            except Exception as e:
-                flash(u'{} has not been updated: {}'.format(self.resource, e), 'error')
+                flash(u'{} has been updated'.format(self.resource), 'success')
+                return self._redirect_for('index')
+            except HTTPError as error:
+                response = error.response.json()
+                resource = e_extractor.extract_resource(error.request)
+                error_id = e_extractor.extract_generic_error_id(response)
+                if error_id == 'invalid-data':
+                    error_fields = e_extractor.extract_fields(response)
+                    error_field_ids = e_extractor.extract_specific_error_id_from_fields(error_fields)
+                    error_field_messages = e_translator.translate_specific_error_id_from_fields(error_field_ids)
+                    form = self.map_errors(form, **{resource: error_field_messages})
 
-            flash(u'{} has been updated'.format(self.resource), 'success')
-            return self._redirect_for('index')
+                flash('{generic_error}: {resource} Details: {method} {url}: {response}'.format(
+                    generic_error=e_translator.generic_messages.get(error_id, ''),
+                    resource=e_translator.resources.get(resource, ''),
+                    method=error.request.method,
+                    url=error.request.url,
+                    response=response,
+                ), 'error')
 
         else:
             flash_errors(form)
 
-        return self.get(id)
+        return self._get(id, form)
 
     def _deserialize_put(form_id, form):
         result = form.data
         result['id'] = form_id
         return (result,)
+
+    def _get(self, id, form=None):
+        try:
+            result = self.service.get(id)
+        except HTTPError:
+            return self._redirect_for('index')
+        form = form or self._serialize_get(result)
+        return render_template(self.templates['edit'], form=form, result=result)
 
     @route('/delete/<id>', methods=['GET'])
     def delete(self, id):

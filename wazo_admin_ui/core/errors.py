@@ -7,6 +7,13 @@ import logging
 from flask import redirect
 from flask import url_for
 from flask.helpers import flash
+from wazo_admin_ui.helpers.error import (ErrorExtractor,
+                                         ErrorTranslator,
+                                         GENERIC_MESSAGE_ERRORS,
+                                         GENERIC_PATTERN_ERRORS,
+                                         RESOURCES,
+                                         SPECIFIC_MESSAGE_ERRORS,
+                                         SPECIFIC_PATTERN_ERRORS)
 
 from requests.exceptions import ConnectionError
 
@@ -15,6 +22,12 @@ logger = logging.getLogger(__name__)
 
 
 def configure_error_handlers(app):
+
+    ErrorExtractor.register_generic_patterns(GENERIC_PATTERN_ERRORS)
+    ErrorExtractor.register_specific_patterns(SPECIFIC_PATTERN_ERRORS)
+    ErrorTranslator.register_generic_messages(GENERIC_MESSAGE_ERRORS)
+    ErrorTranslator.register_specific_messages(SPECIFIC_MESSAGE_ERRORS)
+    ErrorTranslator.register_resources(RESOURCES)
 
     @app.errorhandler(401)
     def page_unauthorized(error):
