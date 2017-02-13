@@ -41,8 +41,9 @@ class BaseView(LoginRequiredView):
         form = self.form()
 
         if form.validate_on_submit():
+            objects = self._deserialize_post(form)
             try:
-                self.service.create(form)
+                self.service.create(*objects)
             except Exception as e:
                 flash('{} has not been created: {}'.format(self.resource, e), 'error')
 
@@ -53,17 +54,24 @@ class BaseView(LoginRequiredView):
 
         return self._redirect_for('index')
 
+    def _deserialize_post(form):
+        return (form.data,)
+
     def get(self, id):
         result = self.service.get(id)
-        form = self.form()
+        form = self._serialize_get(result)
         return render_template(self.templates['edit'], form=form, result=result)
+
+    def _serialize_get(self, obj):
+        return self.form(data=obj)
 
     @route('/put/<id>', methods=['POST'])
     def put(self, id):
         form = self.form()
         if form.validate_on_submit():
+            objects = self._deserialize_put(id, form)
             try:
-                self.service.update(id, form)
+                self.service.update(*objects)
             except Exception as e:
                 flash(u'{} has not been updated: {}'.format(self.resource, e), 'error')
 
@@ -74,6 +82,11 @@ class BaseView(LoginRequiredView):
             flash_errors(form)
 
         return self.get(id)
+
+    def _deserialize_put(form_id, form):
+        result = form.data
+        result['id'] = form_id
+        return (result,)
 
     @route('/delete/<id>', methods=['GET'])
     def delete(self, id):
