@@ -42,9 +42,9 @@ class BaseView(LoginRequiredView):
         form = self.form()
 
         if form.validate_on_submit():
-            objects = self._deserialize_post(form)
+            resources = self.map_form_to_resources_post(form)
             try:
-                self.service.create(*objects)
+                self.service.create(*resources)
             except HTTPError:
                 return self._redirect_for('index')
             flash('{} has been created'.format(self.resource), 'success')
@@ -54,22 +54,22 @@ class BaseView(LoginRequiredView):
 
         return self._redirect_for('index')
 
-    def _deserialize_post(form):
+    def map_form_to_resources_post(form):
         return (form.data,)
 
     def get(self, id):
         return self._get(id)
 
-    def _serialize_get(self, obj):
+    def map_resources_to_form_get(self, obj):
         return self.form(data=obj)
 
     @route('/put/<id>', methods=['POST'])
     def put(self, id):
         form = self.form()
         if form.validate_on_submit():
-            objects = self._deserialize_put(id, form)
+            resources = self.map_form_to_resources_put(form, id)
             try:
-                self.service.update(*objects)
+                self.service.update(*resources)
                 flash(u'{} has been updated'.format(self.resource), 'success')
                 return self._redirect_for('index')
             except HTTPError as error:
@@ -95,7 +95,7 @@ class BaseView(LoginRequiredView):
 
         return self._get(id, form)
 
-    def _deserialize_put(form_id, form):
+    def map_form_to_resources_put(form_id, form):
         result = form.data
         result['id'] = form_id
         return (result,)
@@ -105,7 +105,7 @@ class BaseView(LoginRequiredView):
             result = self.service.get(id)
         except HTTPError:
             return self._redirect_for('index')
-        form = form or self._serialize_get(result)
+        form = form or self.map_resources_to_form_get(result)
         return render_template(self.templates['edit'], form=form, result=result)
 
     @route('/delete/<id>', methods=['GET'])
