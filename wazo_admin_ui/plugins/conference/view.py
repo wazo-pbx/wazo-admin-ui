@@ -2,83 +2,34 @@
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
+from __future__ import unicode_literals
+
 from flask import render_template
-from flask import redirect
-from flask import url_for
-from flask import flash
-
-from flask_classful import FlaskView
-from flask_classful import route
 from flask_menu.classy import classy_menu_item
-from flask_login import login_required
 
-from wazo_admin_ui.core.errors import flash_errors
+from wazo_admin_ui.helpers.classful import BaseView
 
-from .form import FormConference
+from .form import ConferenceForm
 
 
-class ConferenceView(FlaskView):
-    decorators = [login_required]
-    service = None
+class ConferenceView(BaseView):
+
+    form = ConferenceForm
+    resource = 'conference'
+    templates = {'list': 'conferences.html',
+                 'edit': 'view_conference.html'}
 
     @classy_menu_item('.conferences', 'Conferences', order=1, icon="compress")
     def index(self):
-        try:
-            conferences = self.service.list()
-            form = FormConference()
-            return render_template('conferences.html', conferences=conferences, form=form)
-        except Exception as e:
-            flash(u'There is a problem to get your conferences: {}'.format(e), 'error')
-        return redirect(url_for('admin.Admin:get'))
-
-    def post(self):
-        form = FormConference()
-
-        if form.validate_on_submit():
-            try:
-                self.service.create(form)
-                flash(u'Conference {} has been created'.format(form.name.data), 'success')
-            except Exception as e:
-                flash(u'Conference {} has not been created: {}'.format(form.name.data, e), 'error')
-        else:
-            flash_errors(form)
-        return redirect(url_for('conference.ConferenceView:index'))
+        return super(ConferenceView, self).index()
 
     def get(self, id):
         conference = self.service.get(id)
-        extension = None
-        if len(conference['extensions']) > 0:
-            extension = conference['extensions'][0]
-            conference['extension'] = extension['exten']
-        form = FormConference(data=conference)
+        conference['extension'] = self._get_main_exten(conference['extensions'])
+        form = ConferenceForm(data=conference)
+        return render_template(self.templates['edit'], form=form, conference=conference)
 
-        return render_template('view_conference.html', form=form, conference=conference)
-
-    @route('/put/<id>', methods=['POST'])
-    def put(self, id):
-        conference = self.service.get(id)
-        extension = None
-        if len(conference['extensions']) > 0:
-            extension = conference['extensions'][0]
-            conference['extension'] = extension['exten']
-        form = FormConference(data=conference)
-
-        if form.validate_on_submit():
-            try:
-                self.service.update(id, form, extension)
-                flash(u'Conference {} has been updated'.format(form.name.data), 'success')
-                return redirect(url_for('conference.ConferenceView:index'))
-            except Exception as e:
-                flash(u'Conference {} has not been updated: {}'.format(form.name.data, e), 'error')
-        else:
-            flash_errors(form)
-        return render_template('view_conference.html', form=form, conference=conference)
-
-    @route('/delete/<id>', methods=['GET'])
-    def delete(self, id):
-        try:
-            self.service.delete(id)
-            flash(u'Conference {} has been deleted'.format(id), 'success')
-        except Exception as e:
-            flash(u'Conference {} has not been deleted: {}'.format(id, e), 'error')
-        return redirect(url_for('conference.ConferenceView:index'))
+    def _get_main_exten(self, extensions):
+        for extension in extensions:
+            return extension['exten']
+        return None

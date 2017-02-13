@@ -12,7 +12,7 @@ from wtforms.validators import DataRequired
 from wtforms.validators import Optional
 
 
-class FormConference(FlaskForm):
+class ConferenceForm(FlaskForm):
     name = TextField('Name', [DataRequired()])
     extension = TextField('Extension', [Optional()])
     announce_join_leave = BooleanField('Announce join leave', default=True)

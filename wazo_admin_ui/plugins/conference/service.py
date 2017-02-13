@@ -22,9 +22,10 @@ class ConferenceService(object):
     def get(self, id):
         return self._confd.conferences.get(id)
 
-    def update(self, id, conference, extension):
+    def update(self, id_, conference):
+        extension = self._get_main_extension(id_)
         update_conference = {
-            'id': id,
+            'id': id_,
             'name': conference.name.data,
             'announce_join_leave': conference.announce_join_leave.data,
             'announce_user_count': conference.announce_user_count.data,
@@ -39,11 +40,16 @@ class ConferenceService(object):
         self._confd.conferences.update(update_conference)
 
         if conference.extension.data and extension:
-            self.update_extension(extension, conference.extension.data, id)
+            self.update_extension(extension, conference.extension.data, id_)
         elif conference.extension.data:
-            self.add_extension(conference.extension.data, id)
+            self.add_extension(conference.extension.data, id_)
         elif not conference.extension.data and extension:
-            self.remove_extension(extension['id'], id)
+            self.remove_extension(extension['id'], id_)
+
+    def _get_main_extension(self, id_):
+        for extension in self._confd.conferences.get(id_)['extensions']:
+            return extension
+        return None
 
     def create(self, conference):
         create_conference = {
