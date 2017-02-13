@@ -54,31 +54,31 @@ class ConferenceView(BaseView):
         conference['quiet_join_leave'] = form.quiet_join_leave.data
         return conference, extension
 
-    def map_errors(self, form, conferences=None, extensions=None):
-        # TODO: Should be rework
+    def map_resources_to_form_errors(self, form, resources):
+        conference = resources.get('conferences')
+        if conference:
+            if 'name' in conference:
+                form.name.errors.append(conference['name'])
+            if 'pin' in conference:
+                form.pin.errors.append(conference['pin'])
+            if 'admin_pin' in conference:
+                form.admin_pin.errors.append(conference['admin_pin'])
+            if 'announce_join_leave' in conference:
+                form.announce_join_leave.errors.append(conference['announce_join_leave'])
+            if 'announce_user_count' in conference:
+                form.announce_join_leave.errors.append(conference['announce_user_count'])
+            if 'announce_only_user' in conference:
+                form.announce_only_user.errors.append(conference['announce_only_user'])
+            if 'music_on_hold' in conference:
+                form.music_on_hold.errors.append(conference['music_on_hold'])
+            if 'preprocess_subroutine' in conference:
+                form.preprocess_subroutine.errors.append(conference['preprocess_subroutine'])
+            if 'quiet_join_leave' in conference:
+                form.quiet_join_leave.errors.append(conference['quiet_join_leave'])
 
-        if conferences:
-            if 'name' in conferences:
-                form.name.errors.append(conferences['name'])
-            if 'pin' in conferences:
-                form.pin.errors.append(conferences['pin'])
-            if 'admin_pin' in conferences:
-                form.admin_pin.errors.append(conferences['admin_pin'])
-            if 'announce_join_leave' in conferences:
-                form.announce_join_leave.errors.append(conferences['announce_join_leave'])
-            if 'announce_user_count' in conferences:
-                form.announce_join_leave.errors.append(conferences['announce_user_count'])
-            if 'announce_only_user' in conferences:
-                form.announce_only_user.errors.append(conferences['announce_only_user'])
-            if 'music_on_hold' in conferences:
-                form.music_on_hold.errors.append(conferences['music_on_hold'])
-            if 'preprocess_subroutine' in conferences:
-                form.preprocess_subroutine.errors.append(conferences['preprocess_subroutine'])
-            if 'quiet_join_leave' in conferences:
-                form.quiet_join_leave.errors.append(conferences['quiet_join_leave'])
-
-        if extensions:
-            if 'exten' in extensions:
-                form.extension.errors.append(extensions['exten'])
+        extension = resources.get('extensions')
+        if extension:
+            if 'exten' in extension:
+                form.extension.errors.append(extension['exten'])
 
         return form
