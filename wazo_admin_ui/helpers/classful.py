@@ -41,31 +41,33 @@ class BaseView(LoginRequiredView):
     def index(self):
         return self._index()
 
-    def post(self):
-        form = self.form()
-
-        if form.validate_on_submit():
-            resources = self.map_form_to_resources_post(form)
-            try:
-                self.service.create(*resources)
-                flash('{} has been created'.format(self.resource), 'success')
-                return self._redirect_for('index')
-            except HTTPError as error:
-                form = self._fill_form_error(form, error)
-                self._flash_http_error(error)
-        else:
-            flash_basic_form_errors(form)
-
-        return self._index(form)
-
     def _index(self, form=None):
         try:
             result = self.service.list()
         except HTTPError as error:
             self._flash_http_error(error)
             return redirect(url_for('admin.Admin:get'))
+
         form = form or self.form()
         return render_template(self.templates['list'], form=form, result=result)
+
+    def post(self):
+        form = self.form()
+
+        if not form.validate_on_submit():
+            flash_basic_form_errors(form)
+            return self._index(form)
+
+        resources = self.map_form_to_resources_post(form)
+        try:
+            self.service.create(*resources)
+        except HTTPError as error:
+            form = self._fill_form_error(form, error)
+            self._flash_http_error(error)
+            return self._index(form)
+
+        flash('{} has been created'.format(self.resource), 'success')
+        return self._redirect_for('index')
 
     def map_form_to_resources_post(self, form):
         return (form.data,)
@@ -73,39 +75,41 @@ class BaseView(LoginRequiredView):
     def get(self, id):
         return self._get(id)
 
-    def map_resources_to_form_get(self, obj):
-        return self.form(data=obj)
-
-    @route('/put/<id>', methods=['POST'])
-    def put(self, id):
-        form = self.form()
-        if form.validate_on_submit():
-            resources = self.map_form_to_resources_put(form, id)
-            try:
-                self.service.update(*resources)
-                flash(u'{} has been updated'.format(self.resource), 'success')
-                return self._redirect_for('index')
-            except HTTPError as error:
-                form = self._fill_form_error(form, error)
-                self._flash_http_error(error)
-        else:
-            flash_basic_form_errors(form)
-
-        return self._get(id, form)
-
-    def map_form_to_resources_put(form_id, form):
-        result = form.data
-        result['id'] = form_id
-        return (result,)
-
     def _get(self, id, form=None):
         try:
             result = self.service.get(id)
         except HTTPError as error:
             self._flash_http_error(error)
             return self._redirect_for('index')
+
         form = form or self.map_resources_to_form_get(result)
         return render_template(self.templates['edit'], form=form, result=result)
+
+    def map_resources_to_form_get(self, obj):
+        return self.form(data=obj)
+
+    @route('/put/<id>', methods=['POST'])
+    def put(self, id):
+        form = self.form()
+        if not form.validate_on_submit():
+            flash_basic_form_errors(form)
+            return self._get(id, form)
+
+        resources = self.map_form_to_resources_put(form, id)
+        try:
+            self.service.update(*resources)
+        except HTTPError as error:
+            form = self._fill_form_error(form, error)
+            self._flash_http_error(error)
+            return self._get(id, form)
+
+        flash(u'{} has been updated'.format(self.resource), 'success')
+        return self._redirect_for('index')
+
+    def map_form_to_resources_put(form_id, form):
+        result = form.data
+        result['id'] = form_id
+        return (result,)
 
     def map_resources_to_form_errors(form, resources):
         pass
@@ -117,6 +121,7 @@ class BaseView(LoginRequiredView):
             flash(u'{} {} has been deleted'.format(self.resource, id), 'success')
         except HTTPError as error:
             self._flash_http_error(error)
+
         return self._redirect_for('index')
 
     def _redirect_for(self, method_view):
