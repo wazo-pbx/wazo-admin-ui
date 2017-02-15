@@ -40,7 +40,6 @@ _DEFAULT_CONFIG = {
     'enabled_plugins': {
         'admin': True,
         'authentication': True,
-        'conference': True,
         'index': True,
     }
 }

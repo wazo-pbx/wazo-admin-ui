@@ -47,7 +47,6 @@ setup(
         'wazo_admin_ui.plugins': [
             'admin = wazo_admin_ui.plugins.admin.plugin:Plugin',
             'authentication = wazo_admin_ui.plugins.authentication.plugin:Plugin',
-            'conference = wazo_admin_ui.plugins.conference.plugin:Plugin',
             'index = wazo_admin_ui.plugins.index.plugin:Plugin',
         ]
     }
