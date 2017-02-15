@@ -24,3 +24,9 @@ using:
     % pybabel compile --directory=wazo_admin_ui/translations
 
 
+## Debugging bootstrap
+
+To enable live-edit of bootstrap.min.css, you will need to add the following line at the end of
+bootstrap.min.css file:
+
+    /*# sourceMappingURL=bootstrap.min.css.map */

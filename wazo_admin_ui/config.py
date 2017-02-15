@@ -28,13 +28,13 @@ _DEFAULT_CONFIG = {
         'ciphers': DEFAULT_CIPHERS
     },
     'auth': {
-        'host': '127.0.0.1',
+        'host': 'localhost',
         'port': 9497,
         'verify_certificate': '/usr/share/xivo-certs/server.crt'
     },
     'confd': {
-        'host': '127.0.0.1',
-        'port': 9487,
+        'host': 'localhost',
+        'port': 9486,
         'verify_certificate': '/usr/share/xivo-certs/server.crt'
     },
     'enabled_plugins': {

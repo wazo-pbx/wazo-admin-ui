@@ -18,6 +18,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
+#: wazo_admin_ui/helpers/error.py:15
+msgid "Resource not found"
+msgstr ""
+
+#: wazo_admin_ui/helpers/error.py:16
+msgid "Input error"
+msgstr ""
+
+#: wazo_admin_ui/helpers/error.py:23
+msgid "Missing data for required field"
+msgstr ""
+
+#: wazo_admin_ui/helpers/error.py:24
+msgid "Not a valid choice"
+msgstr ""
+
+#: wazo_admin_ui/helpers/error.py:25
+msgid "Longer than maximum length"
+msgstr ""
+
+#: wazo_admin_ui/helpers/error.py:27
+msgid "conference"
+msgstr ""
+
+#: wazo_admin_ui/helpers/error.py:28
+msgid "user"
+msgstr ""
+
 #: wazo_admin_ui/plugins/authentication/form.py:17
 msgid "Wrong username and/or password"
 msgstr ""
