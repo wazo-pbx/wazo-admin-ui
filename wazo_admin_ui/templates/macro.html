@@ -1,114 +1,155 @@
-{% macro render_field(field) -%}
-  {% set with_label = kwargs.pop('with_label', True) %}
-  {% set with_icon = kwargs.pop('with_icon', False) %}
-  {% set placeholder = kwargs.pop('placeholder', False) %}
-  {% set inputclass = kwargs.pop('inputclass', False) %}
-  {% set divclass = kwargs.pop('divclass', 'col-sm-8') %}
-  {% set class_ = kwargs.pop('class_', '') %}
-  {% set formgroup = kwargs.pop('formgroup', True) %}
-
-  {% if with_label %}
-    {% if not placeholder %}
-      {% set placeholder = field.label.text %}
-    {% endif %}
+{% macro render_field(field,
+                      with_label=True,
+                      with_icon=False,
+                      placeholder=False,
+                      inputclass=False,
+                      divclass='col-sm-8',
+                      class_='') %}
+  {% if with_label and not placeholder %}
+    {% set placeholder = field.label.text %}
   {% endif %}
 
-  {% if field.flags.required %}
+  {%- if field.flags.required %}
     {% set class_ = class_ + ' required' %}
   {% endif %}
 
-  {% if formgroup == True %}
-    {% if field.type != 'SubmitField' %}
-      <div class="{% if inputclass %} {{ inputclass }} {% else %} form-group {% endif %} {% if field.errors %}has-error{% endif %}">
-      {% if with_label %}
-        <label for="{{ field.id }}" class="col-sm-4 control-label">
-          {% if field.flags.required %} <abbr title="Required"> {{ field.label.text }} </abbr> {% else %} {{ field.label.text }}{% endif %}
-        </label>
-      {% endif %}
-    {% endif %}
-  {% endif %}
+  {%- call _wrap_label_input_with_div(field, inputclass, with_label) %}
 
+    {%- call _wrap_input_with_div(field, divclass, with_icon) %}
+
+      {%- if field.type == 'BooleanField' %}
+        {{ render_field_boolean(field, class_, **kwargs) }}
+      {% elif field.type == 'RadioField' %}
+        {{ render_field_radio(field) }}
+      {% elif field.type in ('EmailField',
+                             'FloatField',
+                             'IntegerField',
+                             'PasswordField',
+                             'StringField',
+                             'TextField',
+                             'TextAreaField') %}
+        {{ field(class_ = class_ + ' form-control', placeholder=placeholder, **kwargs) }}
+        {% elif field.type in ('QuerySelectField',
+                               'QuerySelectMultipleField',
+                               'SelectField',
+                               'SelectMultipleField') %}
+        {{ field(class_ = class_ + ' form-control', **kwargs) }}
+      {% elif field.type == 'FieldList' %}
+        {{ render_field_form_list(field) }}
+      {% else %}
+        {{ field(class_ = class_ , placeholder=placeholder, **kwargs) }}
+      {% endif %}
+
+    {%- endcall %}
+
+    {%- if field.errors %}
+      {{ field.errors|join(', ') }}
+      <span id="popover" data-toggle="popover" data-container="body" data-trigger="hover"
+        title="{{ field.label.text }}" data-placement="bottom" data-content="{{ field.errors|join(', ') }}"></span>
+    {% endif %}
+
+    {%- if field.description %}
+      <p class="help-block">{{ field.description|safe }}</p>
+    {% endif %}
+
+  {%- endcall %}
+{% endmacro %}
+
+
+{% macro _wrap_label_input_with_div(field, inputclass, with_label) %}
+  {% if field.type == 'SubmitField' %}
+    {{ caller() }}
+
+  {%- else %}
+    <div class="{{ inputclass if inputclass else 'form-group' }}{{ ' has-error' if field.errors}}">
+    {% if with_label %}
+      {{ _generate_label_tag_from_field(field) }}
+    {% endif %}
+    {{ caller() }}
+    </div>
+  {% endif %}
+{% endmacro %}
+
+
+{% macro _wrap_input_with_div(field, divclass, with_icon) %}
   {% if with_icon %}
     <div class="form-group has-feedback">
       <span class="form-control-feedback glyphicon glyphicon-{{ with_icon }}"></span>
-  {% elif formgroup == True and field.type != 'FieldList' %}
+      {{ caller() }}
+    </div>
+
+  {%- elif field.type == 'FieldList' %}
+    {{ caller() }}
+
+  {%- else %}
     <div class="{{ divclass }}">
+      {{ caller() }}
+    </div>
   {% endif %}
+{% endmacro %}
 
-  {% if field.type == 'BooleanField' %}
-      <div class="checkbox">
-        <label>
-          {{ field(class_ = class_, **kwargs) }}
-          {% if not with_label %}
-            {{ field.label.text }}
-          {% endif %}
-        </label>
-      </div>
-  {% elif field.type == 'RadioField' %}
-    {% for value, label, _ in field.iter_choices() %}
-      <div class="radio-inline">
-        <label>
-          <input type="radio" name="{{ field.id }}" id="{{ field.id }}" value="{{ value }}">
-          {{ label }}
-        </label>
-      </div>
-    {% endfor %}
-  {% elif field.type in ('TextField', 'PasswordField', 'StringField', 'TextAreaField', 'EmailField', 'IntegerField', 'FloatField') %}
-    {{ field(class_ = class_ + ' form-control', placeholder=placeholder, **kwargs) }}
-  {% elif field.type in ('SelectField', 'SelectMultipleField', 'QuerySelectField', 'QuerySelectMultipleField') %}
-    {{ field(class_ = class_ + ' form-control', **kwargs) }}
-  {% elif field.type == 'FieldList' %}
-    {{ render_fieldlistaction(field) }}
-  {% else %}
-    {{ field(class_ = class_ , placeholder=placeholder, **kwargs) }}
-  {% endif %}
+
+{% macro render_field_boolean(field, class_) %}
+  <div class="checkbox">
+    <label>
+    {{ field(class_ = class_, **kwargs) }}
+    </label>
   </div>
+{% endmacro %}
 
-  {% if field.errors %}
-    {{ field.errors|join(', ') }}
-    <span id="popover" data-toggle="popover" data-container="body" data-trigger="hover"
-      title="{{ field.label.text }}" data-placement="bottom" data-content="{{ field.errors|join(', ') }}"></span>
-  {% endif %}
 
-  {% if field.description %}
-    <p class="help-block">{{ field.description|safe }}</p>
-  {% endif %}
+{% macro render_field_radio(field) %}
+  {% for value, label, _ in field.iter_choices() %}
+    <div class="radio-inline">
+      <label>
+        <input type="radio" name="{{ field.id }}" id="{{ field.id }}" value="{{ value }}">
+        {{ label }}
+      </label>
+    </div>
+  {% endfor %}
+{% endmacro %}
 
-  {% if formgroup == True and field.type != 'FieldList'%}
-    {% if field.type != 'SubmitField' %}
-      </div>
+
+{% macro render_field_form_list(form_list, class_='', divclass='col-sm-8') %}
+  <div class="{{ divclass }}">
+  {% for form in form_list %}
+    {{ form.csrf_token }}
+    {% for field in form %}
+      {% if field.type != 'CSRFTokenField' %}
+        {{ field(class_ = class_ + ' form-control', **kwargs) }}
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+  </div>
+{% endmacro %}
+
+
+{% macro _generate_label_tag_from_field(field) %}
+  <label for="{{ field.id }}" class="col-sm-4 control-label">
+    {% if field.flags.required %}
+      <abbr title="Required">{{ field.label.text }}</abbr>
+    {% else %}
+      {{ field.label.text }}
     {% endif %}
-  {% endif %}
+  </label>
+{% endmacro %}
 
-{%- endmacro %}
 
 {% macro render_fieldlistaction(form) -%}
   {% set divclass = kwargs.pop('divclass', 'col-sm-8') %}
   {% set with_label = kwargs.pop('with_label', False) %}
-  {% set class_ = kwargs.pop('class_', '') %}
+  {% set class_ = kwargs.pop('class_', '') -%}
 
-    {% if with_label %}
-      <label for="{{ form.id }}" class="col-sm-4 control-label">
-        {% if form.flags.required %} <abbr title="Required"> {{ form.label.text }} </abbr> {% else %} {{ form.label.text }}{% endif %}
-      </label>
-    {% endif %}
+  {% if with_label %}
+    {{ _generate_label_tag_from_field(field) }}
+  {% endif %}
 
-    <div class="{{ divclass }}">
-    {% for field in form %}
-        {{ field.csrf_token() }}
-        {% for f in field %}
-          {% if f.type != 'CSRFTokenField' %}
-            {{ f(class_ = class_ + ' form-control', placeholder=placeholder, **kwargs) }}
-            {# render_field(f, with_label=False, formgroup=False) #}
-          {% endif %}
-        {% endfor %}
-    {% endfor %}
-    </div>
+  {{ render_field_form_list(form, class_, divclass) }}
+{% endmacro %}
 
-{%- endmacro %}
 
-{% macro render_fieldlist(form) -%}
-  {% set headers = kwargs.pop('headers', '') %}
+{% macro render_fieldlist(form) %}
+  {% set headers = kwargs.pop('headers', '') -%}
 
   <div class="no-padding">
     <table class="table table-condensed">
@@ -142,6 +183,7 @@
   </div>
 {%- endmacro %}
 
+
 {% macro build_content_header(page_header, page_header_description, page_header_level) %}
   <section class="content-header">
     <h1>
@@ -159,11 +201,12 @@
   </section>
 {% endmacro %}
 
+
 {% macro build_menu(current_user, current_menu) %}
   {% if current_user.is_authenticated %}
     {% for item in current_menu.children recursive %}
       {% if item.visible %}
-      <li class="{% if item.active %}active{% endif %}">
+      <li class="{{ 'active' if item.active }}">
         {% if item.children %}
           {{ build_menu_chidren(item) }}
         {% else %}
@@ -175,28 +218,19 @@
   {% endif %}
 {% endmacro %}
 
+
 {% macro build_menu_link(item) %}
   <a href="{{ item.url }}">
-    {% if item.icon %}
-      {% set icon = item.icon %}
-    {% else %}
-      {% set icon = "windows" %}
-    {% endif %}
-    <i class="fa fa-{{ icon }}"></i>
+    <i class="fa fa-{{ item.icon if item.icon else 'windows' }}"></i>
     <span>{{ item.text }}</span>
   </a>
 {% endmacro %}
 
 
 {% macro build_menu_chidren(item) %}
-  {% if item.icon %}
-    {% set icon = item.icon %}
-  {% else %}
-    {% set icon = "windows" %}
-  {% endif %}
   <li class="treeview {% if item.active or item.active_item %}active{% endif %}">
     <a href="">
-      <i class="fa fa-{{ icon }}"></i>
+      <i class="fa fa-{{ item.icon if item.icon else 'windows' }}"></i>
       <span>{{ item.text }}</span>
       <span class="pull-right-container">
           <i class="fa fa-angle-left pull-right"></i>
@@ -206,24 +240,13 @@
       {% for i in item.children %}
         {% if i.children and i.text %}
           {{ build_menu_chidren(i) }}
-        {% else %}
-        {% if i.visible %}
-          {% set active = "" %}
-          {% if i.active or i.url in request.path %}
-            {% set active = "active" %}
-          {% endif %}
-          <li {% if i.active %}class="{{ active }}"{% endif %}>
+        {% elif i.visible %}
+          <li{{ ' class="active"' if i.active }}>
             <a href="{{ i.url }}">
-            {% if i.icon %}
-              {% set icon = i.icon %}
-            {% else %}
-               {% set icon = "circle-o" %}
-            {% endif %}
-              <i class="fa fa-{{ icon }}"></i>
+              <i class="fa fa-{{ i.icon if i.icon else 'circle-o' }}"></i>
               {{ i.text }}
             </a>
           </li>
-        {% endif %}
         {% endif %}
       {% endfor %}
     </ul>
