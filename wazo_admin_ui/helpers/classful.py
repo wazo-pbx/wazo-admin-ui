@@ -58,7 +58,7 @@ class BaseView(LoginRequiredView):
             flash_basic_form_errors(form)
             return self._index(form)
 
-        resources = self.map_form_to_resources_post(form)
+        resources = self._map_form_to_resources_post(form)
         try:
             self.service.create(*resources)
         except HTTPError as error:
@@ -82,7 +82,7 @@ class BaseView(LoginRequiredView):
             self._flash_http_error(error)
             return self._redirect_for('index')
 
-        form = form or self.map_resources_to_form_get(result)
+        form = form or self._map_resources_to_form_get(result)
         return render_template(self.templates['edit'], form=form, result=result)
 
     def _map_resources_to_form_get(self, obj):
@@ -95,7 +95,7 @@ class BaseView(LoginRequiredView):
             flash_basic_form_errors(form)
             return self._get(id, form)
 
-        resources = self.map_form_to_resources_put(form, id)
+        resources = self._map_form_to_resources_put(form, id)
         try:
             self.service.update(*resources)
         except HTTPError as error:
@@ -137,7 +137,7 @@ class BaseView(LoginRequiredView):
             error_fields = e_extractor.extract_fields(response)
             error_field_ids = e_extractor.extract_specific_error_id_from_fields(error_fields)
             error_field_messages = e_translator.translate_specific_error_id_from_fields(error_field_ids)
-            form = self.map_resources_to_form_errors(form, {resource: error_field_messages})
+            form = self._map_resources_to_form_errors(form, {resource: error_field_messages})
         return form
 
     def _flash_http_error(self, error):
