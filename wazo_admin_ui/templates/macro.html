@@ -28,16 +28,14 @@
                              'StringField',
                              'TextField',
                              'TextAreaField') %}
-        {{ field(class_ = class_ + ' form-control', placeholder=placeholder, **kwargs) }}
-        {% elif field.type in ('QuerySelectField',
-                               'QuerySelectMultipleField',
-                               'SelectField',
-                               'SelectMultipleField') %}
-        {{ field(class_ = class_ + ' form-control', **kwargs) }}
+        {{ field(class_=class_+' form-control', placeholder=placeholder, **kwargs) }}
+      {% elif field.type in ('SelectField',
+                             'SelectMultipleField') %}
+        {{ field(class_=class_+' form-control', **kwargs) }}
       {% elif field.type == 'FieldList' %}
-        {{ render_field_form_list(field) }}
+        {{ render_field_form_list(field, class_=class_) }}
       {% else %}
-        {{ field(class_ = class_ , placeholder=placeholder, **kwargs) }}
+        {{ field(class_=class_, placeholder=placeholder, **kwargs) }}
       {% endif %}
 
     {%- endcall %}
@@ -92,7 +90,7 @@
 {% macro render_field_boolean(field, class_) %}
   <div class="checkbox">
     <label>
-    {{ field(class_ = class_, **kwargs) }}
+      {{ field(class_ = class_, **kwargs) }}
     </label>
   </div>
 {% endmacro %}
