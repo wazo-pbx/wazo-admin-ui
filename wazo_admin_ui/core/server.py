@@ -90,8 +90,6 @@ class Server(object):
 
     def _configure_jinja(self):
         app.jinja_env.trim_blocks = True
-        # app.jinja_env.lstrip_blocks = True
-        # app.jinja_env.keep_trailing_newline = True
 
     def _configure_login(self):
         login_manager = LoginManager()
