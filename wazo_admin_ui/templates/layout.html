@@ -1,38 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {% block head %}
-      {% include 'head.html' %}
-      {% block additional_css %}{% endblock %}
-    {% endblock %}
+    {% include 'head.html' %}
+    {% block additional_css %}{% endblock %}
   </head>
   {% from "macro.html" import render_field, render_fieldlist, render_fieldlistaction, build_content_header %}
   {% if current_user.is_authenticated %}
-    {% block body %}
-      <body class="fixed skin-blue sidebar-mini">
-        <div class="wrapper">
-          {% block header %}
-            {% include 'header.html' %}
-          {% endblock %}
-          {% block nav %}
-            {% with page=page %}
-              {% include 'sidebar.html' %}
-            {% endwith %}
-          {% endblock %}
-          <div class="content-wrapper">
-            {% include 'flashed_messages.html' %}
-              {% block content_header %}
-                {{ build_content_header(page_header, page_header_description, page_header_level) }}
-              {% endblock %}
-            {% block content %}{% endblock %}
-          </div>
-          {% block footer %}{% include 'footer.html' %}{% endblock %}
+    <body class="fixed skin-blue sidebar-mini">
+      <div class="wrapper">
+        {% include 'header.html' %}
+        {% include 'sidebar.html' %}
+        <div class="content-wrapper">
+          {% include 'flashed_messages.html' %}
+            {% block content_header %}
+              {{ build_content_header(page_header, page_header_description, page_header_level) }}
+            {% endblock %}
+          {% block content %}{% endblock %}
         </div>
-      {% block scripts %}
-        {% include 'js.html' %}
-          {% block additional_js %}{% endblock %}
-      {% endblock %}
-      </body>
-    {% endblock %}
+        {% include 'footer.html' %}
+      </div>
+      {% include 'js.html' %}
+      {% block additional_js %}{% endblock %}
+    </body>
   {% endif %}
 </html>
