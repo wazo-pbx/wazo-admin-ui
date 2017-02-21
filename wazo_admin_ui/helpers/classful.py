@@ -125,9 +125,8 @@ class BaseView(LoginRequiredView):
         return self._redirect_for('index')
 
     def _redirect_for(self, method_view):
-        return redirect(url_for('{}.{}:{}'.format(self.get_route_base(),
-                                                  self.__class__.__name__,
-                                                  method_view)))
+        return redirect(url_for('.{}:{}'.format(self.__class__.__name__,
+                                                method_view)))
 
     def _fill_form_error(self, form, error):
         response = error.response.json()
