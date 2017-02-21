@@ -34,6 +34,7 @@ class BaseView(LoginRequiredView):
     form = None
     resource = None
     service = None
+    schema = None
     templates = {'list': None,
                  'edit': None,
                  'create': None}
@@ -60,7 +61,7 @@ class BaseView(LoginRequiredView):
 
         resources = self._map_form_to_resources_post(form)
         try:
-            self.service.create(*resources)
+            self.service.create(resources)
         except HTTPError as error:
             form = self._fill_form_error(form, error)
             self._flash_http_error(error)
@@ -70,7 +71,7 @@ class BaseView(LoginRequiredView):
         return self._redirect_for('index')
 
     def _map_form_to_resources_post(self, form):
-        return (form.data,)
+        return self.schema().dump(form).data
 
     def get(self, id):
         return self._get(id)
@@ -85,8 +86,8 @@ class BaseView(LoginRequiredView):
         form = form or self._map_resources_to_form_get(result)
         return render_template(self.templates['edit'], form=form, result=result)
 
-    def _map_resources_to_form_get(self, obj):
-        return self.form(data=obj)
+    def _map_resources_to_form_get(self, resources):
+        return self.schema().load(resources).data
 
     @route('/put/<id>', methods=['POST'])
     def put(self, id):
@@ -97,7 +98,7 @@ class BaseView(LoginRequiredView):
 
         resources = self._map_form_to_resources_put(form, id)
         try:
-            self.service.update(*resources)
+            self.service.update(resources)
         except HTTPError as error:
             form = self._fill_form_error(form, error)
             self._flash_http_error(error)
@@ -106,13 +107,11 @@ class BaseView(LoginRequiredView):
         flash(u'{}: Resource has been updated'.format(self.resource), 'success')
         return self._redirect_for('index')
 
-    def _map_form_to_resources_put(form_id, form):
-        result = form.data
-        result['id'] = form_id
-        return (result,)
+    def _map_form_to_resources_put(self, form, form_id):
+        return self.schema(context={'resource_id': form_id}).dump(form).data
 
-    def _map_resources_to_form_errors(form, resources):
-        pass
+    def _map_resources_to_form_errors(self, form, resources):
+        return self.schema().populate_form_errors(form, resources)
 
     @route('/delete/<id>', methods=['GET'])
     def delete(self, id):
