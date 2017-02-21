@@ -13,9 +13,9 @@ from flask_menu.classy import classy_menu_item
 logger = logging.getLogger(__name__)
 
 
-class Admin(FlaskView):
+class Dashboard(FlaskView):
 
     @classy_menu_item('.dashboard', 'Dashboard', order=0, icon="dashboard")
     @login_required
     def get(self):
-        return render_template('admin.html')
+        return render_template('dashboard.html')

@@ -45,8 +45,8 @@ setup(
 
     entry_points={
         'wazo_admin_ui.plugins': [
-            'admin = wazo_admin_ui.plugins.admin.plugin:Plugin',
             'authentication = wazo_admin_ui.plugins.authentication.plugin:Plugin',
+            'dashboard = wazo_admin_ui.plugins.dashboard.plugin:Plugin',
             'index = wazo_admin_ui.plugins.index.plugin:Plugin',
         ]
     }

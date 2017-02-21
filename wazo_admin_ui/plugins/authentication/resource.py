@@ -25,7 +25,7 @@ class Login(FlaskView):
         form = LoginForm()
         if form.validate_on_submit():
             login_user(form.user)
-            return redirect(url_for('admin.Admin:get'))
+            return redirect(url_for('dashboard.Dashboard:get'))
 
         return render_template('login.html',
                                login_user_form=form)
