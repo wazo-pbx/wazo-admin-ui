@@ -6,7 +6,7 @@ import logging
 
 from flask import url_for, render_template, redirect
 from flask_classful import FlaskView
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 
 from .form import LoginForm
 
@@ -22,6 +22,9 @@ class Login(FlaskView):
         return self._login()
 
     def _login(self):
+        if current_user.is_authenticated:
+            return redirect(url_for('dashboard.Dashboard:get'))
+
         form = LoginForm()
         if form.validate_on_submit():
             login_user(form.user)

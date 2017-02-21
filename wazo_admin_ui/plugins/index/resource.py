@@ -4,9 +4,13 @@
 
 from flask import url_for, redirect
 from flask_classful import FlaskView
+from flask_login import current_user
 
 
 class Index(FlaskView):
 
     def get(self):
-        return redirect(url_for('login.Login:get'))
+        if not current_user.is_authenticated:
+            return redirect(url_for('login.Login:get'))
+
+        return redirect(url_for('dashboard.Dashboard:get'))
