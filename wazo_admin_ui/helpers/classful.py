@@ -44,13 +44,13 @@ class BaseView(LoginRequiredView):
 
     def _index(self, form=None):
         try:
-            result = self.service.list()
+            resource_list = self.service.list()
         except HTTPError as error:
             self._flash_http_error(error)
             return redirect(url_for('admin.Admin:get'))
 
         form = form or self.form()
-        return render_template(self.templates['list'], form=form, result=result)
+        return render_template(self.templates['list'], form=form, resource_list=resource_list)
 
     def post(self):
         form = self.form()
@@ -78,13 +78,13 @@ class BaseView(LoginRequiredView):
 
     def _get(self, id, form=None):
         try:
-            result = self.service.get(id)
+            resources = self.service.get(id)
         except HTTPError as error:
             self._flash_http_error(error)
             return self._redirect_for('index')
 
-        form = form or self._map_resources_to_form_get(result)
-        return render_template(self.templates['edit'], form=form, result=result)
+        form = form or self._map_resources_to_form_get(resources)
+        return render_template(self.templates['edit'], form=form, resources=resources)
 
     def _map_resources_to_form_get(self, resources):
         return self.schema().load(resources).data
@@ -97,6 +97,7 @@ class BaseView(LoginRequiredView):
             return self._get(id, form)
 
         resources = self._map_form_to_resources_put(form, id)
+
         try:
             self.service.update(resources)
         except HTTPError as error:
