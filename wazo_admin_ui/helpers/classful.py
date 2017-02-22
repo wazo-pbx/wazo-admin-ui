@@ -4,6 +4,8 @@
 
 from __future__ import unicode_literals
 
+import logging
+
 from flask import render_template
 from flask import redirect
 from flask import url_for
@@ -15,6 +17,8 @@ from requests.exceptions import HTTPError
 
 from wazo_admin_ui.helpers.error import ConfdErrorExtractor as e_extractor
 from wazo_admin_ui.helpers.error import ErrorTranslator as e_translator
+
+logger = logging.getLogger(__name__)
 
 
 def flash_basic_form_errors(form):
@@ -71,7 +75,10 @@ class BaseView(LoginRequiredView):
         return self._redirect_for('index')
 
     def _map_form_to_resources_post(self, form):
-        return self.schema().dump(form).data
+        data, errors = self.schema().dump(form)
+        if errors:
+            logger.debug('Errors during serialization: %s', errors)
+        return data
 
     def get(self, id):
         return self._get(id)
@@ -87,7 +94,10 @@ class BaseView(LoginRequiredView):
         return render_template(self.templates['edit'], form=form, resources=resources)
 
     def _map_resources_to_form_get(self, resources):
-        return self.schema().load(resources).data
+        data, errors = self.schema().load(resources)
+        if errors:
+            logger.debug('Errors during deserialization: %s', errors)
+        return data
 
     @route('/put/<id>', methods=['POST'])
     def put(self, id):
@@ -109,7 +119,10 @@ class BaseView(LoginRequiredView):
         return self._redirect_for('index')
 
     def _map_form_to_resources_put(self, form, form_id):
-        return self.schema(context={'resource_id': form_id}).dump(form).data
+        data, errors = self.schema(context={'resource_id': form_id}).dump(form)
+        if errors:
+            logger.debug('Errors during serialization: %s', errors)
+        return data
 
     def _map_resources_to_form_errors(self, form, resources):
         return self.schema().populate_form_errors(form, resources)
