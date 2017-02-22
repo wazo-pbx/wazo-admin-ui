@@ -15,7 +15,7 @@ from ..mallow import BaseSchema
 class Resource1Schema(BaseSchema):
 
     class Meta:
-        additional = ('attribute1', 'attribute2')
+        fields = ('attribute1', 'attribute2')
 
 
 class Resource2Schema(BaseSchema):
