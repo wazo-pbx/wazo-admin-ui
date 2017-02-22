@@ -9,6 +9,9 @@ from marshmallow import Schema, fields, post_dump
 class BaseSchema(Schema):
     _main_resource = None
 
+    def on_bind_field(self, field_name, field_obj):
+        field_obj.allow_none = True
+
     def get_attribute(self, attr, obj, default):
         if isinstance(obj, FlaskForm):
             value = getattr(obj, attr, default)

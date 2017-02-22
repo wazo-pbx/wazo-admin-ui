@@ -7,7 +7,7 @@ from mock import Mock
 from marshmallow import fields, pre_dump
 from flask_wtf import FlaskForm
 
-from hamcrest import assert_that, contains, equal_to, has_entries, has_properties
+from hamcrest import assert_that, contains, empty, equal_to, has_entries, has_properties
 
 from ..mallow import BaseSchema
 
@@ -89,3 +89,10 @@ class TestBaseSchema(unittest.TestCase):
         main_exten = self.schema().get_main_exten(extensions)
 
         assert_that(main_exten, equal_to('1234'))
+
+    def test_on_bind_field_set_allow_none_true(self):
+        resources = {'resource1': {'attribute1': None}}
+
+        _, errors = self.schema().load(resources)
+
+        assert_that(errors, empty())
