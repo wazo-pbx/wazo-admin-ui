@@ -5,9 +5,9 @@
     {% block additional_css %}{% endblock %}
   </head>
   {% from "macro.html" import render_field,
-                       render_fieldlist,
-                       render_fieldlistaction,
-                       build_breadcrumb %}
+                              render_fieldlist,
+                              render_fieldlistaction,
+                              build_breadcrumb %}
   {% if current_user.is_authenticated %}
     <body class="fixed skin-blue sidebar-mini">
       <div class="wrapper">
