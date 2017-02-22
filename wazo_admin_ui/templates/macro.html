@@ -250,3 +250,26 @@
     </ul>
   </li>
 {% endmacro %}
+
+
+{% macro breadcrumb(name,
+                    description,
+                    icon,
+                    path) %}
+
+  <section class="content-header">
+    <h1>
+      {{ name }}
+      {% if description %}
+        <small>{{ description }}</small>
+      {% endif %}
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-{{ icon }}"></i> {{ name }}</a></li>
+      {% for link in path %}
+        <li class="active">{{ link }}</li>
+      {% endfor %}
+    </ol>
+  </section>
+
+{% endmacro %}
