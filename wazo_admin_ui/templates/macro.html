@@ -182,33 +182,15 @@
 {%- endmacro %}
 
 
-{% macro build_content_header(page_header, page_header_description, page_header_level) %}
-  <section class="content-header">
-    <h1>
-      {{ page_header }}
-      <small>{{ page_header_description }}</small>
-    </h1>
-    {% if page_header_level %}
-      <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-        {% for level in page_header_level %}
-          <li class="active">{{ level }}</li>
-        {% endfor %}
-      </ol>
-    {% endif %}
-  </section>
-{% endmacro %}
-
-
 {% macro build_menu(current_user, current_menu) %}
   {% if current_user.is_authenticated %}
     {% for item in current_menu.children recursive %}
       {% if item.visible %}
       <li class="{{ 'active' if item.active }}">
         {% if item.children %}
-          {{ build_menu_chidren(item) }}
+          {{ _build_menu_chidren(item) }}
         {% else %}
-          {{ build_menu_link(item) }}
+          {{ _build_menu_link(item) }}
         {% endif %}
       </li>
       {% endif %}
@@ -217,7 +199,7 @@
 {% endmacro %}
 
 
-{% macro build_menu_link(item) %}
+{% macro _build_menu_link(item) %}
   <a href="{{ item.url }}">
     <i class="fa fa-{{ item.icon if item.icon else 'windows' }}"></i>
     <span>{{ item.text }}</span>
@@ -225,7 +207,7 @@
 {% endmacro %}
 
 
-{% macro build_menu_chidren(item) %}
+{% macro _build_menu_chidren(item) %}
   <li class="treeview {% if item.active or item.active_item %}active{% endif %}">
     <a href="">
       <i class="fa fa-{{ item.icon if item.icon else 'windows' }}"></i>
@@ -249,4 +231,26 @@
       {% endfor %}
     </ul>
   </li>
+{% endmacro %}
+
+
+{% macro build_breadcrumb(name, description, icon, path) %}
+  <section class="content-header">
+    <h1>
+      {{ name }}
+      {% if description %}
+        <small>{{ description }}</small>
+      {% endif %}
+    </h1>
+    {% if path %}
+      <ol class="breadcrumb">
+        <li>
+          <a href="#"><i class="fa fa-{{ icon }}"></i> {{ name }}</a>
+        </li>
+        {% for link in path %}
+          <li class="active">{{ link }}</li>
+        {% endfor %}
+      </ol>
+    {% endif %}
+  </section>
 {% endmacro %}
