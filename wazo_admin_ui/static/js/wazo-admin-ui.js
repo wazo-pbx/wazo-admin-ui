@@ -19,4 +19,9 @@ $(document).ready(function() {
       orderable: false
     }]
   });
+
+  $('#add-form').click(function() {
+    $('#view-add-form').removeClass('hidden').removeAttr('style');
+  });
+
 });
