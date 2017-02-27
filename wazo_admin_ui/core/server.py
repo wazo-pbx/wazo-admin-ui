@@ -15,6 +15,7 @@ from flask_menu import Menu
 from flask_session import Session
 from flask_login import LoginManager
 from requests.exceptions import HTTPError
+from pkg_resources import iter_entry_points, resource_filename, resource_isdir
 
 from xivo import http_helpers
 from xivo.auth_verifier import AuthVerifier
@@ -22,6 +23,8 @@ from xivo.auth_verifier import AuthVerifier
 from .errors import configure_error_handlers
 from .auth import AuthClient
 from .user import UserUI
+
+TRANSLATION_DIRECTORY = 'translations'
 
 logger = logging.getLogger(__name__)
 app = Flask('wazo_admin_ui')
@@ -59,7 +62,7 @@ class Server(object):
         configure_error_handlers(app)
         self._configure_jinja()
         self._configure_login()
-        self._configure_babel()
+        self._configure_babel(global_config['enabled_plugins'])
         self._configure_menu()
         self._configure_session(global_config['session_file_dir'])
 
@@ -110,15 +113,26 @@ class Server(object):
         menu = Menu()
         menu.init_app(app)
 
-    def _configure_babel(self):
+    def _configure_babel(self, enabled_plugins):
         babel = Babel()
         babel.init_app(app)
         app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+        app.config['BABEL_TRANSLATION_DIRECTORIES'] = ';'.join(self._get_translation_directories(enabled_plugins))
 
         @babel.localeselector
         def get_locale():
             translations = [str(translation) for translation in babel.list_translations()]
             return request.accept_languages.best_match(translations)
+
+    def _get_translation_directories(self, enabled_plugins):
+        main_translation_directory = 'translations'
+        result = [main_translation_directory]
+        entry_points = (e for e in iter_entry_points(group='wazo_admin_ui.plugins')
+                        if e.name in enabled_plugins)
+        for ep in entry_points:
+            if resource_isdir(ep.module_name, TRANSLATION_DIRECTORY):
+                result.append(resource_filename(ep.module_name, TRANSLATION_DIRECTORY))
+        return result
 
     def _configure_session(self, session_file_dir):
         app.config['SESSION_FILE_DIR'] = session_file_dir
