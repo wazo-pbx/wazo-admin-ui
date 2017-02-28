@@ -10,6 +10,7 @@ from flask import render_template
 from flask import redirect
 from flask import url_for
 from flask import flash
+from flask import request
 from flask_classful import FlaskView
 from flask_classful import route
 from flask_login import login_required
@@ -19,6 +20,8 @@ from wazo_admin_ui.helpers.error import ConfdErrorExtractor as e_extractor
 from wazo_admin_ui.helpers.error import ErrorTranslator as e_translator
 
 logger = logging.getLogger(__name__)
+
+DEFAULT_TEMPLATE = '{blueprint}/{type_}.html'
 
 
 class LoginRequiredView(FlaskView):
@@ -30,9 +33,7 @@ class BaseView(LoginRequiredView):
     resource = None
     service = None
     schema = None
-    templates = {'list': None,
-                 'edit': None,
-                 'create': None}
+    templates = {}
 
     def index(self):
         return self._index()
@@ -47,7 +48,7 @@ class BaseView(LoginRequiredView):
         form = form or self.form()
         form = self._populate_form(form)
 
-        return render_template(self.templates['list'], form=form, resource_list=resource_list)
+        return render_template(self._get_template('list'), form=form, resource_list=resource_list)
 
     def post(self):
         form = self.form()
@@ -79,7 +80,7 @@ class BaseView(LoginRequiredView):
         form = form or self._map_resources_to_form(resources)
         form = self._populate_form(form)
 
-        return render_template(self.templates['edit'], form=form, resources=resources)
+        return render_template(self._get_template('view'), form=form, resources=resources)
 
     def _map_resources_to_form(self, resources):
         schema = self.schema()
@@ -117,6 +118,10 @@ class BaseView(LoginRequiredView):
 
     def _map_resources_to_form_errors(self, form, resources):
         return self.schema().populate_form_errors(form, resources)
+
+    def _get_template(self, type_):
+        return self.templates.get(type_, DEFAULT_TEMPLATE.format(blueprint=request.blueprint,
+                                                                 type_=type_))
 
     @route('/delete/<id>', methods=['GET'])
     def delete(self, id):
