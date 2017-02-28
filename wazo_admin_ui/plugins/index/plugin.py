@@ -2,12 +2,11 @@
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
-from flask import Blueprint
+from wazo_admin_ui.helpers.plugin import create_blueprint
 
 from .resource import Index
 
-index = Blueprint('index', __name__, template_folder='templates',
-                  static_folder='static', static_url_path='/%s' % __name__)
+index = create_blueprint('index', __name__)
 
 
 class Plugin(object):

@@ -2,21 +2,12 @@
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
-from flask import Blueprint
+from wazo_admin_ui.helpers.plugin import create_blueprint
 
 from .resource import Login, Logout
 
-login = Blueprint('login',
-                  __name__,
-                  template_folder='templates',
-                  static_folder='static',
-                  static_url_path='/%s' % __name__)
-
-logout = Blueprint('logout',
-                   __name__,
-                   template_folder='templates',
-                   static_folder='static',
-                   static_url_path='/%s' % __name__)
+login = create_blueprint('login', __name__)
+logout = create_blueprint('logout', __name__)
 
 
 class Plugin(object):
