@@ -9,7 +9,7 @@ from flask_wtf import FlaskForm
 
 from hamcrest import assert_that, contains, empty, equal_to, has_entries, has_properties
 
-from ..mallow import BaseSchema
+from ..mallow import BaseSchema, BaseAggregatorSchema
 
 
 class Resource1Schema(BaseSchema):
@@ -96,3 +96,20 @@ class TestBaseSchema(unittest.TestCase):
         _, errors = self.schema().load(resources)
 
         assert_that(errors, empty())
+
+
+class AggregatorSchema(BaseAggregatorSchema):
+
+    class Meta:
+        fields = ('resource1', 'resource2')
+
+
+class TestBaseAggregatorSchema(unittest.TestCase):
+
+    def test_add_envelope(self):
+        form = 'form'
+
+        result = AggregatorSchema().add_envelope(form)
+
+        assert_that(result, equal_to({'resource1': form,
+                                      'resource2': form}))

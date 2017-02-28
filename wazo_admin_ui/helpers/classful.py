@@ -64,10 +64,7 @@ class BaseView(LoginRequiredView):
         return self._redirect_for('index')
 
     def _map_form_to_resources_post(self, form):
-        data, errors = self.schema().dump(form)
-        if errors:
-            logger.debug('Errors during serialization: %s', errors)
-        return data
+        return self._map_form_to_resources(form)
 
     def get(self, id):
         return self._get(id)
@@ -79,16 +76,17 @@ class BaseView(LoginRequiredView):
             self._flash_http_error(error)
             return self._redirect_for('index')
 
-        form = form or self._map_resources_to_form_get(resources)
+        form = form or self._map_resources_to_form(resources)
         form = self._populate_form(form)
 
         return render_template(self.templates['edit'], form=form, resources=resources)
 
-    def _map_resources_to_form_get(self, resources):
-        data, errors = self.schema().load(resources)
+    def _map_resources_to_form(self, resources):
+        schema = self.schema()
+        data, errors = schema.load(resources)
         if errors:
             logger.debug('Errors during deserialization: %s', errors)
-        return data
+        return self.form(data=data.get(schema._main_resource))
 
     def _populate_form(self, form):
         return form
@@ -109,6 +107,9 @@ class BaseView(LoginRequiredView):
         return self._redirect_for('index')
 
     def _map_form_to_resources_put(self, form, form_id):
+        return self._map_form_to_resources(form, form_id)
+
+    def _map_form_to_resources(self, form, form_id=None):
         data, errors = self.schema(context={'resource_id': form_id}).dump(form)
         if errors:
             logger.debug('Errors during serialization: %s', errors)

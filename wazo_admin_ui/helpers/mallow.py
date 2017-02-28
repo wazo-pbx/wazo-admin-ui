@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from flask_wtf import FlaskForm
-from marshmallow import Schema, fields, post_dump
+from marshmallow import Schema, fields, post_dump, pre_dump
 
 
 class BaseSchema(Schema):
@@ -41,8 +41,19 @@ class BaseSchema(Schema):
         if self._main_resource:
             if self.context.get('resource_id'):
                 data[self._main_resource]['id'] = self.context['resource_id']
+        return data
 
     def get_main_exten(self, extensions):
         for extension in extensions:
             return extension['exten']
         return None
+
+
+class BaseAggregatorSchema(BaseSchema):
+
+    @pre_dump
+    def add_envelope(self, data):
+        result = {}
+        for field in self.fields:
+            result[field] = data
+        return result
