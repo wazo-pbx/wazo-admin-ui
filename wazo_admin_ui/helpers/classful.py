@@ -45,6 +45,8 @@ class BaseView(LoginRequiredView):
             return redirect(url_for('admin.Admin:get'))
 
         form = form or self.form()
+        form = self._populate_form(form)
+
         return render_template(self.templates['list'], form=form, resource_list=resource_list)
 
     def post(self):
@@ -78,6 +80,8 @@ class BaseView(LoginRequiredView):
             return self._redirect_for('index')
 
         form = form or self._map_resources_to_form_get(resources)
+        form = self._populate_form(form)
+
         return render_template(self.templates['edit'], form=form, resources=resources)
 
     def _map_resources_to_form_get(self, resources):
@@ -85,6 +89,9 @@ class BaseView(LoginRequiredView):
         if errors:
             logger.debug('Errors during deserialization: %s', errors)
         return data
+
+    def _populate_form(self, form):
+        return form
 
     @route('/put/<id>', methods=['POST'])
     def put(self, id):
