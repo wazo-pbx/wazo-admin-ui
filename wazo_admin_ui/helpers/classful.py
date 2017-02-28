@@ -21,15 +21,6 @@ from wazo_admin_ui.helpers.error import ErrorTranslator as e_translator
 logger = logging.getLogger(__name__)
 
 
-def flash_basic_form_errors(form):
-    for field, errors in form.errors.items():
-        for error in errors:
-            flash('Error in the {field} field - {message}'.format(
-                field=getattr(form, field).label.text,
-                message=error
-            ), 'error')
-
-
 class LoginRequiredView(FlaskView):
     decorators = [login_required]
 
@@ -58,12 +49,8 @@ class BaseView(LoginRequiredView):
 
     def post(self):
         form = self.form()
-
-        if not form.validate_on_submit():
-            flash_basic_form_errors(form)
-            return self._index(form)
-
         resources = self._map_form_to_resources_post(form)
+
         try:
             self.service.create(resources)
         except HTTPError as error:
@@ -102,10 +89,6 @@ class BaseView(LoginRequiredView):
     @route('/put/<id>', methods=['POST'])
     def put(self, id):
         form = self.form()
-        if not form.validate_on_submit():
-            flash_basic_form_errors(form)
-            return self._get(id, form)
-
         resources = self._map_form_to_resources_put(form, id)
 
         try:
