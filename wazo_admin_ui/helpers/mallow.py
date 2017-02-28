@@ -39,8 +39,12 @@ class BaseSchema(Schema):
     @post_dump
     def add_main_resource_id(self, data):
         if self._main_resource:
-            if self.context.get('resource_id'):
-                data[self._main_resource]['id'] = self.context['resource_id']
+            resource_id = self.context.get('resource_id')
+            if resource_id:
+                try:
+                    data[self._main_resource]['id'] = int(resource_id)
+                except ValueError:
+                    data[self._main_resource]['uuid'] = resource_id
         return data
 
     def get_main_exten(self, extensions):

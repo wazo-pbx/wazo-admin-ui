@@ -83,6 +83,15 @@ class TestBaseSchema(unittest.TestCase):
 
         assert_that(resources, has_entries(resource1=has_entries(id=54)))
 
+    def test_add_main_resource_id_when_uuid(self):
+        form = Mock(FlaskForm,
+                    attribute1=Mock(data='value1'),
+                    attribute2=Mock(data='value2'))
+
+        resources = self.schema(context={'resource_id': '1234-abcde'}).dump(form).data
+
+        assert_that(resources, has_entries(resource1=has_entries(uuid='1234-abcde')))
+
     def test_get_main_exten(self):
         extensions = [{'exten': '1234'}, {'exten': '5678'}]
 
