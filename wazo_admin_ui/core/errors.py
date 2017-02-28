@@ -12,6 +12,7 @@ from wazo_admin_ui.helpers.error import (ErrorExtractor,
                                          GENERIC_MESSAGE_ERRORS,
                                          GENERIC_PATTERN_ERRORS,
                                          RESOURCES,
+                                         SINGULARIZE_RESOURCES,
                                          SPECIFIC_MESSAGE_ERRORS,
                                          SPECIFIC_PATTERN_ERRORS)
 
@@ -25,6 +26,7 @@ def configure_error_handlers(app):
 
     ErrorExtractor.register_generic_patterns(GENERIC_PATTERN_ERRORS)
     ErrorExtractor.register_specific_patterns(SPECIFIC_PATTERN_ERRORS)
+    ErrorExtractor.register_singularize_resources(SINGULARIZE_RESOURCES)
     ErrorTranslator.register_generic_messages(GENERIC_MESSAGE_ERRORS)
     ErrorTranslator.register_specific_messages(SPECIFIC_MESSAGE_ERRORS)
     ErrorTranslator.register_resources(RESOURCES)

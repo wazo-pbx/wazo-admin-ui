@@ -24,8 +24,11 @@ SPECIFIC_MESSAGE_ERRORS = {'required-field': lazy_gettext('Missing data for requ
                            'invalid-choice': lazy_gettext('Not a valid choice'),
                            'invalid-length': lazy_gettext('Longer than maximum length')}
 
-RESOURCES = {'conferences': lazy_gettext('conference'),
-             'users': lazy_gettext('user')}
+SINGULARIZE_RESOURCES = {'conferences': 'conference',
+                         'users': 'user'}
+
+RESOURCES = {'conference': lazy_gettext('conference'),
+             'user': lazy_gettext('user')}
 
 
 class ErrorTranslator(object):
@@ -69,6 +72,7 @@ class ErrorExtractor(object):
 
     generic_patterns = {}
     specific_patterns = {}
+    singularize_resources = {}
 
     @classmethod
     def register_generic_patterns(cls, patterns):
@@ -77,6 +81,10 @@ class ErrorExtractor(object):
     @classmethod
     def register_specific_patterns(cls, patterns):
         cls.specific_patterns.update(patterns)
+
+    @classmethod
+    def register_singularize_resources(cls, resources):
+        cls.singularize_resources.update(resources)
 
     @classmethod
     def extract_specific_error_id_from_fields(cls, fields):
@@ -107,7 +115,8 @@ class ErrorExtractor(object):
         regex = re.compile(RESOURCE_REGEX)
         match = regex.match(request.path_url)
         if match:
-            return match.group(1)
+            plural_resource = match.group(1)
+            return cls.singularize_resources.get(plural_resource, plural_resource)
         return None
 
 
