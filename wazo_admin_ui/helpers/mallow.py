@@ -33,6 +33,9 @@ class BaseSchema(Schema):
             if not field_form:
                 continue
 
+            # normally it's form.validate() that make this conversion
+            field_form.errors = list(field_form.errors)
+
             field_form.errors.append(value)
         return form
 

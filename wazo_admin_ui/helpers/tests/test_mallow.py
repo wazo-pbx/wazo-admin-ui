@@ -7,7 +7,7 @@ from mock import Mock
 from marshmallow import fields, pre_dump
 from flask_wtf import FlaskForm
 
-from hamcrest import assert_that, contains, empty, equal_to, has_entries, has_properties
+from hamcrest import assert_that, contains, empty, equal_to, has_entries, has_properties, instance_of
 
 from ..mallow import BaseSchema, BaseAggregatorSchema
 
@@ -72,6 +72,17 @@ class TestBaseSchema(unittest.TestCase):
             attribute2=has_properties(errors=contains('error2')),
             attribute3=has_properties(errors=contains('error3')),
             attribute4=has_properties(errors=contains('error4')),
+        ))
+
+    def test_populate_form_errors_when_errors_is_initialize_with_tuple(self):
+        form = Mock(FlaskForm,
+                    attribute1=Mock(errors=tuple()))
+
+        resources_errors = {'resource1': {'attribute1': 'error1'}}
+        form = self.schema().populate_form_errors(form, resources_errors)
+
+        assert_that(form, has_properties(
+            attribute1=has_properties(errors=instance_of(list))
         ))
 
     def test_add_main_resource_id(self):
