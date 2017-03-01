@@ -54,6 +54,15 @@ class TestBaseSchema(unittest.TestCase):
                                            resource2=has_entries(attribute1='value3',
                                                                  attribute4='default_value4')))
 
+    def test_get_attribute_with_empty_string(self):
+        form = Mock(FlaskForm,
+                    attribute1=Mock(data=''),
+                    attribute2=Mock(data='value2'))
+
+        resources = self.schema().dump(form).data
+
+        assert_that(resources, has_entries(resource1=has_entries(attribute1=None)))
+
     def test_populate_form_errors(self):
         form = Mock(FlaskForm,
                     attribute1=Mock(errors=[]),

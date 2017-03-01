@@ -15,7 +15,8 @@ class BaseSchema(Schema):
     def get_attribute(self, attr, obj, default):
         if isinstance(obj, FlaskForm):
             value = getattr(obj, attr, default)
-            return getattr(value, 'data', default)
+            result = getattr(value, 'data', default)
+            return result if result != '' else None
         return super(BaseSchema, self).get_attribute(attr, obj, default)
 
     def populate_form_errors(self, form, resources):
