@@ -154,8 +154,10 @@ class BaseView(LoginRequiredView):
         resource = e_extractor.extract_resource(error.request)
         error_id = e_extractor.extract_generic_error_id(response)
 
-        flash('{resource}: {generic_error}'.format(
-            resource=e_translator.resources.get(resource, ''),
+        translated_resource = e_translator.resources.get(resource, '')
+        flash('{resource}{delimiter}{generic_error}'.format(
+            resource=translated_resource,
+            delimiter=': ' if translated_resource else '',
             generic_error=e_translator.generic_messages.get(error_id, ''),
         ), 'error')
         flash('{method} {url}: {response}'.format(
