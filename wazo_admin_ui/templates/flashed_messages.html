@@ -11,11 +11,26 @@
       {% else %}
         {% set icon = 'icon fa fa-info' %}
       {% endif %}
-      <div class="alert alert-{{ category }} alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <h4><i class="{{ icon }}"></i> {{ category|title }}!</h4>
-        {{ message }}
-      </div>
+      {% if category != 'error_details' %}
+        <div class="alert alert-{{ category }} alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <h4><i class="{{ icon }}"></i> {{ category|title }}!</h4>
+          {{ message }}
+          {% for category, message in messages %}
+            {% if category == 'error_details' %}
+              <div id="error-details-show">
+                > Details
+              </div>
+              <div id="error-details-hide" style="display: none;">
+                ^ Details
+                <div id="error-details">
+                {{ message }}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
     {% endfor %}
   {% endif %}
 {% endwith %}

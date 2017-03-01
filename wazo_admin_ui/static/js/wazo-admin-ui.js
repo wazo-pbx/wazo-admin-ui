@@ -24,4 +24,14 @@ $(document).ready(function() {
     $('#view-add-form').removeClass('hidden').removeAttr('style');
   });
 
+  $('#error-details-show').click(function(event) {
+      $('#error-details-show').hide();
+      $('#error-details-hide').show();
+  });
+
+  $('#error-details-hide').click(function(event) {
+      $('#error-details-show').show();
+      $('#error-details-hide').hide();
+  });
+
 });
