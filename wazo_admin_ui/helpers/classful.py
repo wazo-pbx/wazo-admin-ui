@@ -139,12 +139,13 @@ class BaseView(LoginRequiredView):
 
     def _fill_form_error(self, form, error):
         response = error.response.json()
-        resource = e_extractor.extract_resource(error.request)
         error_id = e_extractor.extract_generic_error_id(response)
         if error_id == 'invalid-data':
             error_fields = e_extractor.extract_fields(response)
             error_field_ids = e_extractor.extract_specific_error_id_from_fields(error_fields)
             error_field_messages = e_translator.translate_specific_error_id_from_fields(error_field_ids)
+
+            resource = e_extractor.extract_resource(error.request)
             form = self._map_resources_to_form_errors(form, {resource: error_field_messages})
         return form
 

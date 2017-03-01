@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 
 import ast
 import re
+import logging
 
 from flask_babel import lazy_gettext
 
@@ -29,6 +30,8 @@ SINGULARIZE_RESOURCES = {'conferences': 'conference',
 
 RESOURCES = {'conference': lazy_gettext('conference'),
              'user': lazy_gettext('user')}
+
+logger = logging.getLogger(__name__)
 
 
 class ErrorTranslator(object):
@@ -107,6 +110,10 @@ class ErrorExtractor(object):
                 regex = re.compile(pattern)
                 if regex.search(value):
                     result[field] = error_id
+                    break
+            else:
+                logger.debug('Unable to extract specific error id from: %s', value)
+
         return result
 
     @classmethod
@@ -115,8 +122,9 @@ class ErrorExtractor(object):
         regex = re.compile(RESOURCE_REGEX)
         match = regex.match(request.path_url)
         if match:
-            plural_resource = match.group(1)
-            return cls.singularize_resources.get(plural_resource, plural_resource)
+            plurial_resource = match.group(1)
+            return cls.singularize_resources.get(plurial_resource, plurial_resource)
+        logger.debug('Unable to extract resource from: %s', request.path_url)
         return None
 
 
@@ -134,6 +142,7 @@ class ConfdErrorExtractor(ErrorExtractor):
             for message in response:
                 if regex.search(message):
                     return error_id
+        logger.debug('Unable to extract generic error id from: %s', response)
         return None
 
     @classmethod
@@ -149,6 +158,7 @@ class ConfdErrorExtractor(ErrorExtractor):
         regex = re.compile(cls.specific_field_regex)
         match = regex.match(message)
         if not match:
+            logger.debug('Unable to extract field from: %s', message)
             return {}
         key = match.group(1)
         value_str = match.group(2)
