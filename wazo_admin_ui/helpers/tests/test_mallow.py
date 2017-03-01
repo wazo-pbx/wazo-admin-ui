@@ -7,7 +7,14 @@ from mock import Mock
 from marshmallow import fields, pre_dump
 from flask_wtf import FlaskForm
 
-from hamcrest import assert_that, contains, empty, equal_to, has_entries, has_properties, instance_of
+from hamcrest import (assert_that,
+                      contains,
+                      empty,
+                      equal_to,
+                      has_entries,
+                      has_properties,
+                      instance_of,
+                      is_not)
 
 from ..mallow import BaseSchema, BaseAggregatorSchema
 
@@ -43,9 +50,9 @@ class TestBaseSchema(unittest.TestCase):
 
     def test_get_attribute(self):
         form = Mock(FlaskForm,
-                    attribute1=Mock(data='value1'),
-                    attribute2=Mock(data='value2'),
-                    attribute3=Mock(data='value3'))
+                    attribute1=Mock(data='value1', raw_data=['value1']),
+                    attribute2=Mock(data='value2', raw_data=['value2']),
+                    attribute3=Mock(data='value3', raw_data=['value3']))
 
         resources = self.schema().dump(form).data
 
@@ -56,12 +63,21 @@ class TestBaseSchema(unittest.TestCase):
 
     def test_get_attribute_with_empty_string(self):
         form = Mock(FlaskForm,
-                    attribute1=Mock(data=''),
-                    attribute2=Mock(data='value2'))
+                    attribute1=Mock(data='', raw_data=['']),
+                    attribute2=Mock(data='value2', raw_data=['value2']))
 
         resources = self.schema().dump(form).data
 
         assert_that(resources, has_entries(resource1=has_entries(attribute1=None)))
+
+    def test_get_attribute_with_no_raw_data(self):
+        form = Mock(FlaskForm,
+                    attribute1=Mock(data='', raw_data=[]),
+                    attribute2=Mock(data='value2', raw_data=['value2']))
+
+        resources = self.schema().dump(form).data
+
+        assert_that(resources, has_entries(resource1=is_not(has_entries(attribute1=None))))
 
     def test_populate_form_errors(self):
         form = Mock(FlaskForm,
@@ -96,8 +112,8 @@ class TestBaseSchema(unittest.TestCase):
 
     def test_add_main_resource_id(self):
         form = Mock(FlaskForm,
-                    attribute1=Mock(data='value1'),
-                    attribute2=Mock(data='value2'))
+                    attribute1=Mock(data='value1', raw_data=['value1']),
+                    attribute2=Mock(data='value2', raw_data=['value2']))
 
         resources = self.schema(context={'resource_id': 54}).dump(form).data
 
@@ -105,8 +121,8 @@ class TestBaseSchema(unittest.TestCase):
 
     def test_add_main_resource_id_when_uuid(self):
         form = Mock(FlaskForm,
-                    attribute1=Mock(data='value1'),
-                    attribute2=Mock(data='value2'))
+                    attribute1=Mock(data='value1', raw_data=['value1']),
+                    attribute2=Mock(data='value2', raw_data=['value2']))
 
         resources = self.schema(context={'resource_id': '1234-abcde'}).dump(form).data
 

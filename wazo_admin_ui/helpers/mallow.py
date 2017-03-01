@@ -4,6 +4,7 @@
 
 from flask_wtf import FlaskForm
 from marshmallow import Schema, fields, post_dump, pre_dump
+from marshmallow.utils import missing
 
 
 class BaseSchema(Schema):
@@ -15,9 +16,20 @@ class BaseSchema(Schema):
     def get_attribute(self, attr, obj, default):
         if isinstance(obj, FlaskForm):
             value = getattr(obj, attr, default)
+            if not self._data_is_given_in_input(value):
+                return missing
+
             result = getattr(value, 'data', default)
             return result if result != '' else None
         return super(BaseSchema, self).get_attribute(attr, obj, default)
+
+    def _data_is_given_in_input(self, obj):
+        try:
+            raw_data = getattr(obj, 'raw_data')
+        except AttributeError:
+            return False
+
+        return len(raw_data) != 0
 
     def populate_form_errors(self, form, resources):
         for field_name, value in resources.iteritems():
