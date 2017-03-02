@@ -31,7 +31,7 @@ setup(
     version='0.1',
     description='Wazo admin UI',
     author='Wazo Authors',
-    author_email='dev.wazo@gmail.com',
+    author_email='dev@wazo.community',
     url='https://github.com/wazo-pbx/wazo-admin-ui',
     packages=find_packages(),
     include_package_data=True,
