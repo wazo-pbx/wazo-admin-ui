@@ -14,8 +14,8 @@ class TestBaseConfdService(unittest.TestCase):
 
     def setUp(self):
         self._resource1 = Mock()
-        BaseConfdService.confd_resource = 'resource1'
-        BaseConfdService.resource = 'resource1'
+        BaseConfdService.resource_confd = 'resource1'
+        BaseConfdService.resource_name = 'resource1'
         BaseConfdService._confd = Mock(resource1=self._resource1)
         confd_config = {}
         self.service = BaseConfdService(confd_config)
@@ -60,8 +60,8 @@ class TestBaseConfdExtensionService(unittest.TestCase):
     def setUp(self):
         self._resource1 = Mock()
         self._extensions = Mock()
-        BaseConfdService.confd_resource = 'resource1'
-        BaseConfdService.resource = 'resource1'
+        BaseConfdService.resource_confd = 'resource1'
+        BaseConfdService.resource_name = 'resource1'
         BaseConfdService._confd = Mock(resource1=self._resource1,
                                        extensions=self._extensions)
         confd_config = {}
