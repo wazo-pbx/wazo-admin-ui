@@ -7,15 +7,15 @@ Wazo admin ui
 
 To extract new translations:
 
-    % pybabel extract --mapping=wazo_admin_ui/babel.cfg -k l_ -k lazy_gettext --output=wazo_admin_ui/messages.pot wazo_admin_ui/
+    % pybabel extract --mapping=wazo_admin_ui/translations/babel.cfg -k l_ -k lazy_gettext --output=wazo_admin_ui/translations/messages.pot wazo_admin_ui/
 
 To create new translation catalog:
 
-    % pybabel init -l <locale> --input-file=wazo_admin_ui/messages.pot --output-dir=wazo_admin_ui/translations
+    % pybabel init -l <locale> --input-file=wazo_admin_ui/translations/messages.pot --output-dir=wazo_admin_ui/translations
 
 To update existing translations catalog:
 
-    % pybabel update --input-file=wazo_admin_ui/messages.pot --output-dir=wazo_admin_ui/translations
+    % pybabel update --input-file=wazo_admin_ui/translations/messages.pot --output-dir=wazo_admin_ui/translations
 
 
 Edit file `wazo_admin_ui/translations/<locale>/LC_MESSAGES/messages.po` and compile

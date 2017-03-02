@@ -3,7 +3,7 @@ host = https://www.transifex.com
 
 [wazo.wazo-admin-ui]
 file_filter = wazo_admin_ui/translations/<lang>/LC_MESSAGES/messages.po
-source_file = wazo_admin_ui/messages.pot
+source_file = wazo_admin_ui/translations/messages.pot
 source_lang = en
 type = PO
 
