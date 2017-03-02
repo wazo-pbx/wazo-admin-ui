@@ -44,7 +44,7 @@ class BaseConfdService(object):
             return
 
         resource_client = getattr(self._confd, self.resource_confd)
-        resource_client.create(resource)
+        return resource_client.create(resource)
 
     def delete(self, resource_id):
         resource_client = getattr(self._confd, self.resource_confd)
@@ -62,9 +62,10 @@ class BaseConfdExtensionService(BaseConfdService):
         return resource, extension
 
     def create(self, resources):
-        super(BaseConfdExtensionService, self).create(resources)
-        resource, extension = self._extract_resource_extension(resources)
+        resource = super(BaseConfdExtensionService, self).create(resources)
+        _, extension = self._extract_resource_extension(resources)
         self.create_extension(extension, resource)
+        return resource
 
     def update(self, resources):
         super(BaseConfdExtensionService, self).update(resources)
