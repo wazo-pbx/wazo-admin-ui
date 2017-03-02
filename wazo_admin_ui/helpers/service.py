@@ -11,8 +11,8 @@ logger = logging.getLogger(__name__)
 
 
 class BaseConfdService(object):
-    resource = None
-    confd_resource = None
+    resource_name = None
+    resource_confd = None
 
     def __init__(self, confd_config):
         self.confd_config = confd_config
@@ -23,41 +23,41 @@ class BaseConfdService(object):
         return ConfdClient(token=token, **self.confd_config)
 
     def list(self):
-        resource_client = getattr(self._confd, self.confd_resource)
+        resource_client = getattr(self._confd, self.resource_confd)
         return resource_client.list()
 
     def get(self, resource_id):
-        resource_client = getattr(self._confd, self.confd_resource)
-        return {self.resource: resource_client.get(resource_id)}
+        resource_client = getattr(self._confd, self.resource_confd)
+        return {self.resource_name: resource_client.get(resource_id)}
 
     def update(self, resources):
-        resource = resources.get(self.resource)
+        resource = resources.get(self.resource_name)
         if not resource:
             return
 
-        resource_client = getattr(self._confd, self.confd_resource)
+        resource_client = getattr(self._confd, self.resource_confd)
         resource_client.update(resource)
 
     def create(self, resources):
-        resource = resources.get(self.resource)
+        resource = resources.get(self.resource_name)
         if not resource:
             return
 
-        resource_client = getattr(self._confd, self.confd_resource)
+        resource_client = getattr(self._confd, self.resource_confd)
         resource_client.create(resource)
 
     def delete(self, resource_id):
-        resource_client = getattr(self._confd, self.confd_resource)
+        resource_client = getattr(self._confd, self.resource_confd)
         resource_client.delete(resource_id)
 
 
 class BaseConfdExtensionService(BaseConfdService):
 
     def _extract_resource_extension(self, resources):
-        resource = resources.get(self.resource)
+        resource = resources.get(self.resource_name)
         extension = resources.get('extension')
         if not resource or not extension:
-            logger.debug('Missing %s or extension resource', self.confd_resource)
+            logger.debug('Missing %s or extension resource', self.resource_confd)
             return
         return resource, extension
 
@@ -95,7 +95,7 @@ class BaseConfdExtensionService(BaseConfdService):
             self._remove_extension(existing_extension, resource)
 
     def delete_extension(self, resource_id):
-        resource_client = getattr(self._confd, self.confd_resource)
+        resource_client = getattr(self._confd, self.resource_confd)
         resource = resource_client.get(resource_id)
         for extension in resource['extensions']:
             self._remove_extension(extension, resource)
@@ -103,7 +103,7 @@ class BaseConfdExtensionService(BaseConfdService):
     def _add_extension(self, extension, resource):
         extension = self._confd.extensions.create(extension)
         if extension:
-            resource_client = getattr(self._confd, self.confd_resource)
+            resource_client = getattr(self._confd, self.resource_confd)
             resource_client(resource).add_extension(extension)
 
     def _update_extension(self, extension, existing_extension):
@@ -115,17 +115,17 @@ class BaseConfdExtensionService(BaseConfdService):
         self._confd.extensions.update(extension)
 
     def _remove_extension(self, extension, resource):
-        resource_client = getattr(self._confd, self.confd_resource)
+        resource_client = getattr(self._confd, self.resource_confd)
         resource_client(resource).remove_extension(extension)
         self._confd.extensions.delete(extension)
 
     def _get_main_extension(self, resource):
         resource_id = resource.get('uuid', resource.get('id'))
         if not resource_id:
-            logger.debug('Unable to extract resource_id from %s resource', self.confd_resource)
+            logger.debug('Unable to extract resource_id from %s resource', self.resource_confd)
             return
 
-        resource_client = getattr(self._confd, self.confd_resource)
+        resource_client = getattr(self._confd, self.resource_confd)
         for extension in resource_client.get(resource_id)['extensions']:
             return extension
         return None
