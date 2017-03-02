@@ -14,7 +14,7 @@ from ..error import ErrorExtractor
 from ..error import ErrorTranslator
 from ..mallow import BaseSchema, BaseAggregatorSchema
 
-SINGULARIZE_RESOURCES = {'resources_plurial': 'resource'}
+URL_TO_NAME_RESOURCES = {'resources_url': 'resource'}
 
 GENERIC_PATTERN_ERRORS = {'invalid-data': r'^Input Error'}
 GENERIC_MESSAGE_ERRORS = {'invalid-data': 'Input Error'}
@@ -42,7 +42,7 @@ class TestBaseView(unittest.TestCase):
         self.view.schema = AggregatorSchema
         ErrorExtractor.generic_patterns = GENERIC_PATTERN_ERRORS
         ErrorExtractor.specific_patterns = SPECIFIC_PATTERN_ERRORS
-        ErrorExtractor.singularize_resources = SINGULARIZE_RESOURCES
+        ErrorExtractor.url_to_name_resources = URL_TO_NAME_RESOURCES
         ErrorTranslator.generic_messages = GENERIC_MESSAGE_ERRORS
         ErrorTranslator.specific_messages = SPECIFIC_MESSAGE_ERRORS
 
@@ -51,35 +51,35 @@ class TestBaseView(unittest.TestCase):
 
     def test_fill_form_error_with_confd_input_error(self):
         confd_error = ["Input Error - attribute1: 'Longer than maximum length'"]
-        path_url = '/1.1/resources_plurial/42'
+        path_url = '/1.1/resources_url/42'
         form = self.view._fill_form_error(self.form, self._build_error(confd_error, path_url))
 
         assert_that(form.attribute1.errors, contains('Longer than maximum length'))
 
     def test_fill_form_error_with_confd_input_error_and_not_register_msg(self):
         confd_error = ["Input Error - attribute1: 'Unregistered message'"]
-        path_url = '/1.1/resources_plurial/42'
+        path_url = '/1.1/resources_url/42'
         form = self.view._fill_form_error(self.form, self._build_error(confd_error, path_url))
 
         assert_that(form.attribute1.errors, empty())
 
     def test_fill_form_error_with_confd_input_error_and_invalid_attribute(self):
         confd_error = ["Input Error - invalid_attr: 'Longer than maximum length'"]
-        path_url = '/1.1/resources_plurial/42'
+        path_url = '/1.1/resources_url/42'
         form = self.view._fill_form_error(self.form, self._build_error(confd_error, path_url))
 
         assert_that(form.attribute1.errors, empty())
 
     def test_fill_form_error_with_confd_input_error_and_invalid_format(self):
         confd_error = ["Input Error - field 'users': User was not found ('uuid': 'patate')"]
-        path_url = '/1.1/resources_plurial/42'
+        path_url = '/1.1/resources_url/42'
         form = self.view._fill_form_error(self.form, self._build_error(confd_error, path_url))
 
         assert_that(form.attribute1.errors, empty())
 
     def test_fill_form_error_with_confd_not_input_error(self):
         confd_error = ["Some Error - "]
-        path_url = '/1.1/resources_plurial/42'
+        path_url = '/1.1/resources_url/42'
         form = self.view._fill_form_error(self.form, self._build_error(confd_error, path_url))
 
         assert_that(form.attribute1.errors, empty())

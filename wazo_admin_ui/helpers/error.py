@@ -75,7 +75,7 @@ class ErrorExtractor(object):
 
     generic_patterns = {}
     specific_patterns = {}
-    singularize_resources = {}
+    url_to_name_resources = {}
 
     @classmethod
     def register_generic_patterns(cls, patterns):
@@ -86,8 +86,8 @@ class ErrorExtractor(object):
         cls.specific_patterns.update(patterns)
 
     @classmethod
-    def register_singularize_resources(cls, resources):
-        cls.singularize_resources.update(resources)
+    def register_url_to_name_resources(cls, resources):
+        cls.url_to_name_resources.update(resources)
 
     @classmethod
     def extract_specific_error_id_from_fields(cls, fields):
@@ -122,8 +122,8 @@ class ErrorExtractor(object):
         regex = re.compile(RESOURCE_REGEX)
         match = regex.match(request.path_url)
         if match:
-            plurial_resource = match.group(1)
-            return cls.singularize_resources.get(plurial_resource, plurial_resource)
+            url_resource = match.group(1)
+            return cls.url_to_name_resources.get(url_resource, url_resource)
         logger.debug('Unable to extract resource from: %s', request.path_url)
         return None
 

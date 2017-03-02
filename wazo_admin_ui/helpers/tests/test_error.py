@@ -21,7 +21,7 @@ SPECIFIC_PATTERN_ERRORS = {'required': r'Missing data for required field',
 SPECIFIC_MESSAGE_ERRORS = {'required': 'Missing data for required field',
                            'invalid-choice': 'Not a valid choice'}
 
-SINGULARIZE_RESOURCES = {'resource_plurial': 'resource'}
+URL_TO_NAME_RESOURCES = {'resource_url': 'resource'}
 
 
 class TestErrorTranslator(unittest.TestCase):
@@ -52,7 +52,7 @@ class TestErrorExtractor(unittest.TestCase):
     def setUp(self):
         ConfdErrorExtractor.register_generic_patterns(GENERIC_PATTERN_ERRORS)
         ConfdErrorExtractor.register_specific_patterns(SPECIFIC_PATTERN_ERRORS)
-        ConfdErrorExtractor.register_singularize_resources(SINGULARIZE_RESOURCES)
+        ConfdErrorExtractor.register_url_to_name_resources(URL_TO_NAME_RESOURCES)
 
     def test_extract_specific_error_id_from_fields(self):
         fields = {'name': ['Missing data for required field'],
@@ -120,8 +120,8 @@ class TestErrorExtractor(unittest.TestCase):
         resource = ErrorExtractor.extract_resource(request)
         assert_that(resource, equal_to('resource'))
 
-    def test_extract_resource_when_match_on_plurialize(self):
-        request = Mock(path_url='/1.1/resource_plurial/id')
+    def test_extract_resource_when_match_on_url_resource(self):
+        request = Mock(path_url='/1.1/resource_url/id')
         resource = ErrorExtractor.extract_resource(request)
         assert_that(resource, equal_to('resource'))
 
