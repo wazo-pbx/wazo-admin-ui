@@ -6,9 +6,11 @@ import unittest
 from mock import Mock
 from marshmallow import fields, pre_dump
 from flask_wtf import FlaskForm
+from wtforms.fields import TextField
 
 from hamcrest import (assert_that,
                       contains,
+                      contains_inanyorder,
                       empty,
                       equal_to,
                       has_entries,
@@ -16,7 +18,7 @@ from hamcrest import (assert_that,
                       instance_of,
                       is_not)
 
-from ..mallow import BaseSchema, BaseAggregatorSchema
+from ..mallow import BaseSchema, BaseAggregatorSchema, extract_form_fields
 
 
 class Resource1Schema(BaseSchema):
@@ -158,3 +160,24 @@ class TestBaseAggregatorSchema(unittest.TestCase):
 
         assert_that(result, equal_to({'resource1': form,
                                       'resource2': form}))
+
+
+class TestExtractFormFields(unittest.TestCase):
+
+    def test_extract_form_fields(self):
+
+        class Form(FlaskForm):
+            name = TextField('name')
+            description = TextField('description')
+
+        result = extract_form_fields(Form)
+        assert_that(result, contains_inanyorder('name', 'description'))
+
+    def test_extract_form_fields_with_submit_field(self):
+
+        class Form(FlaskForm):
+            name = TextField('name')
+            submit = TextField('submit')
+
+        result = extract_form_fields(Form)
+        assert_that(result, contains('name'))

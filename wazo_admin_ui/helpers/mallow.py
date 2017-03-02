@@ -7,6 +7,17 @@ from marshmallow import Schema, fields, post_dump, pre_dump
 from marshmallow.utils import missing
 
 
+def extract_form_fields(form):
+    # Based on wtform code
+    result = []
+    for name in dir(form):
+        if not name.startswith('_') and name != 'submit':
+            unbound_field = getattr(form, name)
+            if hasattr(unbound_field, '_formfield'):
+                result.append(name)
+    return result
+
+
 class BaseSchema(Schema):
     _main_resource = None
 
