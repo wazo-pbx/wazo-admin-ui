@@ -8,28 +8,96 @@ import ast
 import re
 import logging
 
-from flask_babel import lazy_gettext
+from flask_babel import lazy_gettext as l_
 
-GENERIC_PATTERN_ERRORS = {'resource-not-found': r'^Resource Not Found',
-                          'invalid-data': r'^Input Error'}
+GENERIC_PATTERN_ERRORS = {
+    'resource-not-found': r'^Resource Not Found',
+    'invalid-data': r'^Input Error',
+}
 
-GENERIC_MESSAGE_ERRORS = {'resource-not-found': lazy_gettext('Resource not found'),
-                          'invalid-data': lazy_gettext('Input error')}
+GENERIC_MESSAGE_ERRORS = {
+    'resource-not-found': l_('Resource not found'),
+    'invalid-data': l_('Input error'),
+}
 
 
-SPECIFIC_PATTERN_ERRORS = {'required-field': r'Missing data for required field',
-                           'invalid-choice': r'Not a valid choice',
-                           'invalid-length': r'Longer than maximum length'}
+SPECIFIC_PATTERN_ERRORS = {
+    'contains-only': r'One or more of the choices you made was not acceptable',
+    'equal': r'Must be equal to',
+    'field-format-datetime': r'cannot be formatted as a datetime',
+    'field-format-time': r'cannot be formatted as date',
+    'field-format-timedelta': r'cannot be formatted as a timedelta',
+    'field-invalid-boolean': r'Not a valid boolean',
+    'field-invalid-datetime': r'Not a valid datetime',
+    'field-invalid-dict': r'Not a valid mapping type',
+    'field-invalid-email': r'Not a valid email address',
+    'field-invalid-formatted-string': r'Cannot format string with given data',
+    'field-invalid-integer': r'Not a valid integer',
+    'field-invalid-number': r'Not a valid number',
+    'field-invalid-string': r'Not a valid string',
+    'field-invalid-time': r'Not a valid time',
+    'field-invalid-timedelta': r'Not a valid period of time',
+    'field-invalid-url': r'Not a valid URL',
+    'field-invalid-uuid': r'Not a valid UUID',
+    'field-null': r'Field may not be null',
+    'field-required': r'Missing data for required field',
+    'field-type': r'Invalid input type',
+    'field-validator-failed': r'Invalid value',
+    'input': r'Invalid input',
+    'length': r'(Shorter than minimum length|Longer than maximum length|Length must be between| Length must be)',
+    'oneof': r'Not a valid choice',
+    'range': r'(Must be at least|Must be at most|Must be between)',
+    'regexp': r'String does not match expected pattern',
+}
 
-SPECIFIC_MESSAGE_ERRORS = {'required-field': lazy_gettext('Missing data for required field'),
-                           'invalid-choice': lazy_gettext('Not a valid choice'),
-                           'invalid-length': lazy_gettext('Longer than maximum length')}
+SPECIFIC_MESSAGE_ERRORS = {
+    'contains-only': l_('One or more of the choices you made was not acceptable'),
+    'equal': l_('Invalid value'),
+    'field-format-datetime': l_('cannot be formatted as a datetime'),
+    'field-format-time': l_('cannot be formatted as date'),
+    'field-format-timedelta': l_('cannot be formatted as a timedelta'),
+    'field-invalid-boolean': l_('Not a valid boolean'),
+    'field-invalid-datetime': l_('Not a valid datetime'),
+    'field-invalid-dict': l_('Not a valid mapping type'),
+    'field-invalid-email': l_('Not a valid email address'),
+    'field-invalid-formatted-string': l_('Cannot format string with given data'),
+    'field-invalid-integer': l_('Not a valid integer'),
+    'field-invalid-number': l_('Not a valid number'),
+    'field-invalid-string': l_('Not a valid string'),
+    'field-invalid-time': l_('Not a valid time'),
+    'field-invalid-timedelta': l_('Not a valid period of time'),
+    'field-invalid-url': l_('Not a valid URL'),
+    'field-invalid-uuid': l_('Not a valid UUID'),
+    'field-null': l_('Field may not be null'),
+    'field-required': l_('Missing data for required field'),
+    'field-type': l_('Invalid input type'),
+    'field-validator-failed': l_('Invalid value'),
+    'input': l_('Invalid input'),
+    'length': l_('Invalid length'),
+    'oneof': l_('Not a valid choice'),
+    'range': l_('Invalid range'),
+    'regexp': l_('String does not match expected pattern'),
+}
 
-SINGULARIZE_RESOURCES = {'conferences': 'conference',
-                         'users': 'user'}
+URL_TO_NAME_RESOURCES = {
+    'callpermissions': 'call_permission',
+    'conferences': 'conference',
+    'extensions': 'extension',
+    'parkinglots': 'parking_lot',
+    'switchboards': 'switchboard',
+    'users': 'user',
+    'voicemails': 'voicemail',
+}
 
-RESOURCES = {'conference': lazy_gettext('conference'),
-             'user': lazy_gettext('user')}
+RESOURCES = {
+    'call_permission': l_('call permission'),
+    'conference': l_('conference'),
+    'extension': l_('extension'),
+    'parking_lot': l_('parking lot'),
+    'switchboard': l_('switchboard'),
+    'user': l_('user'),
+    'voicemail': l_('voicemail'),
+}
 
 logger = logging.getLogger(__name__)
 
