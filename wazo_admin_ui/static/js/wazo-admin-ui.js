@@ -6,8 +6,6 @@ $(window).load(function() {
 });
 
 $(document).ready(function() {
-  $('[data-toggle="popover"]').popover();
-
   $('.select2').select2();
 
   $('#table-list').DataTable({

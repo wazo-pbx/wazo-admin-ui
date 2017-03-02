@@ -38,13 +38,10 @@
         {{ field(class_=class_, placeholder=placeholder, **kwargs) }}
       {% endif %}
 
+      {%- if field.errors %}
+        <span class="help-block"><i>{{ field.errors|join(', ') }}</i></span>
+      {% endif %}
     {%- endcall %}
-
-    {%- if field.errors %}
-      {{ field.errors|join(', ') }}
-      <span id="popover" data-toggle="popover" data-container="body" data-trigger="hover"
-        title="{{ field.label.text }}" data-placement="bottom" data-content="{{ field.errors|join(', ') }}"></span>
-    {% endif %}
 
     {%- if field.description %}
       <p class="help-block">{{ field.description|safe }}</p>
