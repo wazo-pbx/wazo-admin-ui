@@ -251,3 +251,41 @@
     {% endif %}
   </section>
 {% endmacro %}
+
+
+{% macro wrap_form_with_section(title) %}
+  <section class="content">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <i class="fa fa-compress"></i>
+            <h3 class="box-title">{{ title }}</h3>
+            <div class="box-tools"></div>
+          </div>
+          {{ caller() }}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endmacro %}
+
+
+{% macro wrap_fields_with_form(method="post", action="") %}
+  <form class="form-horizontal" method="{{ method }}" action="{{ action }}">
+    {{ caller() }}
+  </form>
+{% endmacro %}
+
+
+{% macro add_default_fields(form, submit_value) %}
+  <div class="box-body">
+    {{ form.csrf_token }}
+    {{ caller() }}
+  </div>
+  {% if submit_value %}
+    <div class="box-footer">
+      {{ render_field(form.submit, class_="btn btn-primary pull-right", value=submit_value, with_label=False) }}
+    </div>
+  {% endif %}
+{% endmacro %}
