@@ -4,6 +4,7 @@
 
 import logging
 import os
+import requests
 
 from datetime import timedelta
 
@@ -103,6 +104,9 @@ class Server(object):
             try:
                 response = AuthClient().token.get(token)
             except HTTPError:
+                return None
+            except requests.ConnectionError:
+                logger.warning('Wazo authentication server connection error')
                 return None
             token = response.get('token')
             if not token:

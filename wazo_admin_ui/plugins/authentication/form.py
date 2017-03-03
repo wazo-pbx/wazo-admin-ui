@@ -4,6 +4,8 @@
 
 from __future__ import unicode_literals
 
+import requests
+
 from flask_babel import lazy_gettext
 from flask_wtf import FlaskForm
 from requests.exceptions import HTTPError
@@ -38,6 +40,8 @@ class LoginForm(FlaskForm):
                 self.password.errors.append(USERNAME_PASSWORD_ERROR)
                 return False
             raise ValidationError('Error with Wazo authentication server: {}:'.format(e.message))
+        except requests.ConnectionError:
+            raise ValidationError('Wazo authentication server connection error')
 
         self.user = UserUI(response['token'], response['auth_id'])
 
