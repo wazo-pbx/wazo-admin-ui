@@ -6,7 +6,10 @@ $(window).load(function() {
 });
 
 $(document).ready(function() {
-  $('.select2').select2();
+  $('.select2').select2({
+      theme: 'bootstrap',
+      width: null,
+  });
 
   $('#table-list').DataTable({
     lengthChange: false,
