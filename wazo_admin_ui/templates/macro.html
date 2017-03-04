@@ -253,7 +253,7 @@
 {% endmacro %}
 
 
-{% macro wrap_form_with_section(title, icon) %}
+{% macro build_form_containers(title, icon) %}
   <section class="content">
     <div class="row">
       <div class="col-md-6">
@@ -271,7 +271,7 @@
 {% endmacro %}
 
 
-{% macro wrap_fields_with_form(method="post", action="") %}
+{% macro build_form(method="post", action="") %}
   <form class="form-horizontal" method="{{ method }}" action="{{ action }}">
     {{ caller() }}
   </form>
