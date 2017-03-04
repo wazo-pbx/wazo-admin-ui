@@ -289,3 +289,88 @@
     </div>
   {% endif %}
 {% endmacro %}
+
+
+{% macro build_list_containers(title, icon) %}
+    <div class="col-md-8">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <i class="fa fa-{{ icon }}"></i>
+          <h3 class="box-title">{{ title }}</h3>
+          <div class="box-tools">
+            <a href="#" id="add-form" class="btn btn-box-tool">
+              <i class="fa fa-plus"></i>
+            </a>
+          </div>
+        </div>
+        <div class="box-body">
+          {{ caller() }}
+        </div>
+      </div>
+    </div>
+{% endmacro %}
+
+
+{% macro build_list_table() %}
+    <table id="table-list" class="table table-condensed">
+      {{ caller() }}
+    </table>
+{% endmacro %}
+
+
+{% macro build_list_table_headers() %}
+  <thead>
+    <tr>
+      {{ caller() }}
+    </tr>
+  </thead>
+{% endmacro %}
+
+
+{% macro add_list_table_header_action() %}
+  <th class="no-sort" style="width: 80px">Actions</th>
+{% endmacro %}
+
+
+{% macro build_list_table_rows(items) %}
+  <tbody>
+    {% for item in items %}
+      <tr>
+        {{ caller(item) }}
+      </tr>
+    {% endfor %}
+  </tbody>
+{% endmacro %}
+
+
+{% macro add_edit_button(href) %}
+  <a href="{{ href }}" class="btn btn-xs btn-info">
+    <i class="fa fa-eye"></i>
+  </a>
+{% endmacro %}
+
+
+{% macro add_delete_button(href) %}
+  <a href="{{ href }}" class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">
+    <i class="fa fa-minus"></i>
+  </a>
+{% endmacro %}
+
+
+{% macro build_hidden_add_containers(title) %}
+  <div class="col-lg-4">
+    <div class="box box-info hidden" id="view-add-form">
+      <div class="box-header with-border">
+        <h3 class="box-title">{{ title }}</h3>
+        <div class="pull-right box-tools">
+          <button data-original-title="Remove" type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="">
+            <i class="fa fa-minus"></i>
+          </button>
+        </div>
+      </div>
+      {{ caller() }}
+    </div>
+  </div>
+{% endmacro %}
+
+
