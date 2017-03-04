@@ -78,7 +78,8 @@ class BaseConfdExtensionService(BaseConfdService):
 
     def create_extension(self, extension, resource):
         if resource and extension:
-            self._add_extension(extension, resource)
+            if extension.get('exten') and extension.get('context'):
+                self._add_extension(extension, resource)
 
     def update_extension(self, extension, resource):
         if not extension or not resource:

@@ -172,6 +172,18 @@ class TestBaseConfdExtensionService(unittest.TestCase):
         self.service.create_extension(extension, resource)
         self._assert_no_confd_call()
 
+    def test_create_extension_when_exten_is_None(self):
+        resource = {'id': 3}
+        extension = {'exten': None, 'context': 'default'}
+        self.service.create_extension(extension, resource)
+        self._assert_no_confd_call()
+
+    def test_create_extension_when_context_is_None(self):
+        resource = {'id': 3}
+        extension = {'exten': '123', 'context': None}
+        self.service.create_extension(extension, resource)
+        self._assert_no_confd_call()
+
     def test_create_extension_when_extension_and_resource(self):
         resource = {'id': 3}
         extension = {'exten': '1234', 'context': 'default'}
