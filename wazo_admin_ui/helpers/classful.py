@@ -24,6 +24,15 @@ logger = logging.getLogger(__name__)
 DEFAULT_TEMPLATE = '{blueprint}/{type_}.html'
 
 
+def flash_basic_form_errors(form):
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash('{field} - {message}'.format(
+                field=getattr(form, field).label.text,
+                message=error
+            ), 'error')
+
+
 class LoginRequiredView(FlaskView):
     decorators = [login_required]
 
@@ -53,6 +62,10 @@ class BaseView(LoginRequiredView):
     def post(self):
         form = self.form()
         resources = self._map_form_to_resources_post(form)
+
+        if not form.csrf_token.validate(form):
+            flash_basic_form_errors(form)
+            return self._index(form)
 
         try:
             self.service.create(resources)
@@ -96,6 +109,10 @@ class BaseView(LoginRequiredView):
     def put(self, id):
         form = self.form()
         resources = self._map_form_to_resources_put(form, id)
+
+        if not form.csrf_token.validate(form):
+            flash_basic_form_errors(form)
+            return self._get(id, form)
 
         try:
             self.service.update(resources)
