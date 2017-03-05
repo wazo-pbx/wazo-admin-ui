@@ -311,10 +311,15 @@
 {% endmacro %}
 
 
-{% macro build_list_table() %}
-    <table id="table-list" class="table table-condensed">
-      {{ caller() }}
-    </table>
+{% macro build_list_table(serverside=False) %}
+  {% if serverside %}
+    {% set table_id = "table-list-serverside" %}
+  {% else %}
+    {% set table_id = "table-list" %}
+  {% endif %}
+  <table id="{{ table_id }}" class="table table-condensed">
+    {{ caller() }}
+  </table>
 {% endmacro %}
 
 
