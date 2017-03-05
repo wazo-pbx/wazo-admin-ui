@@ -6,11 +6,12 @@ from __future__ import unicode_literals
 
 import logging
 
-from flask import render_template
-from flask import redirect
-from flask import url_for
-from flask import flash
-from flask import request
+from flask import (flash,
+                   jsonify,
+                   redirect,
+                   render_template,
+                   request,
+                   url_for)
 from flask_classful import FlaskView
 from flask_classful import route
 from flask_login import login_required
@@ -43,16 +44,20 @@ class BaseView(LoginRequiredView):
     service = None
     schema = None
     templates = {}
+    ajax_listing = False
 
     def index(self):
         return self._index()
 
     def _index(self, form=None):
-        try:
-            resource_list = self.service.list()
-        except HTTPError as error:
-            self._flash_http_error(error)
-            return redirect(url_for('admin.Admin:get'))
+        if not self.ajax_listing:
+            try:
+                resource_list = self.service.list()
+            except HTTPError as error:
+                self._flash_http_error(error)
+                return redirect(url_for('admin.Admin:get'))
+        else:
+            resource_list = []
 
         form = form or self.form()
         form = self._populate_form(form)
@@ -182,3 +187,20 @@ class BaseView(LoginRequiredView):
             url=error.request.url,
             response=response,
         ), 'error_details')
+
+    def list_json(self):
+        # TODO: handle case when flask return 302 because token is expired
+        limit = request.args.get('length')
+        offset = request.args.get('start')
+        direction = request.args.get('order[0][dir]')
+        order_column = request.args.get('order[0][column]', 0)
+        order = request.args.get('columns[{}][data]'.format(order_column))
+        search = request.args.get('search[value]')
+
+        result = self.service.list(search=search, order=order, limit=limit, direction=direction, offset=offset)
+
+        return jsonify({
+            'recordsTotal': result['total'],
+            'recordsFiltered': result['total'],
+            'data': result['items']
+        })
