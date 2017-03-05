@@ -98,7 +98,7 @@ class BaseView(LoginRequiredView):
         form = form or self._map_resources_to_form(resources)
         form = self._populate_form(form)
 
-        return render_template(self._get_template('view'), form=form, resources=resources)
+        return render_template(self._get_template('edit'), form=form, resources=resources)
 
     def _map_resources_to_form(self, resources):
         schema = self.schema()
