@@ -1,3 +1,27 @@
+$.extend(true, $.fn.dataTable.defaults, {
+  lengthMenu: [10, 20],
+  order: [],
+  autoWidth: false,
+  responsive: true,
+  searching: true,
+  search: {
+    smart: false
+  },
+  columnDefs: [
+    { responsivePriority: 1, targets: 0 },
+    { responsivePriority: 2, targets: -1 },
+    {
+      targets: '_all',
+      data: null,
+      defaultContent: "-"
+    },
+    {
+      targets: 'no-sort',
+      orderable: false
+    }
+  ]
+});
+
 $(window).load(function() {
   setTimeout(function() {
     $.AdminLTE.layout.fix();
@@ -13,13 +37,12 @@ $(document).ready(function() {
   });
 
   $('#table-list').DataTable({
-    lengthChange: false,
-    searching: false,
-    order: [],
-    columnDefs: [{
-      targets: 'no-sort',
-      orderable: false
-    }]
+    columnDefs: [
+      {
+        targets: '_all',
+        data: undefined,
+      },
+    ]
   });
 
   $('#add-form').click(function() {
@@ -37,3 +60,40 @@ $(document).ready(function() {
   });
 
 });
+
+
+function build_table_actions(get_url, delete_url, id) {
+  remove = $('<a>', {
+    'href': delete_url + id,
+    'class': 'btn btn-xs btn-danger',
+    'onclick': "return confirm('Are you sure you want to delete this item?');"
+  })
+ .append($('<i>', {
+    'class': 'fa fa-minus'
+  }))
+
+  view = $('<a>', {
+    'href': get_url + id,
+    'class': 'btn btn-xs btn-info',
+  })
+  .append($('<i>', {
+    'class': 'fa fa-eye'
+  }))
+
+  return view.prop('outerHTML') + " " + remove.prop('outerHTML');
+};
+
+
+function create_table_serverside(config) {
+  config.serverSide = true
+  config.processing = true
+  var Table = $('#table-list-serverside').DataTable(config);
+
+  // search only on 'enter', not on typing
+  $('#table-list-serverside_filter input').unbind();
+  $('#table-list-serverside_filter input').bind('keypress', function(e) {
+    if (e.which == 13) {
+      Table.search( this.value ).draw();
+    }
+  });
+};
