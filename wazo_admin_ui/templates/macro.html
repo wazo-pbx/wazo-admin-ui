@@ -5,6 +5,8 @@
                       inputclass=False,
                       divclass='col-sm-8',
                       class_='') %}
+  {% set kwargs_  = kwargs %}
+
   {% if with_label and not placeholder %}
     {% set placeholder = field.label.text %}
   {% endif %}
@@ -18,7 +20,7 @@
     {%- call _wrap_input_with_div(field, divclass, with_icon) %}
 
       {%- if field.type == 'BooleanField' %}
-        {{ render_field_boolean(field, class_, **kwargs) }}
+        {{ render_field_boolean(field, class_, **kwargs_) }}
       {% elif field.type == 'RadioField' %}
         {{ render_field_radio(field) }}
       {% elif field.type in ('EmailField',
@@ -28,14 +30,14 @@
                              'StringField',
                              'TextField',
                              'TextAreaField') %}
-        {{ field(class_=class_+' form-control', placeholder=placeholder, **kwargs) }}
+        {{ field(class_=class_+' form-control', placeholder=placeholder, **kwargs_) }}
       {% elif field.type in ('SelectField',
                              'SelectMultipleField') %}
-        {{ field(class_=class_+' form-control', **kwargs) }}
+        {{ field(class_=class_+' form-control', **kwargs_) }}
       {% elif field.type == 'FieldList' %}
         {{ render_field_form_list(field, class_=class_) }}
       {% else %}
-        {{ field(class_=class_, placeholder=placeholder, **kwargs) }}
+        {{ field(class_=class_, placeholder=placeholder, **kwargs_) }}
       {% endif %}
 
       {%- if field.errors %}
