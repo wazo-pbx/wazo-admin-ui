@@ -4,7 +4,7 @@
 
 from wazo_admin_ui.helpers.plugin import create_blueprint
 
-from .resource import Login, Logout
+from .view import Login, Logout
 
 login = create_blueprint('login', __name__)
 logout = create_blueprint('logout', __name__)
