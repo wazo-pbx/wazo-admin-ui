@@ -2,16 +2,12 @@
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
-import logging
-
 from flask_babel import Locale, get_locale
 from flask import url_for, render_template, redirect, session
 from flask_classful import FlaskView
 from flask_login import login_user, logout_user, current_user
 
 from .form import LoginForm
-
-logger = logging.getLogger(__name__)
 
 
 class Login(FlaskView):
@@ -35,8 +31,7 @@ class Login(FlaskView):
             login_user(form.user)
             return redirect(url_for('dashboard.Dashboard:get'))
 
-        return render_template('login.html',
-                               login_user_form=form)
+        return render_template('login.html', form=form)
 
     def _build_language_list(self):
         default_locale = Locale.parse(self.babel.app.config['BABEL_DEFAULT_LOCALE'])
