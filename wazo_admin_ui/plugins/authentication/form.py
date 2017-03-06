@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 
 import requests
 
-from flask_babel import lazy_gettext
+from flask_babel import lazy_gettext as l_
 from flask_wtf import FlaskForm
 from requests.exceptions import HTTPError
 from wtforms.fields import PasswordField, StringField, SubmitField
@@ -16,7 +16,7 @@ from wazo_admin_ui.core.auth import AuthClient
 from wazo_admin_ui.core.user import UserUI
 
 
-USERNAME_PASSWORD_ERROR = lazy_gettext('Wrong username and/or password')
+USERNAME_PASSWORD_ERROR = l_('Wrong username and/or password')
 
 
 def unauthorized(error):
@@ -25,9 +25,9 @@ def unauthorized(error):
 
 class LoginForm(FlaskForm):
 
-    username = StringField('Username', validators=[InputRequired()])
-    password = PasswordField('Password', validators=[InputRequired()])
-    submit = SubmitField('Login')
+    username = StringField(l_('Username'), validators=[InputRequired()])
+    password = PasswordField(l_('Password'), validators=[InputRequired()])
+    submit = SubmitField(l_('Login'))
 
     def validate(self):
         super(LoginForm, self).validate()
@@ -39,9 +39,9 @@ class LoginForm(FlaskForm):
                 self.username.errors.append(USERNAME_PASSWORD_ERROR)
                 self.password.errors.append(USERNAME_PASSWORD_ERROR)
                 return False
-            raise ValidationError('Error with Wazo authentication server: {}:'.format(e.message))
+            raise ValidationError(l_('Error with Wazo authentication server: %(error)s', error=e.message))
         except requests.ConnectionError:
-            raise ValidationError('Wazo authentication server connection error')
+            raise ValidationError(l_('Wazo authentication server connection error'))
 
         self.user = UserUI(response['token'], response['auth_id'])
 

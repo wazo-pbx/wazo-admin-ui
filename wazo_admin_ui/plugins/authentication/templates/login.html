@@ -10,13 +10,13 @@
   <div class="login-box">
     <div class="login-box-body">
       <h3 class="login-box-msg">
-        {{ gettext('Authentication') }}
+        {{ _('Authentication') }}
       </h3>
       <hr>
       <form action="{{ url_for('login.Login:get') }}" method="post" name="login_user_form">
         {{ login_user_form.hidden_tag() }}
-        {{ render_field(login_user_form.username, with_icon="user", with_label=False, placeholder=gettext("Username")) }}
-        {{ render_field(login_user_form.password, with_icon="lock", with_label=False, placeholder=gettext("Password")) }}
+        {{ render_field(login_user_form.username, with_icon="user", with_label=False, placeholder=_("Username")) }}
+        {{ render_field(login_user_form.password, with_icon="lock", with_label=False, placeholder=_("Password")) }}
       <div class="box-footer text-center">
         {{ render_field(login_user_form.submit, class_="btn btn-primary pull-right", with_label=False) }}
       </div>
