@@ -13,7 +13,7 @@
         {{ _('Authentication') }}
       </h3>
       <hr>
-      <form action="{{ url_for('login.Login:get') }}" method="post" name="login_user_form">
+      <form action="" method="post" name="login_user_form">
         {{ login_user_form.hidden_tag() }}
         {{ render_field(login_user_form.username, with_icon="user", with_label=False, placeholder=_("Username")) }}
         {{ render_field(login_user_form.password, with_icon="lock", with_label=False, placeholder=_("Password")) }}
