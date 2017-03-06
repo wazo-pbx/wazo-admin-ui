@@ -10,7 +10,7 @@ from datetime import timedelta
 
 from cherrypy import wsgiserver
 from flask import Flask
-from flask import request
+from flask import request, session
 from flask_babel import Babel
 from flask_menu import Menu
 from flask_session import Session
@@ -26,6 +26,7 @@ from .auth import AuthClient
 from .user import UserUI
 
 TRANSLATION_DIRECTORY = 'translations'
+BABEL_DEFAULT_LOCALE = 'en'
 
 logger = logging.getLogger(__name__)
 app = Flask('wazo_admin_ui')
@@ -63,9 +64,9 @@ class Server(object):
         configure_error_handlers(app)
         self._configure_jinja()
         self._configure_login()
-        self._configure_babel(global_config['enabled_plugins'])
         self._configure_menu()
         self._configure_session(global_config['session_file_dir'])
+        self._configure_babel(global_config['enabled_plugins'])
 
     def get_app(self):
         return app
@@ -120,13 +121,18 @@ class Server(object):
     def _configure_babel(self, enabled_plugins):
         babel = Babel()
         babel.init_app(app)
-        app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+        app.config['BABEL_DEFAULT_LOCALE'] = BABEL_DEFAULT_LOCALE
         app.config['BABEL_TRANSLATION_DIRECTORIES'] = ';'.join(self._get_translation_directories(enabled_plugins))
 
         @babel.localeselector
         def get_locale():
-            translations = [str(translation) for translation in babel.list_translations()]
-            return request.accept_languages.best_match(translations)
+            if not session.get('language'):
+                translations = set([locale.language for locale in babel.list_translations()])
+                translations.add(BABEL_DEFAULT_LOCALE)
+
+                session['language'] = request.accept_languages.best_match(translations)
+
+            return session['language']
 
     def _get_translation_directories(self, enabled_plugins):
         main_translation_directory = 'translations'
