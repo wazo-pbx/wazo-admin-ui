@@ -6,7 +6,7 @@ from wazo_admin_ui.helpers.plugin import create_blueprint
 
 from flask_menu.classy import register_flaskview
 
-from .resource import Dashboard
+from .view import Dashboard
 
 dashboard = create_blueprint('dashboard', __name__)
 
