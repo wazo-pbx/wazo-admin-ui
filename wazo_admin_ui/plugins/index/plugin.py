@@ -4,7 +4,7 @@
 
 from wazo_admin_ui.helpers.plugin import create_blueprint
 
-from .resource import Index
+from .view import Index
 
 index = create_blueprint('index', __name__)
 
