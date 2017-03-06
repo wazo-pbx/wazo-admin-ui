@@ -27,7 +27,7 @@ class LoginForm(FlaskForm):
 
     username = StringField('Username', validators=[InputRequired()])
     password = PasswordField('Password', validators=[InputRequired()])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Login')
 
     def validate(self):
         super(LoginForm, self).validate()
