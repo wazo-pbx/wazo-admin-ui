@@ -9,7 +9,7 @@ import requests
 from flask_babel import lazy_gettext as l_
 from flask_wtf import FlaskForm
 from requests.exceptions import HTTPError
-from wtforms.fields import PasswordField, StringField, SubmitField
+from wtforms.fields import PasswordField, StringField, SubmitField, SelectField
 from wtforms.validators import InputRequired, ValidationError
 
 from wazo_admin_ui.core.auth import AuthClient
@@ -27,6 +27,7 @@ class LoginForm(FlaskForm):
 
     username = StringField(l_('Username'), validators=[InputRequired()])
     password = PasswordField(l_('Password'), validators=[InputRequired()])
+    language = SelectField(l_('Language'))
     submit = SubmitField(l_('Login'))
 
     def validate(self):

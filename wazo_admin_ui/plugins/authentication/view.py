@@ -4,7 +4,8 @@
 
 import logging
 
-from flask import url_for, render_template, redirect
+from flask_babel import Locale, get_locale
+from flask import url_for, render_template, redirect, session
 from flask_classful import FlaskView
 from flask_login import login_user, logout_user, current_user
 
@@ -14,6 +15,8 @@ logger = logging.getLogger(__name__)
 
 
 class Login(FlaskView):
+
+    babel = None
 
     def get(self):
         return self._login()
@@ -26,12 +29,26 @@ class Login(FlaskView):
             return redirect(url_for('dashboard.Dashboard:get'))
 
         form = LoginForm()
+        form.language.choices = self._build_language_list()
         if form.validate_on_submit():
+            session['language'] = form.language.data
             login_user(form.user)
             return redirect(url_for('dashboard.Dashboard:get'))
 
         return render_template('login.html',
                                login_user_form=form)
+
+    def _build_language_list(self):
+        default_locale = Locale.parse(self.babel.app.config['BABEL_DEFAULT_LOCALE'])
+        session_locale = get_locale()
+        first_choice = (session_locale.language, session_locale.language_name)
+
+        choices = set(((l.language, l.language_name) for l in self.babel.list_translations()))
+        choices.add(first_choice)
+        choices.add((default_locale.language, default_locale.language_name))
+        choices.remove(first_choice)
+
+        return [first_choice] + list(choices)
 
 
 class Logout(FlaskView):

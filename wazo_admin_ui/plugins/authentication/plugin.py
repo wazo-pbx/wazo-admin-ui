@@ -15,6 +15,7 @@ class Plugin(object):
     def load(self, dependencies):
         core = dependencies['flask']
 
+        Login.babel = core.babel_instance
         Login.register(login, route_base='/login', route_prefix='')
         core.register_blueprint(login)
 
