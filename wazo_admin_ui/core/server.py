@@ -141,5 +141,5 @@ class Server(object):
     def _configure_session(self, session_file_dir):
         app.config['SESSION_FILE_DIR'] = session_file_dir
         app.config['SESSION_TYPE'] = 'filesystem'
-        sess = Session()
-        sess.init_app(app)
+        session = Session()
+        session.init_app(app)
