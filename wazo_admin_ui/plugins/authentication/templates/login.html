@@ -10,18 +10,17 @@
   <div class="login-box">
     <div class="login-box-body">
       <h3 class="login-box-msg">
-        {{ gettext('Wazo authentication') }}
+        {{ gettext('Authentication') }}
       </h3>
       <hr>
       <form action="{{ url_for('login.Login:get') }}" method="post" name="login_user_form">
         {{ login_user_form.hidden_tag() }}
         {{ render_field(login_user_form.username, with_icon="user", with_label=False, placeholder=gettext("Username")) }}
         {{ render_field(login_user_form.password, with_icon="lock", with_label=False, placeholder=gettext("Password")) }}
-        <div class="row">
-          <div class="col-xs-4 col-xs-offset-8">
-            {{ render_field(login_user_form.submit, class_="btn btn-primary pull-right", value=gettext("Login"), with_label=False) }}
-          </div>
-        </div>
+      <div class="box-footer text-center">
+        {{ render_field(login_user_form.submit, class_="btn btn-primary pull-right", with_label=False) }}
+      </div>
+
       </form>
       <div id="messages" class="row">
         {% include "flashed_messages.html" %}

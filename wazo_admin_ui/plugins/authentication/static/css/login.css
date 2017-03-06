@@ -1,15 +1,6 @@
-.backstretch {
-    filter: brightness(25%);
-    -webkit-filter: brightness(25%);
-    -moz-filter: brightness(25%);
-    -ms-filter: brightness(25%);
-    -o-filter: brightness(25%);
-}
-
 body {
   background: #7f99b1;
   background: linear-gradient(to left, #7f99b1, #7f99b1);
-  text-shadow: 0 1px 3px rgba(0,0,0,.2);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      
 }
