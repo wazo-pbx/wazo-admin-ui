@@ -4,6 +4,7 @@
     {% include 'head.html' %}
     {% block additional_css %}{% endblock %}
   </head>
+  {% from "translations.html" import datatable_language %}
   {% from "macro.html" import render_field,
                               render_fieldlist,
                               render_fieldlistaction,

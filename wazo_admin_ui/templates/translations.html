@@ -1,0 +1,25 @@
+{% macro datatable_language() %}
+  {
+    "emptyTable":     "{{ _("No data available in table") }}",
+    "info":           "{{ _("Showing _START_ to _END_ of _TOTAL_ entries") }}",
+    "infoEmpty":      "{{ _("Showing 0 to 0 of 0 entries") }}",
+    "infoFiltered":   "{{ _("(filtered from _MAX_ total entries)") }}",
+    "infoPostFix":    "",
+    "infoThousands":  ",",
+    "lengthMenu":     "{{ _("Show _MENU_ entries") }}",
+    "loadingRecords": "{{ _("Loading...") }}",
+    "processing":     "{{ _("Processing...") }}",
+    "search":         "{{ _("Search:") }}",
+    "zeroRecords":    "{{ _("No matching records found") }}",
+      "paginate": {
+        "first":    "{{ _("First") }}",
+        "last":     "{{ _("Last") }}",
+        "next":     "{{ _("Next") }}",
+        "previous": "{{ _("Previous") }}"
+      },
+      "aria": {
+        "sortAscending":  "{{ _(": activate to sort column ascending") }}",
+        "sortDescending": "{{ _(": activate to sort column descending") }}"
+      }
+  }
+{% endmacro %}

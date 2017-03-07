@@ -5,3 +5,9 @@
 <script src="{{ url_for('static', filename='js/select2.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/adminlte.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/wazo-admin-ui.js') }}"></script>
+{% set language = datatable_language() %}
+<script type="text/javascript">
+  $(document).ready(function() {
+      create_table({{ language|tojson }});
+  });
+</script>
