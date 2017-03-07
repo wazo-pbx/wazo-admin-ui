@@ -5,6 +5,12 @@ body {
   -moz-osx-font-smoothing: grayscale;      
 }
 
-.text-white {
+.login-footer {
+  text-align: center;
   color: white;
+}
+
+a, a:focus, a:hover {
+  color: #fff;
+  text-decoration-line: underline;
 }
