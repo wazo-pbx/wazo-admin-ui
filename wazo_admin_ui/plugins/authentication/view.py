@@ -31,7 +31,7 @@ class Login(FlaskView):
             login_user(form.user)
             return redirect(url_for('dashboard.Dashboard:get'))
 
-        return render_template('login.html', form=form)
+        return render_template('authentication/login.html', form=form)
 
     def _build_language_list(self):
         default_locale = Locale.parse(self.babel.app.config['BABEL_DEFAULT_LOCALE'])

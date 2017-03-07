@@ -1,4 +1,4 @@
-{% extends "auth_homepage.html" %}
+{% extends "authentication/layout.html" %}
 {% from "macro.html" import render_field %}
 
 {% block additional_css %}
@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block content %}
-
   <div class="login-box">
     <div class="login-box-body">
       <h3 class="login-box-msg">
@@ -28,5 +27,4 @@
       </div>
     </div>
   </div>
-
 {% endblock %}
