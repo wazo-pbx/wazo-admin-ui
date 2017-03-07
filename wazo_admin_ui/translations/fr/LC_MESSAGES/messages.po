@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wazo-admin-ui 0.1\n"
 "Report-Msgid-Bugs-To: dev@wazo.community\n"
-"POT-Creation-Date: 2017-03-06 13:17-0500\n"
-"PO-Revision-Date: 2017-03-06 13:17-0500\n"
+"POT-Creation-Date: 2017-03-07 15:10-0500\n"
+"PO-Revision-Date: 2017-03-07 15:10-0500\n"
 "Last-Translator: Francois Blackburn <fblackburn@wazo.community>, 2017\n"
 "Language-Team: French (https://www.transifex.com/wazo/teams/69545/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -163,28 +163,100 @@ msgid "Wrong username and/or password"
 msgstr "Mauvais identifiant et/ou mot de passe"
 
 #: wazo_admin_ui/plugins/authentication/form.py:28
-#: wazo_admin_ui/plugins/authentication/templates/login.html:18
+#: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:17
 msgid "Username"
 msgstr "Identifiant"
 
 #: wazo_admin_ui/plugins/authentication/form.py:29
-#: wazo_admin_ui/plugins/authentication/templates/login.html:19
+#: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:18
 msgid "Password"
 msgstr "Mot de passe"
 
 #: wazo_admin_ui/plugins/authentication/form.py:30
+msgid "Language"
+msgstr "Langue"
+
+#: wazo_admin_ui/plugins/authentication/form.py:31
 msgid "Login"
 msgstr "Connexion"
 
-#: wazo_admin_ui/plugins/authentication/form.py:42
+#: wazo_admin_ui/plugins/authentication/form.py:43
 #, python-format
 msgid "Error with Wazo authentication server: %(error)s"
 msgstr "Erreur avec le serveur d'authentification Wazo:  %(error)s"
 
-#: wazo_admin_ui/plugins/authentication/form.py:44
+#: wazo_admin_ui/plugins/authentication/form.py:45
 msgid "Wazo authentication server connection error"
 msgstr "Erreur de connexion avec le serveur d'authentification Wazo"
 
-#: wazo_admin_ui/plugins/authentication/templates/login.html:13
+#: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:12
 msgid "Authentication"
 msgstr "Authentification"
+
+#: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:34
+msgid "All rights reserved."
+msgstr "Tous droits réservés."
+
+#: wazo_admin_ui/templates/macro.html:338
+msgid "Actions"
+msgstr "Actions"
+
+#: wazo_admin_ui/templates/translations.html:3
+msgid "No data available in table"
+msgstr "Aucune donnée disponible dans le tableau"
+
+#: wazo_admin_ui/templates/translations.html:4
+msgid "Showing _START_ to _END_ of _TOTAL_ entries"
+msgstr "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments"
+
+#: wazo_admin_ui/templates/translations.html:5
+msgid "Showing 0 to 0 of 0 entries"
+msgstr "Affichage de l'élément 0 à 0 sur 0 élément"
+
+#: wazo_admin_ui/templates/translations.html:6
+msgid "(filtered from _MAX_ total entries)"
+msgstr "(filtré de _MAX_ éléments au total)"
+
+#: wazo_admin_ui/templates/translations.html:9
+msgid "Show _MENU_ entries"
+msgstr "Afficher _MENU_ éléments"
+
+#: wazo_admin_ui/templates/translations.html:10
+msgid "Loading..."
+msgstr "Chargement en cours..."
+
+#: wazo_admin_ui/templates/translations.html:11
+msgid "Processing..."
+msgstr "Traitement en cours..."
+
+#: wazo_admin_ui/templates/translations.html:12
+msgid "Search:"
+msgstr "Rechercher:"
+
+#: wazo_admin_ui/templates/translations.html:13
+msgid "No matching records found"
+msgstr "Aucun élément à afficher"
+
+#: wazo_admin_ui/templates/translations.html:15
+msgid "First"
+msgstr "Premier"
+
+#: wazo_admin_ui/templates/translations.html:16
+msgid "Last"
+msgstr "Dernier"
+
+#: wazo_admin_ui/templates/translations.html:17
+msgid "Next"
+msgstr "Suivant"
+
+#: wazo_admin_ui/templates/translations.html:18
+msgid "Previous"
+msgstr "Précédent"
+
+#: wazo_admin_ui/templates/translations.html:21
+msgid ": activate to sort column ascending"
+msgstr ": activer pour trier la colonne par ordre croissant"
+
+#: wazo_admin_ui/templates/translations.html:22
+msgid ": activate to sort column descending"
+msgstr ": activer pour trier la colonne par ordre décroissant"
