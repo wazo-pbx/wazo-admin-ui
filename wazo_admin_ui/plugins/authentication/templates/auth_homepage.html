@@ -2,17 +2,15 @@
 <html lang="en">
   <head>
     {% block head %}
-      {% include 'auth_head.html' %}
+      {% include 'head.html' %}
       {% block additional_css %}{% endblock %}
     {% endblock %}
   </head>
   {% block body %}
     <body>
     {% block content %}{% endblock %}
-    {% block scripts %}
-      {% include 'auth_js.html' %}
-      {% block additional_js %}{% endblock %}
-    {% endblock %}
+    {% include 'js.html' %}
+    {% block additional_js %}{% endblock %}
     </body>
   {% endblock %}
 </html>
