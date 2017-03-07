@@ -12,7 +12,6 @@ $.extend(true, $.fn.dataTable.defaults, {
     { responsivePriority: 2, targets: -1 },
     {
       targets: '_all',
-      data: null,
       defaultContent: "-"
     },
     {
@@ -36,14 +35,7 @@ $(document).ready(function() {
       width: null,
   });
 
-  $('#table-list').DataTable({
-    columnDefs: [
-      {
-        targets: '_all',
-        data: undefined,
-      },
-    ]
-  });
+  $('#table-list').DataTable();
 
   $('#add-form').click(function() {
     $('#view-add-form').removeClass('hidden').removeAttr('style');
