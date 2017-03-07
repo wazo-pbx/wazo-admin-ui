@@ -2,40 +2,189 @@
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # This file is distributed under the same license as the wazo-admin-ui
 # project.
-# Wazo Dev Team <dev.wazo@gmail.com>, 2017.
+# Wazo Dev Team <dev@wazo.community>, 2017.
 # 
-#, fuzzy
+# Translators:
+# Francois Blackburn <fblackburn@wazo.community>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: wazo-admin-ui 0.1\n"
-"Report-Msgid-Bugs-To: dev.wazo@gmail.com\n"
-"POT-Creation-Date: 2017-01-31 11:42-0500\n"
-"PO-Revision-Date: 2017-02-06 15:00-0500\n"
-"Last-Translator: Francois Blackburn <fblackburn@proformatique.com>, 2017\n"
+"Report-Msgid-Bugs-To: dev@wazo.community\n"
+"POT-Creation-Date: 2017-03-06 13:17-0500\n"
+"PO-Revision-Date: 2017-03-06 13:17-0500\n"
+"Last-Translator: Francois Blackburn <fblackburn@wazo.community>, 2017\n"
 "Language-Team: French (https://www.transifex.com/wazo/teams/69545/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 1.3\n"
+"Generated-By: Babel 2.3.4\n"
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: wazo_admin_ui/plugins/authentication/form.py:17
+#: wazo_admin_ui/helpers/error.py:19
+msgid "Resource not found"
+msgstr "Ressource introuvable"
+
+#: wazo_admin_ui/helpers/error.py:20
+msgid "Input error"
+msgstr "Erreur d'entrée"
+
+#: wazo_admin_ui/helpers/error.py:54
+msgid "One or more of the choices you made was not acceptable"
+msgstr "Un ou plusieurs des choix que vous avez faits ne sont pas acceptables"
+
+#: wazo_admin_ui/helpers/error.py:55 wazo_admin_ui/helpers/error.py:74
+msgid "Invalid value"
+msgstr "Valeur invalide"
+
+#: wazo_admin_ui/helpers/error.py:56
+msgid "cannot be formatted as a datetime"
+msgstr "ne peut pas être formaté comme un datetime"
+
+#: wazo_admin_ui/helpers/error.py:57
+msgid "cannot be formatted as date"
+msgstr "ne peut pas être formaté comme une date"
+
+#: wazo_admin_ui/helpers/error.py:58
+msgid "cannot be formatted as a timedelta"
+msgstr "ne peut pas être formaté comme une intervalle de temps"
+
+#: wazo_admin_ui/helpers/error.py:59
+msgid "Not a valid boolean"
+msgstr "Pas un boolean valide"
+
+#: wazo_admin_ui/helpers/error.py:60
+msgid "Not a valid datetime"
+msgstr "Pas un datetime valide"
+
+#: wazo_admin_ui/helpers/error.py:61
+msgid "Not a valid mapping type"
+msgstr "Pas un type de mappage valide"
+
+#: wazo_admin_ui/helpers/error.py:62
+msgid "Not a valid email address"
+msgstr "Pas une adresse email valide"
+
+#: wazo_admin_ui/helpers/error.py:63
+msgid "Cannot format string with given data"
+msgstr ""
+"Impossible de formater la chaîne de caractère avec les données fournies"
+
+#: wazo_admin_ui/helpers/error.py:64
+msgid "Not a valid integer"
+msgstr "Pas un entier valide"
+
+#: wazo_admin_ui/helpers/error.py:65
+msgid "Not a valid number"
+msgstr "Pas un nombre valide"
+
+#: wazo_admin_ui/helpers/error.py:66
+msgid "Not a valid string"
+msgstr "Pas une chaine de caractère valide"
+
+#: wazo_admin_ui/helpers/error.py:67
+msgid "Not a valid time"
+msgstr "Pas un temps valide"
+
+#: wazo_admin_ui/helpers/error.py:68
+msgid "Not a valid period of time"
+msgstr "Pas une période de temps valide"
+
+#: wazo_admin_ui/helpers/error.py:69
+msgid "Not a valid URL"
+msgstr "Pas un URL valide"
+
+#: wazo_admin_ui/helpers/error.py:70
+msgid "Not a valid UUID"
+msgstr "Pas un UUID valide"
+
+#: wazo_admin_ui/helpers/error.py:71
+msgid "Field may not be null"
+msgstr "Le champ ne peut pas être null"
+
+#: wazo_admin_ui/helpers/error.py:72
+msgid "Missing data for required field"
+msgstr "Données manquantes pour le champ obligatoire"
+
+#: wazo_admin_ui/helpers/error.py:73
+msgid "Invalid input type"
+msgstr "Type d'entrée non valide"
+
+#: wazo_admin_ui/helpers/error.py:75
+msgid "Invalid input"
+msgstr "Entrée invalide"
+
+#: wazo_admin_ui/helpers/error.py:76
+msgid "Invalid length"
+msgstr "Longueur invalide"
+
+#: wazo_admin_ui/helpers/error.py:77
+msgid "Not a valid choice"
+msgstr "Pas un choix valide"
+
+#: wazo_admin_ui/helpers/error.py:78
+msgid "Invalid range"
+msgstr "Plage invalide"
+
+#: wazo_admin_ui/helpers/error.py:79
+msgid "String does not match expected pattern"
+msgstr "La chaîne de caractère ne correspond pas au modèle attendu"
+
+#: wazo_admin_ui/helpers/error.py:93
+msgid "call permission"
+msgstr "droit d'appel"
+
+#: wazo_admin_ui/helpers/error.py:94
+msgid "conference"
+msgstr "conférence"
+
+#: wazo_admin_ui/helpers/error.py:95
+msgid "extension"
+msgstr "extension"
+
+#: wazo_admin_ui/helpers/error.py:96
+msgid "parking lot"
+msgstr "terrain de stationnement"
+
+#: wazo_admin_ui/helpers/error.py:97
+msgid "switchboard"
+msgstr "popc"
+
+#: wazo_admin_ui/helpers/error.py:98
+msgid "user"
+msgstr "utilisateur"
+
+#: wazo_admin_ui/helpers/error.py:99
+msgid "voicemail"
+msgstr "boite vocale"
+
+#: wazo_admin_ui/plugins/authentication/form.py:19
 msgid "Wrong username and/or password"
 msgstr "Mauvais identifiant et/ou mot de passe"
 
-#: wazo_admin_ui/plugins/authentication/templates/login.html:13
-msgid "Wazo authentication"
-msgstr "Wazo authentification"
-
+#: wazo_admin_ui/plugins/authentication/form.py:28
 #: wazo_admin_ui/plugins/authentication/templates/login.html:18
 msgid "Username"
 msgstr "Identifiant"
 
+#: wazo_admin_ui/plugins/authentication/form.py:29
 #: wazo_admin_ui/plugins/authentication/templates/login.html:19
 msgid "Password"
 msgstr "Mot de passe"
 
-#: wazo_admin_ui/plugins/authentication/templates/login.html:22
+#: wazo_admin_ui/plugins/authentication/form.py:30
 msgid "Login"
 msgstr "Connexion"
+
+#: wazo_admin_ui/plugins/authentication/form.py:42
+#, python-format
+msgid "Error with Wazo authentication server: %(error)s"
+msgstr "Erreur avec le serveur d'authentification Wazo:  %(error)s"
+
+#: wazo_admin_ui/plugins/authentication/form.py:44
+msgid "Wazo authentication server connection error"
+msgstr "Erreur de connexion avec le serveur d'authentification Wazo"
+
+#: wazo_admin_ui/plugins/authentication/templates/login.html:13
+msgid "Authentication"
+msgstr "Authentification"
