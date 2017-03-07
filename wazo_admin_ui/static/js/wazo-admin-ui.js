@@ -35,6 +35,8 @@ $(document).ready(function() {
       width: null,
   });
 
+  $('#table-list').DataTable();
+
   $('#add-form').click(function() {
     $('#view-add-form').removeClass('hidden').removeAttr('style');
   });
@@ -85,12 +87,5 @@ function create_table_serverside(config) {
     if (e.which == 13) {
       Table.search( this.value ).draw();
     }
-  });
-};
-
-
-function create_table(language) {
-  $('#table-list').DataTable({
-      language: $.parseJSON(language)
   });
 };
