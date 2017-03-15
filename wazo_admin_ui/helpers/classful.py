@@ -204,3 +204,36 @@ class BaseView(LoginRequiredView):
             'recordsFiltered': result['total'],
             'data': result['items']
         })
+
+
+class BaseDestinationView(LoginRequiredView):
+    limit = 10
+
+    def _extract_params(self):
+        search = request.args.get('term')
+        page = request.args.get('page')
+
+        if not self._is_positive_integer(page):
+            page = 1
+
+        offset = (int(page) - 1) * self.limit
+        return {'search': search,
+                'offset': offset,
+                'limit': self.limit}
+
+    def _is_positive_integer(self, value):
+        if value is None:
+            return False
+
+        try:
+            value = int(value)
+        except ValueError:
+            return False
+
+        if value < 0:
+            return False
+        return True
+
+    def _select2_response(self, results, total, params):
+        return jsonify({'results': results,
+                        'pagination': {'more': (params['offset'] + params['limit']) < total}})

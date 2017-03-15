@@ -6,10 +6,10 @@ import unittest
 from mock import Mock
 from flask_wtf import FlaskForm
 
-from hamcrest import assert_that, contains, empty
+from hamcrest import assert_that, contains, empty, is_
 from marshmallow import fields
 
-from ..classful import BaseView
+from ..classful import BaseView, BaseDestinationView
 from ..error import ErrorExtractor
 from ..error import ErrorTranslator
 from ..mallow import BaseSchema, BaseAggregatorSchema
@@ -94,3 +94,29 @@ class TestBaseView(unittest.TestCase):
     def _build_error(self, error, path_url):
         return Mock(response=Mock(json=Mock(return_value=error)),
                     request=Mock(path_url=path_url))
+
+
+class TestBaseDestinationView(unittest.TestCase):
+
+    def setUp(self):
+        self.view = BaseDestinationView()
+
+    def test_is_positive_integer(self):
+        response = self.view._is_positive_integer(1)
+        assert_that(response, is_(True))
+
+    def test_is_positive_integer_when_string_integer(self):
+        response = self.view._is_positive_integer('1')
+        assert_that(response, is_(True))
+
+    def test_is_positive_integer_when_none(self):
+        response = self.view._is_positive_integer(None)
+        assert_that(response, is_(False))
+
+    def test_is_positive_integer_when_negative(self):
+        response = self.view._is_positive_integer(-1)
+        assert_that(response, is_(False))
+
+    def test_is_positive_integer_when_string(self):
+        response = self.view._is_positive_integer('abcd')
+        assert_that(response, is_(False))
