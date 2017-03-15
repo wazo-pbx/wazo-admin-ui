@@ -29,11 +29,6 @@ $(window).load(function() {
 });
 
 $(document).ready(function() {
-  $('.select2').select2({
-      theme: 'bootstrap',
-      placeholder: 'Select...',
-      width: null,
-  });
 
   $('#table-list').DataTable();
 
@@ -87,5 +82,18 @@ function create_table_serverside(config) {
     if (e.which == 13) {
       Table.search( this.value ).draw();
     }
+  });
+};
+
+
+function create_default_select2(ajax_url) {
+  $('.select2').select2({
+    theme: 'bootstrap',
+    placeholder: 'Select...',
+    width: null,
+    ajax: {
+      url: ajax_url,
+      delay: 450,
+      },
   });
 };
