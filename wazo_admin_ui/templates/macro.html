@@ -266,20 +266,65 @@
 
 
 {% macro build_form_containers(title, icon) %}
-  <section class="content">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="box box-primary">
-          <div class="box-header with-border">
-            <i class="fa fa-{{ icon }}"></i>
-            <h3 class="box-title">{{ title }}</h3>
-            <div class="box-tools"></div>
-          </div>
+  {% set caller_ = caller %}
+  {% call build_tabs_containers() %}
+    {# TODO: add subtitle arg  or use build_tabs_navigation directly in template #}
+    {% call build_tabs_navigation() %}
+      {{ add_tab_navigation_header(title, '', icon) }}
+    {% endcall %}
+    {{ caller_() }}
+  {% endcall %}
+{% endmacro %}
+
+
+{% macro build_tabs_containers() %}
+<section class="content">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box box-primary">
+        <div class="nav-tabs-custom">
           {{ caller() }}
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+{% endmacro %}
+
+
+{% macro build_tabs_navigation() %}
+  <ul class="nav nav-tabs pull-right">
+    {{ caller() }}
+  </ul>
+{% endmacro %}
+
+
+{% macro add_tab_navigation_item(id, name, active=False) %}
+  <li class="{{ 'active' if active }}"><a href="#{{ id }}" data-toggle="tab">{{ name }}</a></li>
+{% endmacro %}
+
+
+{% macro add_tab_navigation_header(title, subtitle, icon) %}
+  <li class="pull-left header"><i class="fa fa-{{ icon }}"></i> {{ title }}</li>
+  <li class="pull-left header"><small>{{ subtitle }}</small></li>
+{% endmacro %}
+
+
+{% macro build_tabs_content() %}
+  <div class="tab-content">
+    {{ caller() }}
+  </div>
+{% endmacro %}
+
+
+{% macro build_tab_content_item(id, active=False) %}
+  <div class="{{ 'active' if active }} tab-pane" id="{{ id }}">
+    <div class="row">
+      <div class="col-md-12">
+        {{ caller() }}
+      </div>
+    </div>
+  </div>
 {% endmacro %}
 
 
