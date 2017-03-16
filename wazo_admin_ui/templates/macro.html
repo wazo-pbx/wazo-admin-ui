@@ -267,7 +267,7 @@
 
 {% macro build_form_containers(title, icon) %}
   {% set caller_ = caller %}
-  {% call build_tabs_containers() %}
+  {% call build_tabs_containers(without_tab=True) %}
     {# TODO: add subtitle arg  or use build_tabs_navigation directly in template #}
     {% call build_tabs_navigation() %}
       {{ add_tab_navigation_header(title, '', icon) }}
@@ -277,11 +277,11 @@
 {% endmacro %}
 
 
-{% macro build_tabs_containers() %}
+{% macro build_tabs_containers(without_tab=False) %}
 <section class="content">
   <div class="row">
     <div class="col-md-6">
-      <div class="box box-primary">
+      <div class="{{ 'box box-primary' if without_tab }}">
         <div class="nav-tabs-custom">
           {{ caller() }}
         </div>
