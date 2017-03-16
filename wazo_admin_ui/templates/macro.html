@@ -33,7 +33,7 @@
         {{ field(class_=class_+' form-control', placeholder=placeholder, **kwargs_) }}
       {% elif field.type in ('SelectField',
                              'SelectMultipleField') %}
-        {{ field(class_=class_+' form-control', **kwargs_) }}
+        {{ render_field_select(field, class_, **kwargs_) }}
       {% elif field.type == 'FieldList' %}
         {{ render_field_form_list(field, class_=class_) }}
       {% else %}
@@ -104,6 +104,16 @@
       </label>
     </div>
   {% endfor %}
+{% endmacro %}
+
+
+{% macro render_field_select(field, class_) %}
+  {% if field.choices %}
+    {% set class_=class_+' selectfield' %}
+  {% else %}
+    {% set class_=class_+' selectfield-ajax' %}
+  {% endif %}
+  {{ field(class_=class_+' form-control', **kwargs) }}
 {% endmacro %}
 
 
@@ -379,5 +389,3 @@
     </div>
   </div>
 {% endmacro %}
-
-

@@ -30,6 +30,11 @@ $(window).load(function() {
 
 $(document).ready(function() {
 
+  $('.selectfield').select2({
+    theme: 'bootstrap',
+    width: null,
+  });
+
   $('#table-list').DataTable();
 
   $('#add-form').click(function() {
@@ -87,7 +92,7 @@ function create_table_serverside(config) {
 
 
 function create_default_select2(ajax_url) {
-  $('.select2').select2({
+  $('.selectfield-ajax').select2({
     theme: 'bootstrap',
     placeholder: 'Select...',
     width: null,
