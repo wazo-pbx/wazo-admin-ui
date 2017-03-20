@@ -6,7 +6,7 @@ import unittest
 from mock import Mock
 from marshmallow import fields, pre_dump
 from flask_wtf import FlaskForm
-from wtforms.fields import TextField
+from wtforms.fields import TextField, FormField, FieldList
 
 from hamcrest import (assert_that,
                       contains,
@@ -80,6 +80,24 @@ class TestBaseSchema(unittest.TestCase):
         resources = self.schema().dump(form).data
 
         assert_that(resources, has_entries(resource1=is_not(has_entries(attribute1=None))))
+
+    def test_get_attribute_with_attribute_FormField(self):
+        form = Mock(FlaskForm,
+                    attribute1=Mock(FormField, data='value1'),
+                    attribute2=Mock(data='value2', raw_data=['value2']))
+
+        resources = self.schema().dump(form).data
+
+        assert_that(resources, has_entries(resource1=has_entries(attribute1='value1')))
+
+    def test_get_attribute_with_attribute_FieldList(self):
+        form = Mock(FlaskForm,
+                    attribute1=Mock(FieldList, data='value1'),
+                    attribute2=Mock(data='value2', raw_data=['value2']))
+
+        resources = self.schema().dump(form).data
+
+        assert_that(resources, has_entries(resource1=has_entries(attribute1='value1')))
 
     def test_populate_form_errors(self):
         form = Mock(FlaskForm,

@@ -2,6 +2,7 @@
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
+from wtforms.fields import FormField, FieldList
 from flask_wtf import FlaskForm
 from marshmallow import Schema, fields, post_dump, pre_dump
 from marshmallow.utils import missing
@@ -35,6 +36,9 @@ class BaseSchema(Schema):
         return super(BaseSchema, self).get_attribute(attr, obj, default)
 
     def _data_is_given_in_input(self, obj):
+        if isinstance(obj, FormField) or isinstance(obj, FieldList):
+            return True  # We don't know if input is given but we don't want to block
+
         try:
             raw_data = getattr(obj, 'raw_data')
         except AttributeError:
