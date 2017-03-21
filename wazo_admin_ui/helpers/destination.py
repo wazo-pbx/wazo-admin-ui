@@ -46,10 +46,16 @@ class DestinationSchema(BaseSchema):
     @post_dump(pass_original=True)
     def _dump_dynamic_destination(self, data, raw_data):
         if not isinstance(raw_data, dict):
-            return data
+            return {}
 
-        destination_type = raw_data['type']
-        result = raw_data[destination_type]
+        destination_type = raw_data.get('type')
+        if not destination_type:
+            return {}
+
+        result = raw_data.get(destination_type)
+        if not result:
+            return {}
+
         result['type'] = destination_type
         result.pop('csrf_token', None)
         return result
@@ -57,9 +63,12 @@ class DestinationSchema(BaseSchema):
     @post_load(pass_original=True)
     def _load_dynamic_destination(self, data, raw_data):
         if not isinstance(raw_data, dict):
-            return data
+            return {}
 
-        destination_type = raw_data.pop('type')
+        destination_type = raw_data.pop('type', None)
+        if not destination_type:
+            return {}
+
         result = {'type': destination_type,
                   destination_type: raw_data}
         return result
