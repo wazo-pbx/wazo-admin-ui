@@ -51,6 +51,16 @@ $(document).ready(function() {
       $('#error-details-hide').hide();
   });
 
+  $('.destination-select').on("select2:select", function(e) {
+    let context = $(e.target).closest(".destination-container")
+    let destination = $('.destination-'+e.params.data.id, context);
+    let ajax_url = destination.attr('data-destination-href');
+
+    $('[class^=destination-]', context).addClass("hidden");
+    destination.removeClass("hidden");
+
+    create_default_select2(ajax_url, context);
+  });
 });
 
 
@@ -91,8 +101,8 @@ function create_table_serverside(config) {
 };
 
 
-function create_default_select2(ajax_url) {
-  $('.selectfield-ajax').select2({
+function create_default_select2(ajax_url, context) {
+  $('.selectfield-ajax', context).select2({
     theme: 'bootstrap',
     placeholder: 'Select...',
     width: null,

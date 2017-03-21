@@ -5,7 +5,6 @@
 import logging
 
 from wazo_admin_ui.core import plugin_manager
-from wazo_admin_ui.core.destination import destination_blueprint
 from wazo_admin_ui.core.server import Server
 
 logger = logging.getLogger(__name__)
@@ -30,7 +29,3 @@ class Controller(object):
             'flask': self.server.get_app(),
         }]
         plugin_manager.load_plugins(global_config['enabled_plugins'], load_args)
-        self._load_destination(self.server.get_app())
-
-    def _load_destination(self, app):
-        app.register_blueprint(destination_blueprint)

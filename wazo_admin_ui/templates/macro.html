@@ -36,6 +36,10 @@
         {{ render_field_select(field, class_, **kwargs_) }}
       {% elif field.type == 'FieldList' %}
         {{ render_field_form_list(field, class_=class_) }}
+      {% elif field.type == 'FormField' %}
+        {{ render_field_form(field, class_=class_) }}
+      {% elif field.type == 'DestinationField' %}
+        {{ render_field_destination(field, class_=class_) }}
       {% else %}
         {{ field(class_=class_, placeholder=placeholder, **kwargs_) }}
       {% endif %}
@@ -128,6 +132,38 @@
     {% endfor %}
   {% endfor %}
   </div>
+{% endmacro %}
+
+
+{% macro render_field_form(field, class_) %}
+  <div class="">
+    {{ _render_fields(field.form, class_=class_, **kwargs) }}
+  </div>
+{% endmacro %}
+
+
+{% macro render_field_destination(field, class_) %}
+  <div class="destination-container">
+    {{ render_field(field.form.type, class_= class_ ~ ' destination-select', **kwargs) }}
+
+    {% for destination in field.form %}
+      {% if destination.type == 'FormField' %}
+        <div class="destination-{{ destination.short_name }} hidden" data-destination-href="{{ url_for(field.form.listing_urls[destination.short_name]) if field.form.listing_urls[destination.short_name] }}">
+          {{ _render_fields(destination.form, class_=class_, **kwargs) }}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endmacro %}
+
+
+
+{% macro _render_fields(form, class_) %}
+  {% for field in form %}
+    {% if field.type != 'CSRFTokenField' %}
+      {{ render_field(field, class_=class_, **kwargs) }}
+    {% endif %}
+  {% endfor %}
 {% endmacro %}
 
 
