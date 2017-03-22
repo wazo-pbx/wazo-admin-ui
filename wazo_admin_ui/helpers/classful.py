@@ -19,6 +19,7 @@ from requests.exceptions import HTTPError
 
 from wazo_admin_ui.helpers.error import ConfdErrorExtractor as e_extractor
 from wazo_admin_ui.helpers.error import ErrorTranslator as e_translator
+from wazo_admin_ui.helpers.destination import listing_urls
 
 logger = logging.getLogger(__name__)
 
@@ -62,7 +63,10 @@ class BaseView(LoginRequiredView):
         form = form or self.form()
         form = self._populate_form(form)
 
-        return render_template(self._get_template('list'), form=form, resource_list=resource_list)
+        return render_template(self._get_template('list'),
+                               form=form,
+                               resource_list=resource_list,
+                               listing_urls=listing_urls)
 
     def post(self):
         form = self.form()
@@ -98,7 +102,10 @@ class BaseView(LoginRequiredView):
         form = form or self._map_resources_to_form(resources)
         form = self._populate_form(form)
 
-        return render_template(self._get_template('edit'), form=form, resources=resources)
+        return render_template(self._get_template('edit'),
+                               form=form,
+                               resources=resources,
+                               listing_urls=listing_urls)
 
     def _map_resources_to_form(self, resources):
         schema = self.schema()

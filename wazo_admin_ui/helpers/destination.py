@@ -10,11 +10,11 @@ from wazo_admin_ui.helpers.mallow import BaseSchema
 
 
 _destination_choices = set()
-_listing_urls = {}
+listing_urls = {}
 
 
 def register_listing_url(type_id, endpoint):
-    _listing_urls[type_id] = endpoint
+    listing_urls[type_id] = endpoint
 
 
 def register_destination_form(type_id, type_label, form):
@@ -29,7 +29,7 @@ class DestinationForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         super(DestinationForm, self).__init__(*args, **kwargs)
         self.type.choices = [('none', 'None')] + list(_destination_choices)
-        self.listing_urls = _listing_urls
+        self.listing_urls = listing_urls
 
 
 class DestinationField(FormField):
