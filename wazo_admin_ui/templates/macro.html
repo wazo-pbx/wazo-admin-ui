@@ -167,7 +167,7 @@
 
 {% macro _render_fields_destination(form, class_) %}
   {% for field in form %}
-    {% if field.type != 'CSRFTokenField' %}
+    {% if field.type != 'CSRFTokenField'  and field.type != 'DestinationHiddenField'%}
 
       {% if field.type == 'SelectField' and not field.choices %}
         {% if field.data and field.data != 'None' %}  {# issue github wtform #324 #}
