@@ -41,9 +41,9 @@ class TestDestinationSchema(unittest.TestCase):
         assert_that(result, empty())
 
     def test_post_dump_with_no_destination_values(self):
-        data = {'type': 'user'}
+        data = {'type': 'none'}
         result = self.schema.dump(data).data
-        assert_that(result, empty())
+        assert_that(result, {'type': 'none'})
 
     def test_post_dump_when_no_dict(self):
         data = []
@@ -66,7 +66,7 @@ class TestDestinationSchema(unittest.TestCase):
         assert_that(result, empty())
 
     def test_post_load_with_no_destination_values(self):
-        data = {'type': 'user'}
+        data = {'type': 'none'}
         result = self.schema.load(data).data
-        assert_that(result, equal_to({'type': 'user',
-                                      'user': {}}))
+        assert_that(result, equal_to({'type': 'none',
+                                      'none': {}}))

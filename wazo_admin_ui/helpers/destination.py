@@ -23,9 +23,13 @@ def register_destination_form(type_id, type_label, form):
 
 
 class DestinationForm(FlaskForm):
-    listing_urls = _listing_urls
 
-    type = SelectField('Destination', choices=_destination_choices)
+    type = SelectField('Destination', choices=[])
+
+    def __init__(self, *args, **kwargs):
+        super(DestinationForm, self).__init__(*args, **kwargs)
+        self.type.choices = [('none', 'None')] + list(_destination_choices)
+        self.listing_urls = _listing_urls
 
 
 class DestinationField(FormField):
@@ -52,9 +56,7 @@ class DestinationSchema(BaseSchema):
         if not destination_type:
             return {}
 
-        result = raw_data.get(destination_type)
-        if not result:
-            return {}
+        result = raw_data.get(destination_type, {})
 
         result['type'] = destination_type
         result.pop('csrf_token', None)
@@ -79,3 +81,10 @@ class FallbacksSchema(BaseSchema):
     congestion_destination = fields.Nested(DestinationSchema)
     fail_destination = fields.Nested(DestinationSchema)
     noanswer_destination = fields.Nested(DestinationSchema)
+
+    @post_dump
+    def _set_empty_fallback_to_none(self, data):
+        for key, value in data.iteritems():
+            if not value or value.get('type') == 'none':
+                data[key] = None
+        return data
