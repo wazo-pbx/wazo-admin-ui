@@ -4,7 +4,7 @@
 
 from flask_wtf import FlaskForm
 from marshmallow import fields, post_load, post_dump
-from wtforms.fields import SelectField, FormField
+from wtforms.fields import SelectField, FormField, HiddenField
 
 from wazo_admin_ui.helpers.mallow import BaseSchema
 
@@ -43,6 +43,14 @@ class FallbacksForm(FlaskForm):
     congestion_destination = DestinationField('Congestion')
     fail_destination = DestinationField('Fail')
     noanswer_destination = DestinationField('No answer')
+
+
+class DestinationHiddenField(HiddenField):
+
+    def __init__(self, *args, **kwargs):
+        def remove_none(value):
+            return value or ''
+        super(DestinationHiddenField, self).__init__(filters=[remove_none], *args, **kwargs)
 
 
 class DestinationSchema(BaseSchema):
