@@ -189,11 +189,11 @@ class ErrorExtractor(object):
         # TODO: How to extract sub-resource like /usrs/id/funckeys
         regex = re.compile(RESOURCE_REGEX)
         match = regex.match(request.path_url)
-        if match:
-            url_resource = match.group(1)
-            return cls.url_to_name_resources.get(url_resource, url_resource)
-        logger.debug('Unable to extract resource from: %s', request.path_url)
-        return None
+        if not match:
+            logger.debug('Unable to extract resource from: %s', request.path_url)
+            return None
+        url_resource = match.group(1)
+        return cls.url_to_name_resources.get(url_resource, url_resource)
 
 
 class ConfdErrorExtractor(ErrorExtractor):
