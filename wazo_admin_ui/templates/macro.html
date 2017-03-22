@@ -7,6 +7,10 @@
                       class_='') %}
   {% set kwargs_  = kwargs %}
 
+  {% if field.type == 'HiddenField' %}
+    {% set with_label=False %}
+  {% endif %}
+
   {% if with_label and not placeholder %}
     {% set placeholder = field.label.text %}
   {% endif %}
