@@ -95,6 +95,7 @@ class Server(object):
 
     def _configure_jinja(self):
         app.jinja_env.trim_blocks = True
+        app.jinja_env.add_extension('jinja2.ext.do')
 
     def _configure_login(self):
         login_manager = LoginManager()

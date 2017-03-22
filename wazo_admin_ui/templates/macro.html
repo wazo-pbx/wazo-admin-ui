@@ -116,7 +116,7 @@
 
 
 {% macro render_field_select(field, class_) %}
-  {% if field.choices %}
+  {% if field.choices|length > 1 %}  {# TODO: find a better way to check if it is ajax #}
     {% set class_=class_+' selectfield' %}
   {% else %}
     {% set class_=class_+' selectfield-ajax' %}
@@ -141,7 +141,11 @@
 
 {% macro render_field_form(field, class_) %}
   <div class="">
-    {{ _render_fields(field.form, class_=class_, **kwargs) }}
+    {% for field in form %}
+      {% if field.type != 'CSRFTokenField' %}
+        {{ render_field(field, class_=class_, **kwargs) }}
+      {% endif %}
+    {% endfor %}
   </div>
 {% endmacro %}
 
@@ -153,7 +157,7 @@
     {% for destination in field.form %}
       {% if destination.type == 'FormField' %}
         <div class="destination-{{ destination.short_name }} hidden" data-destination-href="{{ url_for(field.form.listing_urls[destination.short_name]) if field.form.listing_urls[destination.short_name] }}">
-          {{ _render_fields(destination.form, class_=class_, **kwargs) }}
+          {{ _render_fields_destination(destination.form, class_=class_, **kwargs) }}
         </div>
       {% endif %}
     {% endfor %}
@@ -161,11 +165,21 @@
 {% endmacro %}
 
 
-
-{% macro _render_fields(form, class_) %}
+{% macro _render_fields_destination(form, class_) %}
   {% for field in form %}
     {% if field.type != 'CSRFTokenField' %}
-      {{ render_field(field, class_=class_, **kwargs) }}
+
+      {% if field.type == 'SelectField' and not field.choices %}
+        {% if field.data and field.data != 'None' %}  {# issue github wtform #324 #}
+          {% set text = form.setted_value_template.format(**form.data) if form.setted_value_template else field.data%}
+          {% do field.choices.append((field.data, text)) %}
+          {{ render_field(field, class_=class_, **kwargs) }}
+          {% do field.choices.pop() %}
+        {% endif %}
+      {% else %}
+        {{ render_field(field, class_=class_, **kwargs) }}
+      {% endif %}
+
     {% endif %}
   {% endfor %}
 {% endmacro %}

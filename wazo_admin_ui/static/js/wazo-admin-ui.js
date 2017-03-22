@@ -52,16 +52,24 @@ $(document).ready(function() {
   });
 
   $('.destination-select').on("select2:select", function(e) {
-    let context = $(e.target).closest(".destination-container")
-    let destination = $('.destination-'+e.params.data.id, context);
+      toggle_destination.call(this);
+  });
+  $('.destination-select').each(function(index) {
+      toggle_destination.call(this);
+  });
+});
+
+
+function toggle_destination(current, value) {
+    let context = $(this).closest(".destination-container")
+    let destination = $('.destination-'+$(this).val(), context);
     let ajax_url = destination.attr('data-destination-href');
 
     $('[class^=destination-]', context).addClass("hidden");
     destination.removeClass("hidden");
 
     create_default_select2(ajax_url, context);
-  });
-});
+};
 
 
 function build_table_actions(get_url, delete_url, id) {
@@ -110,5 +118,5 @@ function create_default_select2(ajax_url, context) {
       url: ajax_url,
       delay: 450,
       },
-  });
+  })
 };
