@@ -60,7 +60,15 @@ $(document).ready(function() {
 
   $('.selectfield-ajax').each(function(index) {
     let ajax_url = $(this).attr('data-listing_href');
-    create_default_select2(ajax_url, this.parentNode);
+    $('.selectfield-ajax', context).select2({
+      theme: 'bootstrap',
+      placeholder: 'Select...',
+      width: null,
+      ajax: {
+        url: ajax_url,
+        delay: 450,
+        },
+    });
   });
 
 });
@@ -109,18 +117,5 @@ function create_table_serverside(config) {
     if (e.which == 13) {
       Table.search( this.value ).draw();
     }
-  });
-};
-
-
-function create_default_select2(ajax_url, context) {
-  $('.selectfield-ajax', context).select2({
-    theme: 'bootstrap',
-    placeholder: 'Select...',
-    width: null,
-    ajax: {
-      url: ajax_url,
-      delay: 450,
-      },
   });
 };
