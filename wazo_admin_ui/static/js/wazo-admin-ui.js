@@ -57,6 +57,12 @@ $(document).ready(function() {
   $('.destination-select').each(function(index) {
       toggle_destination.call(this);
   });
+
+  $('.selectfield-ajax').each(function(index) {
+    let ajax_url = $(this).attr('data-listing_href');
+    create_default_select2(ajax_url, this.parentNode);
+  });
+
 });
 
 
@@ -67,8 +73,6 @@ function toggle_destination(current, value) {
 
     $('[class^=destination-]', context).addClass("hidden");
     destination.removeClass("hidden");
-
-    create_default_select2(ajax_url, context);
 };
 
 
@@ -118,5 +122,5 @@ function create_default_select2(ajax_url, context) {
       url: ajax_url,
       delay: 450,
       },
-  })
+  });
 };
