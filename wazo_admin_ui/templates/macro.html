@@ -116,13 +116,7 @@
 
 
 {% macro render_field_select(field, class_) %}
-  {% set data_listing_href = kwargs.get('data_listing_href') %}
-  {% if data_listing_href %}
-    {% set class_=class_+' selectfield-ajax' %}
-  {% else %}
-    {% set class_=class_+' selectfield' %}
-  {% endif %}
-  {{ field(class_=class_+' form-control', **kwargs) }}
+  {{ field(class_=class_+' selectfield form-control', **kwargs) }}
 {% endmacro %}
 
 

@@ -30,11 +30,6 @@ $(window).load(function() {
 
 $(document).ready(function() {
 
-  $('.selectfield').select2({
-    theme: 'bootstrap',
-    width: null,
-  });
-
   $('#table-list').DataTable();
 
   $('#add-form').click(function() {
@@ -58,17 +53,22 @@ $(document).ready(function() {
       toggle_destination.call(this);
   });
 
-  $('.selectfield-ajax').each(function(index) {
-    let ajax_url = $(this).attr('data-listing_href');
-    $(this).select2({
+  $('.selectfield').each(function(index) {
+    let config = {
       theme: 'bootstrap',
-      placeholder: 'Select...',
       width: null,
-      ajax: {
-        url: ajax_url,
-        delay: 450,
-        },
-    });
+    };
+
+    let ajax_url = $(this).attr('data-listing_href');
+    if (ajax_url) {
+      config['placeholder'] = 'Select...';
+      config['ajax'] = {
+          url: ajax_url,
+          delay: 450,
+      };
+    }
+
+    $(this).select2(config);
   });
 
 });
