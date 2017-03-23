@@ -60,7 +60,7 @@ $(document).ready(function() {
 
   $('.selectfield-ajax').each(function(index) {
     let ajax_url = $(this).attr('data-listing_href');
-    $('.selectfield-ajax', context).select2({
+    $(this).select2({
       theme: 'bootstrap',
       placeholder: 'Select...',
       width: null,
