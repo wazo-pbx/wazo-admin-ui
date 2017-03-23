@@ -156,7 +156,7 @@
 
     {% for destination in field.form %}
       {% if destination.type == 'FormField' %}
-        <div class="destination-{{ destination.short_name }} hidden" data-destination-href="{{ url_for(field.form.listing_urls[destination.short_name]) if field.form.listing_urls[destination.short_name] }}">
+        <div class="destination-{{ destination.short_name }} hidden" data-destination_href="{{ url_for(field.form.listing_urls[destination.short_name]) if field.form.listing_urls[destination.short_name] }}">
           {{ _render_fields_destination(destination.form, class_=class_, **kwargs) }}
         </div>
       {% endif %}

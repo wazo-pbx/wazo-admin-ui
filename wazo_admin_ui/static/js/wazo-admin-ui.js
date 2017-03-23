@@ -63,7 +63,7 @@ $(document).ready(function() {
 function toggle_destination(current, value) {
     let context = $(this).closest(".destination-container")
     let destination = $('.destination-'+$(this).val(), context);
-    let ajax_url = destination.attr('data-destination-href');
+    let ajax_url = destination.attr('data-destination_href');
 
     $('[class^=destination-]', context).addClass("hidden");
     destination.removeClass("hidden");
