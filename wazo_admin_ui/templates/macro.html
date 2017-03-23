@@ -175,6 +175,8 @@
           {% do field.choices.append((field.data, text)) %}
           {{ render_field(field, class_=class_, **kwargs) }}
           {% do field.choices.pop() %}
+        {% else %}
+          {{ render_field(field, class_=class_, **kwargs) }}
         {% endif %}
       {% else %}
         {{ render_field(field, class_=class_, **kwargs) }}
