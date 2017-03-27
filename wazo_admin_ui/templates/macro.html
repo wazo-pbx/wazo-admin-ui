@@ -7,7 +7,7 @@
                       class_='') %}
   {% set kwargs_  = kwargs %}
 
-  {% if field.type == 'HiddenField' %}
+  {% if field.type == 'HiddenField' or field.type == 'DestinationHiddenField'%}
     {% set with_label=False %}
   {% endif %}
 
@@ -162,7 +162,7 @@
 
 {% macro _render_fields_destination(form, destination, listing_urls, class_) %}
   {% for field in form %}
-    {% if field.type != 'CSRFTokenField'  and field.type != 'DestinationHiddenField'%}
+    {% if field.type != 'CSRFTokenField' %}
 
       {% if field.type == 'SelectField' %}
 
