@@ -1,0 +1,53 @@
+# This file should not be modified as it may get changed by the maintainer.
+# Add extra configuration files in the extra_config_files directory to override
+# the content from this file
+
+extra_config_files: /etc/xivo-confd/conf.d/
+
+debug: false
+
+log_level: info
+
+log_filename: /var/log/xivo-confd.log
+pid_filename: /var/run/xivo-confd/xivo-confd.pid
+
+db_uri: postgresql://asterisk:proformatique@postgres/asterisk
+
+service_discovery:
+  enabled: false
+
+rest_api:
+  http:
+    enabled: false
+
+  https:
+    enabled: true
+    listen: 0.0.0.0
+    port: 9486
+
+    certificate: /usr/local/share/ssl/confd/server.crt
+    private_key: /usr/local/share/ssl/confd/server.key
+
+bus:
+    username: guest
+    password: guest
+    host: rabbitmq
+    port: 5672
+    exchange_name: xivo
+    exchange_type: topic
+    exchange_durable: True
+
+auth:
+  host: auth
+  port: 9497
+  verify_certificate: /usr/local/share/ssl/auth/server.crt
+
+provd:
+    host: provd
+    port: 8666
+
+sysconfd:
+    host: sysconfd
+    port: 8668
+
+uuid: 25a8940f-b563-4537-81d0-ccd40c841a2c

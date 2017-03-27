@@ -1,0 +1,22 @@
+extra_config_files: /etc/wazo-admin-ui/conf.d/
+
+debug: false
+log_filename: /var/log/wazo-admin-ui.log
+pid_filename: /var/run/wazo-admin-ui/wazo-admin-ui.pid
+
+https:
+  listen: 0.0.0.0
+  port: 9296
+  certificate: /usr/local/share/ssl/admin-ui/server.crt
+  private_key: /usr/local/share/ssl/admin-ui/server.key
+
+
+auth:
+  host: auth
+  port: 9497
+  verify_certificate: /usr/local/share/ssl/auth/server.crt
+
+confd:
+  host: confd
+  port: 9486
+  verify_certificate: /usr/local/share/ssl/confd/server.crt
