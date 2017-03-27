@@ -50,6 +50,16 @@ class TestDestinationSchema(unittest.TestCase):
         result = self.schema.dump(data).data
         assert_that(result, empty())
 
+    def test_post_dump_with_empty_string(self):
+        data = {'type': 'user',
+                'user': {'user_id': 1,
+                         'timeout': ''}}
+
+        result = self.schema.dump(data).data
+        assert_that(result, equal_to({'type': 'user',
+                                      'user_id': 1,
+                                      'timeout': None}))
+
     def test_post_load(self):
         data = {'type': 'user',
                 'user_id': 1,

@@ -64,7 +64,8 @@ class DestinationSchema(BaseSchema):
         if not destination_type:
             return {}
 
-        result = raw_data.get(destination_type, {})
+        destination = raw_data.get(destination_type, {})
+        result = self._convert_all_empty_string_to_none(destination)
 
         result['type'] = destination_type
         result.pop('csrf_token', None)
@@ -81,6 +82,12 @@ class DestinationSchema(BaseSchema):
 
         result = {'type': destination_type,
                   destination_type: raw_data}
+        return result
+
+    def _convert_all_empty_string_to_none(self, data):
+        result = {}
+        for key, val in data.iteritems():
+            result[key] = val if val != '' else None
         return result
 
 
