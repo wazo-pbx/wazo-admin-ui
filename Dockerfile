@@ -21,9 +21,10 @@ RUN chown wazo-admin-ui /var/run/wazo-admin-ui/
 RUN mkdir /var/lib/wazo-admin-ui/
 RUN chown wazo-admin-ui /var/lib/wazo-admin-ui/
 
-# DO NOT USE this certificate in prod
-RUN mkdir -p /usr/share/xivo-certs
 ADD ./contribs/docker/certs /usr/share/xivo-certs
+WORKDIR /usr/share/xivo-certs
+RUN openssl req -x509 -newkey rsa:4096 -keyout server.key -out server.crt -nodes -config openssl.cfg -days 3650
+WORKDIR /usr/src/wazo-admin-ui
 
 EXPOSE 9296
 
