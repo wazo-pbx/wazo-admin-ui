@@ -120,12 +120,11 @@ class BaseView(LoginRequiredView):
     @route('/put/<id>', methods=['POST'])
     def put(self, id):
         form = self.form()
-        resources = self._map_form_to_resources_put(form, id)
-
         if not form.csrf_token.validate(form):
             flash_basic_form_errors(form)
             return self._get(id, form)
 
+        resources = self._map_form_to_resources_put(form, id)
         try:
             self.service.update(resources)
         except HTTPError as error:
