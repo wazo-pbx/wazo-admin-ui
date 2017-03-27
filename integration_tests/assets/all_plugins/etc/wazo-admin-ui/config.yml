@@ -20,3 +20,15 @@ confd:
   host: confd
   port: 9486
   verify_certificate: /usr/local/share/ssl/confd/server.crt
+
+enabled_plugins:
+  user: true
+  # conference: true
+  group: true
+  parking_lot: true
+  switchoard: true
+  paging: true
+  voicemail: true
+  moh: true
+  incall: true
+  outcall: true
