@@ -1,0 +1,13 @@
+sync:
+  image: n3llyb0y/wait
+  links:
+    - admin-ui
+
+admin-ui:
+  image: wazo-admin-ui-test
+  ports:
+    - "9296"
+  volumes:
+    - "../../..:/usr/src/wazo-admin-ui"
+    - "./etc/wazo-admin-ui:/etc/wazo-admin-ui"
+    - "./ssl-admin-ui:/usr/share/xivo-certs"
