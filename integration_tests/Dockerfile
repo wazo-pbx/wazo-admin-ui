@@ -5,10 +5,10 @@ RUN git clone https://github.com/wazo-pbx/wazo-admin-ui-user.git
 WORKDIR /var/tmp/wazo-admin-ui-user
 RUN python setup.py install
 
-# WORKDIR /var/tmp
-# RUN git clone https://github.com/wazo-pbx/wazo-admin-ui-conference.git
-# WORKDIR /var/tmp/wazo-admin-ui-conference
-# RUN python setup.py install
+WORKDIR /var/tmp
+RUN git clone https://github.com/wazo-pbx/wazo-admin-ui-conference.git
+WORKDIR /var/tmp/wazo-admin-ui-conference
+RUN python setup.py install
 
 WORKDIR /var/tmp
 RUN git clone https://github.com/wazo-pbx/wazo-admin-ui-group.git

@@ -23,7 +23,7 @@ confd:
 
 enabled_plugins:
   user: true
-  # conference: true
+  conference: true
   group: true
   parking_lot: true
   switchoard: true
