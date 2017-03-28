@@ -26,7 +26,7 @@ enabled_plugins:
   conference: true
   group: true
   parking_lot: true
-  switchoard: true
+  switchboard: true
   paging: true
   voicemail: true
   moh: true
