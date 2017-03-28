@@ -53,4 +53,5 @@ RUN python setup.py install
 COPY . /usr/src/wazo-admin-ui
 WORKDIR /usr/src/wazo-admin-ui
 
+RUN pybabel compile --directory=wazo_admin_ui/translations
 RUN python setup.py develop
