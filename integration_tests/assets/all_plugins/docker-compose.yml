@@ -23,6 +23,16 @@ admin-ui:
     - "../../..:/usr/src/wazo-admin-ui"
     - "./etc/wazo-admin-ui:/etc/wazo-admin-ui"
     - "./ssl:/usr/local/share/ssl"
+    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-conference/conference:/usr/src/wazo-admin-ui-conference/conference"
+    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-group/group:/usr/src/wazo-admin-ui-group/group"
+    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-incall/incall:/usr/src/wazo-admin-ui-incall/incall"
+    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-moh/moh:/usr/src/wazo-admin-ui-moh/moh"
+    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-outcall/outcall:/usr/src/wazo-admin-ui-outcall/outcall"
+    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-paging/paging:/usr/src/wazo-admin-ui-paging/paging"
+    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-parking-lot/parking_lot:/usr/src/wazo-admin-ui-parking-lot/parking_lot"
+    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-switchboard/switchboard:/usr/src/wazo-admin-ui-switchboard/switchboard"
+    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-user/user:/usr/src/wazo-admin-ui-user/user"
+    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-voicemail/voicemail:/usr/src/wazo-admin-ui-voicemail/voicemail"
 
 auth:
   image: p0bailey/docker-flask

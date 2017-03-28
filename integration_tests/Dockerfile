@@ -10,10 +10,10 @@ RUN for plugin in conference \
                   switchboard \
                   user \
                   voicemail; do \
-    cd /var/tmp; \
+    cd /usr/src; \
     git clone --depth 1 https://github.com/wazo-pbx/wazo-admin-ui-$plugin.git;  \
-    cd /var/tmp/wazo-admin-ui-$plugin; \
-    python setup.py install; \
+    cd /usr/src/wazo-admin-ui-$plugin; \
+    python setup.py develop; \
     done
 
 COPY . /usr/src/wazo-admin-ui
