@@ -4,12 +4,15 @@
 # project.
 # Wazo Dev Team <dev@wazo.community>, 2017.
 # 
+# Translators:
+# Rafał Perczyński <pery@kza.pl>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: wazo-admin-ui 0.1\n"
 "Report-Msgid-Bugs-To: dev@wazo.community\n"
 "POT-Creation-Date: 2017-03-07 15:10-0500\n"
 "PO-Revision-Date: 2017-03-07 15:10-0500\n"
+"Last-Translator: Rafał Perczyński <pery@kza.pl>, 2017\n"
 "Language-Team: Polish (https://www.transifex.com/wazo/teams/69545/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -20,239 +23,240 @@ msgstr ""
 
 #: wazo_admin_ui/helpers/error.py:19
 msgid "Resource not found"
-msgstr ""
+msgstr "Nie znaleziono zasobu"
 
 #: wazo_admin_ui/helpers/error.py:20
 msgid "Input error"
-msgstr ""
+msgstr "Błąd danych wejściowych"
 
 #: wazo_admin_ui/helpers/error.py:54
 msgid "One or more of the choices you made was not acceptable"
 msgstr ""
+"Jeden lub więcej wyborów których dokonałeś nie zostało zaakceptowanych"
 
 #: wazo_admin_ui/helpers/error.py:55 wazo_admin_ui/helpers/error.py:74
 msgid "Invalid value"
-msgstr ""
+msgstr "Nieprawidłowa wartość"
 
 #: wazo_admin_ui/helpers/error.py:56
 msgid "cannot be formatted as a datetime"
-msgstr ""
+msgstr "nie jest poprawną wartością \"daty i czasu\""
 
 #: wazo_admin_ui/helpers/error.py:57
 msgid "cannot be formatted as date"
-msgstr ""
+msgstr "nie jest poprawną wartością \"daty\""
 
 #: wazo_admin_ui/helpers/error.py:58
 msgid "cannot be formatted as a timedelta"
-msgstr ""
+msgstr "nie jest poprawną wartością \"przedziału czasu\""
 
 #: wazo_admin_ui/helpers/error.py:59
 msgid "Not a valid boolean"
-msgstr ""
+msgstr "Nieprawidłowa wartość logiczna"
 
 #: wazo_admin_ui/helpers/error.py:60
 msgid "Not a valid datetime"
-msgstr ""
+msgstr "Nieprawidłowa wartość \"data i czas\""
 
 #: wazo_admin_ui/helpers/error.py:61
 msgid "Not a valid mapping type"
-msgstr ""
+msgstr "Nieprawidłowe mapowanie typu"
 
 #: wazo_admin_ui/helpers/error.py:62
 msgid "Not a valid email address"
-msgstr ""
+msgstr "Nieprawidłowy adres email"
 
 #: wazo_admin_ui/helpers/error.py:63
 msgid "Cannot format string with given data"
-msgstr ""
+msgstr "Wprowadzona wartość nie może być zamieniona na ciąg znaków"
 
 #: wazo_admin_ui/helpers/error.py:64
 msgid "Not a valid integer"
-msgstr ""
+msgstr "Nieprawidłowa wartość \"całkowita dodatnia\""
 
 #: wazo_admin_ui/helpers/error.py:65
 msgid "Not a valid number"
-msgstr ""
+msgstr "Nieprawidłowa wartość \"numer\""
 
 #: wazo_admin_ui/helpers/error.py:66
 msgid "Not a valid string"
-msgstr ""
+msgstr "Nieprawidłowa wartość \"ciąg znaków\""
 
 #: wazo_admin_ui/helpers/error.py:67
 msgid "Not a valid time"
-msgstr ""
+msgstr "Nieprawidłowa wartość \"czas\""
 
 #: wazo_admin_ui/helpers/error.py:68
 msgid "Not a valid period of time"
-msgstr ""
+msgstr "Nieprawidłowa wartość \"przedział czasu\""
 
 #: wazo_admin_ui/helpers/error.py:69
 msgid "Not a valid URL"
-msgstr ""
+msgstr "Nieprawidłowa wartość \"URL\""
 
 #: wazo_admin_ui/helpers/error.py:70
 msgid "Not a valid UUID"
-msgstr ""
+msgstr "Nieprawidłowa wartość \"UUID\""
 
 #: wazo_admin_ui/helpers/error.py:71
 msgid "Field may not be null"
-msgstr ""
+msgstr "Pole nie może być puste"
 
 #: wazo_admin_ui/helpers/error.py:72
 msgid "Missing data for required field"
-msgstr ""
+msgstr "Brakuje danych dla wymaganego pola"
 
 #: wazo_admin_ui/helpers/error.py:73
 msgid "Invalid input type"
-msgstr ""
+msgstr "Nieprawidłowy typ danych wejściowych"
 
 #: wazo_admin_ui/helpers/error.py:75
 msgid "Invalid input"
-msgstr ""
+msgstr "Nieprawidłowe wejście"
 
 #: wazo_admin_ui/helpers/error.py:76
 msgid "Invalid length"
-msgstr ""
+msgstr "Nieprawidłowa długość"
 
 #: wazo_admin_ui/helpers/error.py:77
 msgid "Not a valid choice"
-msgstr ""
+msgstr "Brak prawidłowego wyboru"
 
 #: wazo_admin_ui/helpers/error.py:78
 msgid "Invalid range"
-msgstr ""
+msgstr "Nieprawidłowy zakres"
 
 #: wazo_admin_ui/helpers/error.py:79
 msgid "String does not match expected pattern"
-msgstr ""
+msgstr "Łańcuch znaków nie pasuje do oczekiwanego wzorca"
 
 #: wazo_admin_ui/helpers/error.py:93
 msgid "call permission"
-msgstr ""
+msgstr "uprawnienia połączeń"
 
 #: wazo_admin_ui/helpers/error.py:94
 msgid "conference"
-msgstr ""
+msgstr "konferencje"
 
 #: wazo_admin_ui/helpers/error.py:95
 msgid "extension"
-msgstr ""
+msgstr "numer wewnętrzny"
 
 #: wazo_admin_ui/helpers/error.py:96
 msgid "parking lot"
-msgstr ""
+msgstr "Parkowanie połączeń"
 
 #: wazo_admin_ui/helpers/error.py:97
 msgid "switchboard"
-msgstr ""
+msgstr "Konsola operatora"
 
 #: wazo_admin_ui/helpers/error.py:98
 msgid "user"
-msgstr ""
+msgstr "Użytkownik"
 
 #: wazo_admin_ui/helpers/error.py:99
 msgid "voicemail"
-msgstr ""
+msgstr "poczta głosowa"
 
 #: wazo_admin_ui/plugins/authentication/form.py:19
 msgid "Wrong username and/or password"
-msgstr ""
+msgstr "Nieprawidłowa nazwa użytkownika lub/i hasło"
 
 #: wazo_admin_ui/plugins/authentication/form.py:28
 #: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:17
 msgid "Username"
-msgstr ""
+msgstr "nazwa użytkownika"
 
 #: wazo_admin_ui/plugins/authentication/form.py:29
 #: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:18
 msgid "Password"
-msgstr ""
+msgstr "Hasło"
 
 #: wazo_admin_ui/plugins/authentication/form.py:30
 msgid "Language"
-msgstr ""
+msgstr "Język"
 
 #: wazo_admin_ui/plugins/authentication/form.py:31
 msgid "Login"
-msgstr ""
+msgstr "Zaloguj"
 
 #: wazo_admin_ui/plugins/authentication/form.py:43
 #, python-format
 msgid "Error with Wazo authentication server: %(error)s"
-msgstr ""
+msgstr "Błąd serwera autoryzacji WAZO: %(error)s"
 
 #: wazo_admin_ui/plugins/authentication/form.py:45
 msgid "Wazo authentication server connection error"
-msgstr ""
+msgstr "Błąd połączenia z serwerem autoryzacji WAZO"
 
 #: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:12
 msgid "Authentication"
-msgstr ""
+msgstr "Uwierzytelnienie"
 
 #: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:34
 msgid "All rights reserved."
-msgstr ""
+msgstr "Wszystkie prawa zastrzeżone"
 
 #: wazo_admin_ui/templates/macro.html:338
 msgid "Actions"
-msgstr ""
+msgstr "Działania"
 
 #: wazo_admin_ui/templates/translations.html:3
 msgid "No data available in table"
-msgstr ""
+msgstr "Brak danych w tabeli"
 
 #: wazo_admin_ui/templates/translations.html:4
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
-msgstr ""
+msgstr "Pokazuje _START_ do _END_ z _TOTAL_ wpisów"
 
 #: wazo_admin_ui/templates/translations.html:5
 msgid "Showing 0 to 0 of 0 entries"
-msgstr ""
+msgstr "Pokazuje 0 do 0 z 0 wpisów"
 
 #: wazo_admin_ui/templates/translations.html:6
 msgid "(filtered from _MAX_ total entries)"
-msgstr ""
+msgstr "(filtruj z _MAX_ wszystkich wpisów)"
 
 #: wazo_admin_ui/templates/translations.html:9
 msgid "Show _MENU_ entries"
-msgstr ""
+msgstr "Pokaż _MENU_ wpisy"
 
 #: wazo_admin_ui/templates/translations.html:10
 msgid "Loading..."
-msgstr ""
+msgstr "Wczytywanie..."
 
 #: wazo_admin_ui/templates/translations.html:11
 msgid "Processing..."
-msgstr ""
+msgstr "Przetwarzanie..."
 
 #: wazo_admin_ui/templates/translations.html:12
 msgid "Search:"
-msgstr ""
+msgstr "Szukaj:"
 
 #: wazo_admin_ui/templates/translations.html:13
 msgid "No matching records found"
-msgstr ""
+msgstr "Brak pasujących rekordów"
 
 #: wazo_admin_ui/templates/translations.html:15
 msgid "First"
-msgstr ""
+msgstr "Pierwszy"
 
 #: wazo_admin_ui/templates/translations.html:16
 msgid "Last"
-msgstr ""
+msgstr "Ostatni"
 
 #: wazo_admin_ui/templates/translations.html:17
 msgid "Next"
-msgstr ""
+msgstr "Następny"
 
 #: wazo_admin_ui/templates/translations.html:18
 msgid "Previous"
-msgstr ""
+msgstr "Poprzedni"
 
 #: wazo_admin_ui/templates/translations.html:21
 msgid ": activate to sort column ascending"
-msgstr ""
+msgstr ":włącz sortowanie kolumny rosnąco"
 
 #: wazo_admin_ui/templates/translations.html:22
 msgid ": activate to sort column descending"
-msgstr ""
+msgstr ":włącz sortowanie kolumny malejąco"
