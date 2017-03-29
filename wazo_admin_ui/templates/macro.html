@@ -156,14 +156,14 @@
 {% endmacro %}
 
 
-{% macro build_list_containers(title, icon) %}
+{% macro build_list_containers(title, icon, add_url='#') %}
     <div class="col-md-8">
       <div class="box box-primary">
         <div class="box-header with-border">
           <i class="fa fa-{{ icon }}"></i>
           <h3 class="box-title">{{ title }}</h3>
           <div class="box-tools">
-            <a href="#" id="add-form" class="btn btn-box-tool">
+            <a href="{{ add_url }}" id="add-form" class="btn btn-box-tool">
               <i class="fa fa-plus"></i>
             </a>
           </div>
