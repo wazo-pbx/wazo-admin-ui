@@ -3,7 +3,7 @@
                       with_icon=False,
                       placeholder=False,
                       inputclass=False,
-                      divclass='col-sm-8',
+                      divclass=None,
                       class_='') %}
   {% set kwargs_  = kwargs %}
 
@@ -13,6 +13,10 @@
 
   {% if with_label and not placeholder %}
     {% set placeholder = field.label.text %}
+  {% endif %}
+
+  {% if not divclass %}
+    {% set divclass = 'col-sm-8' if with_label else 'col-sm-12' %}
   {% endif %}
 
   {%- if field.flags.required %}
