@@ -71,6 +71,38 @@ $(document).ready(function() {
     $(this).select2(config);
   });
 
+  $('.add-row-entry').click(function(e) {
+    e.preventDefault();
+    let context = $(this).closest('.row')[0];
+    let row = $(".row-template", context).clone();
+    let element_total = $('.dynamic-table', context).find("tr").length;  // including template
+
+    // Update name/id
+    row.find(":input").not(":button").each(function() {
+      id = $(this).attr('id').replace(/(.*)-template-(.*)/m, '$1-' + element_total + '-$2');
+      $(this).attr('name', id).attr('id', id);
+    });
+
+    let last_tr = $('.dynamic-table', context).find("tr").last()
+    row.removeClass("row-template hidden");
+    row.insertAfter(last_tr);
+
+    $('.delete-row-entry', context).click(function(e) {
+      e.preventDefault();
+      $(this).closest("tr").remove();
+    });
+  });
+
+  // Update name/id of template row
+  $('.row-template :input').not(":button").each(function() {
+    let template_id = $(this).attr('id').replace(/(.*)-\d{1,4}-(.*)/m, '$1-template-$2');
+    $(this).attr('name', template_id).attr('id', template_id);
+  });
+
+  $('.delete-row-entry').click(function(e) {
+    e.preventDefault();
+    $(this).closest("tr").remove();
+  });
 });
 
 
