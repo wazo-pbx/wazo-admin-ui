@@ -149,8 +149,8 @@
     {{ caller() }}
   </div>
   {% if submit_value %}
-    <div class="box-footer">
-      {{ render_field(form.submit, class_="btn btn-primary pull-right", value=submit_value, with_label=False) }}
+    <div class="box-footer text-center">
+      {{ render_field(form.submit, class_="btn btn-primary", value=submit_value, with_label=False) }}
     </div>
   {% endif %}
 {% endmacro %}
