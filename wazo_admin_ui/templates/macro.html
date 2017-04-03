@@ -135,6 +135,29 @@
 {% endmacro %}
 
 
+{% macro add_add_entry_button() %}
+  <button class="btn btn-box-tool add-row-entry">
+    <i class="fa fa-plus"></i>
+  </button>
+{% endmacro %}
+
+
+{% macro add_delete_entry_button() %}
+  <button class="btn btn-xs btn-danger delete-row-entry">
+    <i class="fa fa-minus"></i>
+  </button>
+{% endmacro %}
+
+
+{% macro build_add_row_entry_header() %}
+  <div class="box-header">
+    <div class="box-tools">
+      {{ add_add_entry_button() }}
+    </div>
+  </div>
+{% endmacro %}
+
+
 {% macro build_form(method="post", action="") %}
   <form class="form-horizontal" method="{{ method }}" action="{{ action }}">
     {{ caller() }}
@@ -176,19 +199,28 @@
 {% endmacro %}
 
 
+{% macro build_table(id=None) %}
+  <table {{ 'id=' ~ id if id }} class="table table-condensed">
+    {{ caller() }}
+  </table>
+{% endmacro %}
+
+
 {% macro build_list_table(serverside=False) %}
   {% if serverside %}
     {% set table_id = "table-list-serverside" %}
   {% else %}
     {% set table_id = "table-list" %}
   {% endif %}
-  <table id="{{ table_id }}" class="table table-condensed">
-    {{ caller() }}
-  </table>
+
+  {% set caller_ = caller %}
+  {% call build_table(id=table_id) %}
+    {{ caller_() }}
+  {% endcall %}
 {% endmacro %}
 
 
-{% macro build_list_table_headers() %}
+{% macro build_table_headers() %}
   <thead>
     <tr>
       {{ caller() }}
@@ -197,19 +229,35 @@
 {% endmacro %}
 
 
+{% macro build_list_table_headers() %}
+  {% set caller_ = caller %}
+  {% call build_table_headers() %}
+    {{ caller_() }}
+  {% endcall %}
+{% endmacro %}
+
+
 {% macro add_list_table_header_action() %}
   <th class="no-sort" style="width: 80px">{{ _('Actions')  }}</th>
 {% endmacro %}
 
 
+{% macro build_table_body(class_=None) %}
+  <tbody class="{{ class_ }}">
+    {{ caller() }}
+  </tbody>
+{% endmacro %}
+
+
 {% macro build_list_table_rows(items) %}
-  <tbody>
+  {% set caller_ = caller %}
+  {% call build_table_body() %}
     {% for item in items %}
       <tr>
-        {{ caller(item) }}
+        {{ caller_(item) }}
       </tr>
     {% endfor %}
-  </tbody>
+  {% endcall %}
 {% endmacro %}
 
 
