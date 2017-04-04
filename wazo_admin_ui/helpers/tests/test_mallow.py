@@ -179,6 +179,17 @@ class TestBaseAggregatorSchema(unittest.TestCase):
         assert_that(result, equal_to({'resource1': form,
                                       'resource2': form}))
 
+    def test_add_envelope_with_fields_list(self):
+        class AggregatorSchemaList(BaseAggregatorSchema):
+            resourcesn = fields.List(fields.String())
+
+        form = Mock(FlaskForm,
+                    resourcesn=Mock(FieldList, data=['value1', 'value2']))
+
+        result = AggregatorSchemaList().add_envelope(form)
+
+        assert_that(result, equal_to({'resourcesn': ['value1', 'value2']}))
+
 
 class TestExtractFormFields(unittest.TestCase):
 

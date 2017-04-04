@@ -90,5 +90,15 @@ class BaseAggregatorSchema(BaseSchema):
     def add_envelope(self, data):
         result = {}
         for field in self.fields:
-            result[field] = data
+            field_obj = self.declared_fields.get(field, None)
+            if isinstance(field_obj, fields.List):
+                result[field] = self._extract_data_field_list(data, field)
+            else:
+                result[field] = data
         return result
+
+    def _extract_data_field_list(self, data, field):
+        data_obj = getattr(data, field, None)
+        if isinstance(data_obj, FieldList):
+            return getattr(data_obj, 'data', {})
+        return data_obj
