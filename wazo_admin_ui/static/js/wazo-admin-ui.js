@@ -46,13 +46,7 @@ $(document).ready(function() {
       $('#error-details-hide').hide();
   });
 
-  $('.destination-select').on("select2:select", function(e) {
-      toggle_destination.call(this);
-  });
-  $('.destination-select').each(function(index) {
-      toggle_destination.call(this);
-  });
-
+  init_destination_select.call(this);
   init_select2.call(this);
 
   $('.add-row-entry').click(function(e) {
@@ -70,6 +64,7 @@ $(document).ready(function() {
     let last_tr = $('.dynamic-table', context).find("tr").last()
     row.removeClass("row-template hidden");
     row.insertAfter(last_tr);
+    init_destination_select.call(row);
     init_select2.call(row);
 
     $('.delete-row-entry', context).click(function(e) {
@@ -89,6 +84,17 @@ $(document).ready(function() {
     $(this).closest("tr").remove();
   });
 });
+
+
+function init_destination_select() {
+  $('.destination-select', this).on("select2:select", function(e) {
+      toggle_destination.call(this);
+  });
+  $('.destination-select', this).each(function(index) {
+      toggle_destination.call(this);
+  });
+
+};
 
 
 function toggle_destination(current, value) {
@@ -144,8 +150,7 @@ function init_select2() {
 
     $(this).select2(config);
   });
-
-}
+};
 
 function create_table_serverside(config) {
   config.serverSide = true
