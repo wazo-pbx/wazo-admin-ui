@@ -53,23 +53,7 @@ $(document).ready(function() {
       toggle_destination.call(this);
   });
 
-  $('.selectfield').each(function(index) {
-    let config = {
-      theme: 'bootstrap',
-      width: null,
-    };
-
-    let ajax_url = $(this).attr('data-listing_href');
-    if (ajax_url) {
-      config['placeholder'] = 'Select...';
-      config['ajax'] = {
-          url: ajax_url,
-          delay: 450,
-      };
-    }
-
-    $(this).select2(config);
-  });
+  init_select2.call(this);
 
   $('.add-row-entry').click(function(e) {
     e.preventDefault();
@@ -86,6 +70,7 @@ $(document).ready(function() {
     let last_tr = $('.dynamic-table', context).find("tr").last()
     row.removeClass("row-template hidden");
     row.insertAfter(last_tr);
+    init_select2.call(row);
 
     $('.delete-row-entry', context).click(function(e) {
       e.preventDefault();
@@ -137,6 +122,30 @@ function build_table_actions(get_url, delete_url, id) {
   return view.prop('outerHTML') + " " + remove.prop('outerHTML');
 };
 
+
+function init_select2() {
+  $('.selectfield', this).each(function(index) {
+    if ($(this).parents('.row-template').length) {
+      return;
+    }
+    let config = {
+      theme: 'bootstrap',
+      width: null,
+    };
+
+    let ajax_url = $(this).attr('data-listing_href');
+    if (ajax_url) {
+      config['placeholder'] = 'Select...';
+      config['ajax'] = {
+          url: ajax_url,
+          delay: 450,
+      };
+    }
+
+    $(this).select2(config);
+  });
+
+}
 
 function create_table_serverside(config) {
   config.serverSide = true
