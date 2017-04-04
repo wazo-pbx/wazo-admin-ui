@@ -5,6 +5,7 @@
 from flask_wtf import FlaskForm
 from marshmallow import fields, post_load, post_dump
 from wtforms.fields import SelectField, FormField, HiddenField
+from wtforms.utils import unset_value
 
 from wazo_admin_ui.helpers.mallow import BaseSchema
 
@@ -35,7 +36,12 @@ class DestinationForm(FlaskForm):
 class DestinationField(FormField):
 
     def __init__(self, *args, **kwargs):
+        self.destination_label = kwargs.pop('destination_label', None)
         super(DestinationField, self).__init__(DestinationForm, *args, **kwargs)
+
+    def process(self, formdata, data=unset_value):
+        super(DestinationField, self).process(formdata, data)
+        self.form.type.label.text = self.destination_label
 
 
 class FallbacksForm(FlaskForm):
