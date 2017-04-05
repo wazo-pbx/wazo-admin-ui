@@ -7,7 +7,7 @@
                       class_='') %}
   {% set kwargs_  = kwargs %}
 
-  {% if field.type == 'HiddenField' or field.type == 'DestinationHiddenField'%}
+  {% if field.type in ('HiddenField', 'DestinationHiddenField') %}
     {% set with_label=False %}
   {% endif %}
 
@@ -66,7 +66,7 @@
 
 
 {% macro _wrap_label_input_with_div(field, inputclass, with_label) %}
-  {% if field.type == 'SubmitField' or field.type == 'HiddenField' %}
+  {% if field.type in ('SubmitField', 'HiddenField', 'DestinationHiddenField') %}
     {{ caller() }}
 
   {%- else %}
@@ -87,7 +87,7 @@
       {{ caller() }}
     </div>
 
-  {%- elif field.type == 'FieldList' or field.type == 'HiddenField' %}
+  {%- elif field.type in ('FieldList', 'HiddenField', 'DestinationHiddenField') %}
     {{ caller() }}
 
   {%- else %}
