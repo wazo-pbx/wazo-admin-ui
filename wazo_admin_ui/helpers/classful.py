@@ -39,26 +39,51 @@ class LoginRequiredView(FlaskView):
     decorators = [login_required]
 
 
+class IndexAjaxViewMixin(object):
+
+    def _index(self, form=None):
+        form = form or self.form()
+        form = self._populate_form(form)
+
+        return render_template(self._get_template('list'),
+                               form=form,
+                               resource_list=[],
+                               listing_urls=listing_urls)
+
+    def list_json(self):
+        # TODO: handle case when flask return 302 because token is expired
+        limit = request.args.get('length')
+        offset = request.args.get('start')
+        direction = request.args.get('order[0][dir]')
+        order_column = request.args.get('order[0][column]', 0)
+        order = request.args.get('columns[{}][data]'.format(order_column))
+        search = request.args.get('search[value]')
+
+        result = self.service.list(search=search, order=order, limit=limit, direction=direction, offset=offset)
+
+        return jsonify({
+            'recordsTotal': result['total'],
+            'recordsFiltered': result['total'],
+            'data': result['items']
+        })
+
+
 class BaseView(LoginRequiredView):
     form = None
     resource = None
     service = None
     schema = None
     templates = {}
-    ajax_listing = False
 
     def index(self):
         return self._index()
 
     def _index(self, form=None):
-        if not self.ajax_listing:
-            try:
-                resource_list = self.service.list()
-            except HTTPError as error:
-                self._flash_http_error(error)
-                return redirect(url_for('admin.Admin:get'))
-        else:
-            resource_list = []
+        try:
+            resource_list = self.service.list()
+        except HTTPError as error:
+            self._flash_http_error(error)
+            return redirect(url_for('admin.Admin:get'))
 
         form = form or self.form()
         form = self._populate_form(form)
@@ -193,23 +218,6 @@ class BaseView(LoginRequiredView):
             url=error.request.url,
             response=response,
         ), 'error_details')
-
-    def list_json(self):
-        # TODO: handle case when flask return 302 because token is expired
-        limit = request.args.get('length')
-        offset = request.args.get('start')
-        direction = request.args.get('order[0][dir]')
-        order_column = request.args.get('order[0][column]', 0)
-        order = request.args.get('columns[{}][data]'.format(order_column))
-        search = request.args.get('search[value]')
-
-        result = self.service.list(search=search, order=order, limit=limit, direction=direction, offset=offset)
-
-        return jsonify({
-            'recordsTotal': result['total'],
-            'recordsFiltered': result['total'],
-            'data': result['items']
-        })
 
 
 class BaseDestinationView(LoginRequiredView):
