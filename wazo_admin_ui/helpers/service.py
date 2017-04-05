@@ -22,9 +22,14 @@ class BaseConfdService(object):
         token = current_user.get_id()
         return ConfdClient(token=token, **self.confd_config)
 
-    def list(self, limit=None, order=None, direction=None, offset=None, search=None):
+    def list(self, limit=None, order=None, direction=None, offset=None, search=None, **kwargs):
         resource_client = getattr(self._confd, self.resource_confd)
-        return resource_client.list(search=search, order=order, limit=limit, direction=direction, offset=offset)
+        return resource_client.list(search=search,
+                                    order=order,
+                                    limit=limit,
+                                    direction=direction,
+                                    offset=offset,
+                                    **kwargs)
 
     def get(self, resource_id):
         resource_client = getattr(self._confd, self.resource_confd)
