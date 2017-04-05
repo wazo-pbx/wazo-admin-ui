@@ -68,6 +68,17 @@ class IndexAjaxViewMixin(object):
         })
 
 
+class NewViewMixin(object):
+
+    def new(self):
+        return self._new()
+
+    def _new(self, form=None):
+        form = form or self.form()
+        return render_template(self._get_template('add'),
+                               form=form)
+
+
 class BaseView(LoginRequiredView):
     form = None
     resource = None
@@ -99,17 +110,20 @@ class BaseView(LoginRequiredView):
 
         if not form.csrf_token.validate(form):
             flash_basic_form_errors(form)
-            return self._index(form)
+            return self._new(form)
 
         try:
             self.service.create(resources)
         except HTTPError as error:
             form = self._fill_form_error(form, error)
             self._flash_http_error(error)
-            return self._index(form)
+            return self._new(form)
 
         flash('{}: Resource has been created'.format(self.resource), 'success')
         return self._redirect_for('index')
+
+    def _new(self, form=None):
+        return self._index(form)
 
     def _map_form_to_resources_post(self, form):
         return self._map_form_to_resources(form)
