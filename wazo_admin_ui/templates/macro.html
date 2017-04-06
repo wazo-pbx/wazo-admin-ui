@@ -72,30 +72,34 @@
 {% endmacro %}
 
 
-{% macro build_form_containers(title, icon) %}
-  {% set caller_ = caller %}
-  {% call build_tabs_containers(without_tab=True) %}
-    {# TODO: add subtitle arg  or use build_tabs_navigation directly in template #}
-    {% call build_tabs_navigation() %}
-      {{ add_tab_navigation_header(title, '', icon) }}
-    {% endcall %}
-    {{ caller_() }}
-  {% endcall %}
+{% macro build_section_row() %}
+  <section class="content">
+    <div class="row">
+      {{ caller() }}
+    </div>
+  </section>
 {% endmacro %}
 
 
-{% macro build_tabs_containers(without_tab=False) %}
-<section class="content">
-  <div class="row">
-    <div class="col-md-6">
-      <div class="{{ 'box box-primary' if without_tab }}">
-        <div class="nav-tabs-custom">
-          {{ caller() }}
-        </div>
+{% macro build_form_tabs_box(box_class, without_tab=False) %}
+  <div class="col-md-6">
+    <div class="{{ box_class }}{{ ' box box-primary' if without_tab }}">
+      <div class="nav-tabs-custom">
+        {{ caller() }}
       </div>
     </div>
   </div>
-</section>
+{% endmacro %}
+
+
+{% macro build_form_box(title, subtitle, icon, box_class) %}
+  {% set caller_ = caller %}
+  {% call build_form_tabs_box(box_class, without_tab=True) %}
+    {% call build_tabs_navigation() %}
+      {{ add_tab_navigation_header(title, subtitle, icon) }}
+    {% endcall %}
+    {{ caller_() }}
+  {% endcall %}
 {% endmacro %}
 
 
