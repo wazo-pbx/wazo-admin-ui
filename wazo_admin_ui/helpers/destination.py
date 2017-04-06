@@ -41,7 +41,7 @@ class DestinationField(FormField):
 
     def process(self, formdata, data=unset_value):
         super(DestinationField, self).process(formdata, data)
-        if self.destination_label is None:
+        if self.destination_label is not None:
             self.form.type.label.text = self.destination_label
 
 
