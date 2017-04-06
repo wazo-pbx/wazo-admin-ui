@@ -10,7 +10,7 @@ from datetime import timedelta
 
 from cherrypy import wsgiserver
 from flask import Flask
-from flask import request, session
+from flask import request, session, url_for
 from flask_babel import Babel
 from flask_menu import Menu
 from flask_session import Session
@@ -62,6 +62,7 @@ class Server(object):
         AuthClient.set_config(global_config['auth'])
 
         configure_error_handlers(app)
+        self._override_url_for()
         self._configure_jinja()
         self._configure_login()
         self._configure_menu()
@@ -92,6 +93,16 @@ class Server(object):
     def stop(self):
         if self.server:
             self.server.stop()
+
+    def _override_url_for(self):
+        def url_for_allow_empty_endpoint(endpoint, **values):
+            if not endpoint:
+                return ''
+            return url_for(endpoint, **values)
+
+        @app.context_processor
+        def override_url_for():
+            return dict(url_for=url_for_allow_empty_endpoint)
 
     def _configure_jinja(self):
         app.jinja_env.trim_blocks = True
