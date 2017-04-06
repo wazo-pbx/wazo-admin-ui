@@ -6,10 +6,10 @@ import unittest
 from mock import Mock
 from flask_wtf import FlaskForm
 
-from hamcrest import assert_that, contains, empty, is_
+from hamcrest import assert_that, contains, empty, is_, equal_to
 from marshmallow import fields
 
-from ..classful import BaseView, BaseDestinationView
+from ..classful import BaseView, _is_positive_integer, extract_select2_params, build_select2_response
 from ..error import ErrorExtractor
 from ..error import ErrorTranslator
 from ..mallow import BaseSchema, BaseAggregatorSchema
@@ -96,27 +96,68 @@ class TestBaseView(unittest.TestCase):
                     request=Mock(path_url=path_url))
 
 
-class TestBaseDestinationView(unittest.TestCase):
-
-    def setUp(self):
-        self.view = BaseDestinationView()
+class TestSelect2Helpers(unittest.TestCase):
 
     def test_is_positive_integer(self):
-        response = self.view._is_positive_integer(1)
+        response = _is_positive_integer(1)
         assert_that(response, is_(True))
 
     def test_is_positive_integer_when_string_integer(self):
-        response = self.view._is_positive_integer('1')
+        response = _is_positive_integer('1')
         assert_that(response, is_(True))
 
     def test_is_positive_integer_when_none(self):
-        response = self.view._is_positive_integer(None)
+        response = _is_positive_integer(None)
         assert_that(response, is_(False))
 
     def test_is_positive_integer_when_negative(self):
-        response = self.view._is_positive_integer(-1)
+        response = _is_positive_integer(-1)
         assert_that(response, is_(False))
 
     def test_is_positive_integer_when_string(self):
-        response = self.view._is_positive_integer('abcd')
+        response = _is_positive_integer('abcd')
         assert_that(response, is_(False))
+
+    def test_extract_select2_params(self):
+        args = {'term': 'a', 'page': 1}
+        result = extract_select2_params(args, limit=10)
+        assert_that(result, equal_to({'search': 'a',
+                                      'offset': 0,
+                                      'limit': 10}))
+
+    def test_extract_select2_params_when_no_args(self):
+        args = {}
+        result = extract_select2_params(args, limit=10)
+        assert_that(result, equal_to({'search': None,
+                                      'offset': 0,
+                                      'limit': 10}))
+
+    def test_extract_select2_params_when_page_is_not_positive_integer(self):
+        args = {'page': 'abcd'}
+        result = extract_select2_params(args, limit=10)
+        assert_that(result, equal_to({'search': None,
+                                      'offset': 0,
+                                      'limit': 10}))
+
+    def test_extract_select2_params_when_page_is_more_than_one(self):
+        args = {'page': 3}
+        result = extract_select2_params(args, limit=10)
+        assert_that(result, equal_to({'search': None,
+                                      'offset': 20,
+                                      'limit': 10}))
+
+    def test_build_select2_response_with_pagination(self):
+        result = [{'key': 'value'}]
+        total = 42
+        params = {'search': 'a', 'offset': 10, 'limit': 10}
+        response = build_select2_response(result, total, params)
+        assert_that(response, equal_to({'results': result,
+                                        'pagination': {'more': True}}))
+
+    def test_build_select2_response_without_pagination(self):
+        result = [{'key': 'value'}]
+        total = 15
+        params = {'search': 'a', 'offset': 10, 'limit': 10}
+        response = build_select2_response(result, total, params)
+        assert_that(response, equal_to({'results': result,
+                                        'pagination': {'more': False}}))

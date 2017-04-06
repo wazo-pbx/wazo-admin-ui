@@ -234,34 +234,33 @@ class BaseView(LoginRequiredView):
         ), 'error_details')
 
 
-class BaseDestinationView(LoginRequiredView):
-    limit = 10
+def extract_select2_params(args, limit=10):
+    search = args.get('term')
+    page = args.get('page')
 
-    def _extract_params(self):
-        search = request.args.get('term')
-        page = request.args.get('page')
+    if not _is_positive_integer(page):
+        page = 1
 
-        if not self._is_positive_integer(page):
-            page = 1
+    offset = (int(page) - 1) * limit
+    return {'search': search,
+            'offset': offset,
+            'limit': limit}
 
-        offset = (int(page) - 1) * self.limit
-        return {'search': search,
-                'offset': offset,
-                'limit': self.limit}
 
-    def _is_positive_integer(self, value):
-        if value is None:
-            return False
+def _is_positive_integer(value):
+    if value is None:
+        return False
 
-        try:
-            value = int(value)
-        except ValueError:
-            return False
+    try:
+        value = int(value)
+    except ValueError:
+        return False
 
-        if value < 0:
-            return False
-        return True
+    if value < 0:
+        return False
+    return True
 
-    def _select2_response(self, results, total, params):
-        return jsonify({'results': results,
-                        'pagination': {'more': (params['offset'] + params['limit']) < total}})
+
+def build_select2_response(results, total, params):
+    return {'results': results,
+            'pagination': {'more': (params['offset'] + params['limit']) < total}}
