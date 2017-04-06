@@ -146,7 +146,10 @@ function init_select2() {
           url: ajax_url,
           delay: 450,
       };
-      config['allowClear'] = true;
+
+      if($(this).attr('multiple')) {
+          config['allowClear'] = true;
+      }
     }
 
     $(this).select2(config);
