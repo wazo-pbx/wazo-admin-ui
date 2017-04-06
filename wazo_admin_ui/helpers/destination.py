@@ -41,7 +41,8 @@ class DestinationField(FormField):
 
     def process(self, formdata, data=unset_value):
         super(DestinationField, self).process(formdata, data)
-        self.form.type.label.text = self.destination_label
+        if self.destination_label:
+            self.form.type.label.text = self.destination_label
 
 
 class FallbacksForm(FlaskForm):
