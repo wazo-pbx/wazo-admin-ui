@@ -150,8 +150,29 @@ function init_select2() {
     }
 
     $(this).select2(config);
+    select2_sortable($(this));
   });
 };
+
+
+// https://github.com/select2/select2/issues/3004
+function select2_sortable($select2){
+    var ul = $select2.next('.select2-container').first('ul.select2-selection__rendered');
+    ul.sortable({
+        placeholder : 'ui-state-highlight',
+        forcePlaceholderSize: true,
+        items       : 'li:not(.select2-search__field)',
+        tolerance   : 'pointer',
+        stop: function() {
+            $($(ul).find('.select2-selection__choice').get().reverse()).each(function() {
+                var id = $(this).data('data').id;
+                var option = $select2.find('option[value="' + id + '"]')[0];
+                $select2.prepend(option);
+            });
+        }
+    });
+}
+
 
 function create_table_serverside(config) {
   config.serverSide = true
