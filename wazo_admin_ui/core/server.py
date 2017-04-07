@@ -60,6 +60,7 @@ class Server(object):
         app.secret_key = os.urandom(24)
         app.permanent_session_lifetime = timedelta(minutes=60)
         AuthClient.set_config(global_config['auth'])
+        app.config['confd'] = global_config.get('confd', {})
 
         configure_error_handlers(app)
         self._override_url_for()

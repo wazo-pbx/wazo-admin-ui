@@ -4,8 +4,7 @@
 
 import logging
 
-from flask_login import current_user
-from xivo_confd_client import Client as ConfdClient
+from wazo_admin_ui.helpers.confd import confd
 
 logger = logging.getLogger(__name__)
 
@@ -14,16 +13,8 @@ class BaseConfdService(object):
     resource_name = None
     resource_confd = None
 
-    def __init__(self, confd_config):
-        self.confd_config = confd_config
-
-    @property
-    def _confd(self):
-        token = current_user.get_id()
-        return ConfdClient(token=token, **self.confd_config)
-
     def list(self, limit=None, order=None, direction=None, offset=None, search=None, **kwargs):
-        resource_client = getattr(self._confd, self.resource_confd)
+        resource_client = getattr(confd, self.resource_confd)
         return resource_client.list(search=search,
                                     order=order,
                                     limit=limit,
@@ -32,7 +23,7 @@ class BaseConfdService(object):
                                     **kwargs)
 
     def get(self, resource_id):
-        resource_client = getattr(self._confd, self.resource_confd)
+        resource_client = getattr(confd, self.resource_confd)
         return {self.resource_name: resource_client.get(resource_id)}
 
     def update(self, resources):
@@ -40,7 +31,7 @@ class BaseConfdService(object):
         if not resource:
             return
 
-        resource_client = getattr(self._confd, self.resource_confd)
+        resource_client = getattr(confd, self.resource_confd)
         resource_client.update(resource)
 
     def create(self, resources):
@@ -48,11 +39,11 @@ class BaseConfdService(object):
         if not resource:
             return
 
-        resource_client = getattr(self._confd, self.resource_confd)
+        resource_client = getattr(confd, self.resource_confd)
         return resource_client.create(resource)
 
     def delete(self, resource_id):
-        resource_client = getattr(self._confd, self.resource_confd)
+        resource_client = getattr(confd, self.resource_confd)
         resource_client.delete(resource_id)
 
 
@@ -102,15 +93,15 @@ class BaseConfdExtensionService(BaseConfdService):
             self._remove_extension(existing_extension, resource)
 
     def delete_extension(self, resource_id):
-        resource_client = getattr(self._confd, self.resource_confd)
+        resource_client = getattr(confd, self.resource_confd)
         resource = resource_client.get(resource_id)
         for extension in resource['extensions']:
             self._remove_extension(extension, resource)
 
     def _add_extension(self, extension, resource):
-        extension = self._confd.extensions.create(extension)
+        extension = confd.extensions.create(extension)
         if extension:
-            resource_client = getattr(self._confd, self.resource_confd)
+            resource_client = getattr(confd, self.resource_confd)
             resource_client(resource).add_extension(extension)
 
     def _update_extension(self, extension, existing_extension):
@@ -119,12 +110,12 @@ class BaseConfdExtensionService(BaseConfdService):
             return
 
         extension['id'] = existing_extension['id']
-        self._confd.extensions.update(extension)
+        confd.extensions.update(extension)
 
     def _remove_extension(self, extension, resource):
-        resource_client = getattr(self._confd, self.resource_confd)
+        resource_client = getattr(confd, self.resource_confd)
         resource_client(resource).remove_extension(extension)
-        self._confd.extensions.delete(extension)
+        confd.extensions.delete(extension)
 
     def _get_main_extension(self, resource):
         resource_id = resource.get('uuid', resource.get('id'))
@@ -132,7 +123,7 @@ class BaseConfdExtensionService(BaseConfdService):
             logger.debug('Unable to extract resource_id from %s resource', self.resource_confd)
             return
 
-        resource_client = getattr(self._confd, self.resource_confd)
+        resource_client = getattr(confd, self.resource_confd)
         for extension in resource_client.get(resource_id)['extensions']:
             return extension
         return None
