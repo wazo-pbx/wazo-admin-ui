@@ -139,6 +139,11 @@ function init_select2() {
       width: null,
     };
 
+    let tags = this.hasAttribute('data-allow_custom_values');
+    if (tags) {
+      config['tags'] = true;
+    }
+
     let ajax_url = $(this).attr('data-listing_href');
     if (ajax_url) {
       config['placeholder'] = 'Select...';
@@ -148,7 +153,9 @@ function init_select2() {
       };
 
     } else {
-      config['minimumResultsForSearch'] = 5;
+      if (! tags) {
+        config['minimumResultsForSearch'] = 5;
+      }
     }
 
     if($(this).attr('multiple')) {
