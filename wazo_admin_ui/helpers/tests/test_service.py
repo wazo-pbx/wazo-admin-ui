@@ -7,6 +7,7 @@ import unittest
 from hamcrest import assert_that, equal_to
 from mock import Mock
 
+import wazo_admin_ui.helpers.service
 from ..service import BaseConfdService, BaseConfdExtensionService
 
 
@@ -16,7 +17,7 @@ class TestBaseConfdService(unittest.TestCase):
         self._resource1 = Mock()
         BaseConfdService.resource_confd = 'resource1'
         BaseConfdService.resource_name = 'resource1'
-        BaseConfdService._confd = Mock(resource1=self._resource1)
+        wazo_admin_ui.helpers.service.confd = Mock(resource1=self._resource1)
         confd_config = {}
         self.service = BaseConfdService(confd_config)
 
@@ -62,8 +63,8 @@ class TestBaseConfdExtensionService(unittest.TestCase):
         self._extensions = Mock()
         BaseConfdService.resource_confd = 'resource1'
         BaseConfdService.resource_name = 'resource1'
-        BaseConfdService._confd = Mock(resource1=self._resource1,
-                                       extensions=self._extensions)
+        wazo_admin_ui.helpers.service.confd = Mock(resource1=self._resource1,
+                                                   extensions=self._extensions)
         confd_config = {}
         self.service = BaseConfdExtensionService(confd_config)
 
