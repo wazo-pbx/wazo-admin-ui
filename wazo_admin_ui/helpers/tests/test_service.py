@@ -18,8 +18,7 @@ class TestBaseConfdService(unittest.TestCase):
         BaseConfdService.resource_confd = 'resource1'
         BaseConfdService.resource_name = 'resource1'
         wazo_admin_ui.helpers.service.confd = Mock(resource1=self._resource1)
-        confd_config = {}
-        self.service = BaseConfdService(confd_config)
+        self.service = BaseConfdService()
 
     def test_list(self):
         self._resource1.list.return_value = [{'name': 'value'}]
@@ -65,8 +64,7 @@ class TestBaseConfdExtensionService(unittest.TestCase):
         BaseConfdService.resource_name = 'resource1'
         wazo_admin_ui.helpers.service.confd = Mock(resource1=self._resource1,
                                                    extensions=self._extensions)
-        confd_config = {}
-        self.service = BaseConfdExtensionService(confd_config)
+        self.service = BaseConfdExtensionService()
 
     def _assert_no_confd_call(self):
         self._extensions.create.assert_not_called()
