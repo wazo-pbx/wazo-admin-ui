@@ -147,11 +147,12 @@ function init_select2() {
           delay: 450,
       };
 
-      if($(this).attr('multiple')) {
-          config['allowClear'] = true;
-      }
     } else {
       config['minimumResultsForSearch'] = 5;
+    }
+
+    if($(this).attr('multiple')) {
+      config['allowClear'] = true;
     }
 
     $(this).select2(config);
