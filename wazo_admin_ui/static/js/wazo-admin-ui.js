@@ -150,6 +150,8 @@ function init_select2() {
       if($(this).attr('multiple')) {
           config['allowClear'] = true;
       }
+    } else {
+      config['minimumResultsForSearch'] = 5;
     }
 
     $(this).select2(config);
