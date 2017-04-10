@@ -8,7 +8,7 @@ from flask import Flask
 from hamcrest import assert_that, equal_to, empty, has_entries
 from wtforms import StringField, FormField, IntegerField
 
-from ..destination import DestinationSchema, DestinationForm, FallbacksForm
+from ..destination import DestinationForm, FallbacksForm
 from ..form import BaseForm
 
 
@@ -114,76 +114,3 @@ class TestFallbacksForm(unittest.TestCase):
         result = form.to_dict()
 
         assert_that(result, has_entries(busy_destination=None))
-
-
-class TestDestinationSchema(unittest.TestCase):
-
-    def setUp(self):
-        self.schema = DestinationSchema()
-
-    def test_post_dump(self):
-        data = {'type': 'user',
-                'user': {'user_id': 1,
-                         'timeout': 2}}
-
-        result = self.schema.dump(data).data
-        assert_that(result, equal_to({'type': 'user',
-                                      'user_id': 1,
-                                      'timeout': 2}))
-
-    def test_post_dump_with_csrf_token(self):
-        data = {'type': 'user',
-                'user': {'user_id': 1,
-                         'timeout': 2,
-                         'csrf_token': '123'}}
-
-        result = self.schema.dump(data).data
-        assert_that(result, equal_to({'type': 'user',
-                                      'user_id': 1,
-                                      'timeout': 2}))
-
-    def test_post_dump_with_no_type(self):
-        data = {}
-        result = self.schema.dump(data).data
-        assert_that(result, empty())
-
-    def test_post_dump_with_no_destination_values(self):
-        data = {'type': 'none'}
-        result = self.schema.dump(data).data
-        assert_that(result, {'type': 'none'})
-
-    def test_post_dump_when_no_dict(self):
-        data = []
-        result = self.schema.dump(data).data
-        assert_that(result, empty())
-
-    def test_post_dump_with_empty_string(self):
-        data = {'type': 'user',
-                'user': {'user_id': 1,
-                         'timeout': ''}}
-
-        result = self.schema.dump(data).data
-        assert_that(result, equal_to({'type': 'user',
-                                      'user_id': 1,
-                                      'timeout': None}))
-
-    def test_post_load(self):
-        data = {'type': 'user',
-                'user_id': 1,
-                'timeout': 2}
-
-        result = self.schema.load(data).data
-        assert_that(result, equal_to({'type': 'user',
-                                      'user': {'user_id': 1,
-                                               'timeout': 2}}))
-
-    def test_post_load_with_no_type(self):
-        data = {}
-        result = self.schema.load(data).data
-        assert_that(result, empty())
-
-    def test_post_load_with_no_destination_values(self):
-        data = {'type': 'none'}
-        result = self.schema.load(data).data
-        assert_that(result, equal_to({'type': 'none',
-                                      'none': {}}))

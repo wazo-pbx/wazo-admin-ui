@@ -83,7 +83,6 @@ class BaseView(LoginRequiredView):
     form = None
     resource = None
     service = None
-    schema = None
     templates = {}
 
     def index(self):
@@ -147,11 +146,8 @@ class BaseView(LoginRequiredView):
                                listing_urls=listing_urls)
 
     def _map_resources_to_form(self, resources):
-        schema = self.schema()
-        data, errors = schema.load(resources)
-        if errors:
-            logger.debug('Errors during deserialization: %s', errors)
-        return self.form(data=data.get(schema._main_resource))
+        for resource in resources.values():
+            return self.form(data=resource)
 
     def _populate_form(self, form):
         return form
@@ -178,13 +174,15 @@ class BaseView(LoginRequiredView):
         return self._map_form_to_resources(form, form_id)
 
     def _map_form_to_resources(self, form, form_id=None):
-        data, errors = self.schema(context={'resource_id': form_id}).dump(form)
-        if errors:
-            logger.debug('Errors during serialization: %s', errors)
+        data = form.to_dict()
+        if form_id:
+            data['id'] = form_id
         return data
 
     def _map_resources_to_form_errors(self, form, resources):
-        return self.schema().populate_form_errors(form, resources)
+        for resource in resources.values():
+            form.populate_errors(resource)
+            return form
 
     def _get_template(self, type_):
         return self.templates.get(type_, DEFAULT_TEMPLATE.format(blueprint=request.blueprint,

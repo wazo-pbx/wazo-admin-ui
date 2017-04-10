@@ -3,16 +3,15 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 import unittest
-from mock import Mock
-from flask_wtf import FlaskForm
 
+from flask import Flask
 from hamcrest import assert_that, contains, empty, is_, equal_to
-from marshmallow import fields
+from mock import Mock
+from wtforms import StringField
 
 from ..classful import BaseView, _is_positive_integer, extract_select2_params, build_select2_response
-from ..error import ErrorExtractor
-from ..error import ErrorTranslator
-from ..mallow import BaseSchema, BaseAggregatorSchema
+from ..error import ErrorExtractor, ErrorTranslator
+from ..form import BaseForm
 
 URL_TO_NAME_RESOURCES = {'resources_url': 'resource'}
 
@@ -22,32 +21,26 @@ GENERIC_MESSAGE_ERRORS = {'invalid-data': 'Input Error'}
 SPECIFIC_PATTERN_ERRORS = {'invalid-length': r'Longer than maximum length'}
 SPECIFIC_MESSAGE_ERRORS = {'invalid-length': 'Longer than maximum length'}
 
-
-class ResourceSchema(BaseSchema):
-
-    class Meta:
-        fields = ('attribute1', 'attribute2')
-
-
-class AggregatorSchema(BaseAggregatorSchema):
-    _main_resource = 'resource'
-
-    resource = fields.Nested(ResourceSchema)
+app = Flask('test_wazo_admin_ui')
 
 
 class TestBaseView(unittest.TestCase):
 
     def setUp(self):
         self.view = BaseView()
-        self.view.schema = AggregatorSchema
         ErrorExtractor.generic_patterns = GENERIC_PATTERN_ERRORS
         ErrorExtractor.specific_patterns = SPECIFIC_PATTERN_ERRORS
         ErrorExtractor.url_to_name_resources = URL_TO_NAME_RESOURCES
         ErrorTranslator.generic_messages = GENERIC_MESSAGE_ERRORS
         ErrorTranslator.specific_messages = SPECIFIC_MESSAGE_ERRORS
+        app.config['TESTING'] = True
+        app.config['WTF_CSRF_ENABLED'] = False
 
-        self.form = Mock(FlaskForm,
-                         attribute1=Mock(data='value1', errors=[], raw_data='value1'))
+        class MyForm(BaseForm):
+            attribute1 = StringField()
+
+        with app.test_request_context(method='POST', data={'attribute1': ''}):
+            self.form = MyForm()
 
     def test_fill_form_error_with_confd_input_error(self):
         confd_error = ["Input Error - attribute1: 'Longer than maximum length'"]
