@@ -77,13 +77,6 @@ class TestBaseView(unittest.TestCase):
 
         assert_that(form.attribute1.errors, empty())
 
-    def test_fill_form_error_with_confd_input_error_with_unregistered_resource(self):
-        confd_error = ["Input Error - attribute1: 'Longer than maximum length'"]
-        path_url = '/1.1/unregistered_resource/42'
-        form = self.view._fill_form_error(self.form, self._build_error(confd_error, path_url))
-
-        assert_that(form.attribute1.errors, empty())
-
     def _build_error(self, error, path_url):
         return Mock(response=Mock(json=Mock(return_value=error)),
                     request=Mock(path_url=path_url))
