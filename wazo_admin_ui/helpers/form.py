@@ -14,9 +14,7 @@ class BaseForm(FlaskForm):
             if name == 'csrf_token' or isinstance(f, SubmitField):
                 continue
             if isinstance(f, FormField):
-                if hasattr(f.form, 'to_dict'):  # should be removed when all forms will have BaseForm
-                    result[name] = f.form.to_dict()
-                continue
+                result[name] = f.form.to_dict()
             if isinstance(f, FieldList):
                 result[name] = [entry.to_dict() for entry in f.entries]
                 continue
