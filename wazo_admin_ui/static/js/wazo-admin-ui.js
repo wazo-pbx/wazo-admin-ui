@@ -57,7 +57,7 @@ $(document).ready(function() {
 
     // Update name/id
     row.find(":input").not(":button").each(function() {
-      id = $(this).attr('id').replace(/(.*)-template-(.*)/m, '$1-' + element_total + '-$2');
+      id = $(this).attr('id').replace(/-template-/, '-' + element_total + '-');
       $(this).attr('name', id).attr('id', id);
     });
 
@@ -75,7 +75,7 @@ $(document).ready(function() {
 
   // Update name/id of template row
   $('.row-template :input').not(":button").each(function() {
-    let template_id = $(this).attr('id').replace(/(.*)-\d{1,4}-(.*)/m, '$1-template-$2');
+    let template_id = $(this).attr('id').replace(/-\d{1,4}-/, '-template-');
     $(this).attr('name', template_id).attr('id', template_id);
   });
 
