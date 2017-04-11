@@ -2,12 +2,18 @@
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
-from flask_babel import Locale, get_locale
+import logging
+import requests
+
 from flask import url_for, render_template, redirect, session
+from flask_babel import Locale, get_locale
 from flask_classful import FlaskView
 from flask_login import login_user, logout_user, current_user
+from wazo_admin_ui.core.auth import AuthClient
 
 from .form import LoginForm
+
+logger = logging.getLogger(__name__)
 
 
 class Login(FlaskView):
@@ -49,5 +55,12 @@ class Login(FlaskView):
 class Logout(FlaskView):
 
     def get(self):
+        token = current_user.get_id()
         logout_user()
+        try:
+            AuthClient(host='fsa').token.revoke(token)
+        except requests.HTTPError as e:
+            logger.warning('Error with Wazo authentication server: %(error)s', error=e.message)
+        except requests.ConnectionError:
+            logger.warning('Wazo authentication server connection error: Unable to revoke token')
         return redirect(url_for('index.Index:get'))
