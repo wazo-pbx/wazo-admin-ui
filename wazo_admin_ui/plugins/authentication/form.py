@@ -5,10 +5,10 @@
 from __future__ import unicode_literals
 
 import requests
+from requests.exceptions import HTTPError
 
 from flask_babel import lazy_gettext as l_
 from flask_wtf import FlaskForm
-from requests.exceptions import HTTPError
 from wtforms.fields import PasswordField, StringField, SubmitField, SelectField
 from wtforms.validators import InputRequired, ValidationError
 

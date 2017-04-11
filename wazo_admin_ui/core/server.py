@@ -4,9 +4,11 @@
 
 import logging
 import os
-import requests
 
 from datetime import timedelta
+
+import requests
+from requests.exceptions import HTTPError
 
 from cherrypy import wsgiserver
 from flask import Flask
@@ -15,7 +17,6 @@ from flask_babel import Babel
 from flask_menu import Menu
 from flask_session import Session
 from flask_login import LoginManager
-from requests.exceptions import HTTPError
 from pkg_resources import iter_entry_points, resource_filename, resource_isdir
 
 from xivo import http_helpers
@@ -160,5 +161,5 @@ class Server(object):
     def _configure_session(self, session_file_dir):
         app.config['SESSION_FILE_DIR'] = session_file_dir
         app.config['SESSION_TYPE'] = 'filesystem'
-        session = Session()
-        session.init_app(app)
+        flask_session = Session()
+        flask_session.init_app(app)
