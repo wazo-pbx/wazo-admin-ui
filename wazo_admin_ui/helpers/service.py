@@ -10,7 +10,6 @@ logger = logging.getLogger(__name__)
 
 
 class BaseConfdService(object):
-    resource_name = None
     resource_confd = None
 
     def list(self, limit=None, order=None, direction=None, offset=None, search=None, **kwargs):
@@ -24,21 +23,13 @@ class BaseConfdService(object):
 
     def get(self, resource_id):
         resource_client = getattr(confd, self.resource_confd)
-        return {self.resource_name: resource_client.get(resource_id)}
+        return resource_client.get(resource_id)
 
-    def update(self, resources):
-        resource = resources.get(self.resource_name)
-        if not resource:
-            return
-
+    def update(self, resource):
         resource_client = getattr(confd, self.resource_confd)
         resource_client.update(resource)
 
-    def create(self, resources):
-        resource = resources.get(self.resource_name)
-        if not resource:
-            return
-
+    def create(self, resource):
         resource_client = getattr(confd, self.resource_confd)
         return resource_client.create(resource)
 
@@ -49,23 +40,22 @@ class BaseConfdService(object):
 
 class BaseConfdExtensionService(BaseConfdService):
 
-    def _extract_resource_extension(self, resources):
-        resource = resources.get(self.resource_name)
-        extension = resources.get('extension')
-        if not resource or not extension:
-            logger.debug('Missing %s or extension resource', self.resource_confd)
+    def _extract_main_extension(self, resource):
+        extensions = resource.get('extensions')
+        if not extensions:
+            logger.debug('Missing extension resource')
             return
-        return resource, extension
+        return extensions[0]
 
-    def create(self, resources):
-        resource = super(BaseConfdExtensionService, self).create(resources)
-        _, extension = self._extract_resource_extension(resources)
-        self.create_extension(extension, resource)
-        return resource
+    def create(self, resource):
+        resource_created = super(BaseConfdExtensionService, self).create(resource)
+        extension = self._extract_main_extension(resource)
+        self.create_extension(extension, resource_created)
+        return resource_created
 
-    def update(self, resources):
-        super(BaseConfdExtensionService, self).update(resources)
-        resource, extension = self._extract_resource_extension(resources)
+    def update(self, resource):
+        super(BaseConfdExtensionService, self).update(resource)
+        extension = self._extract_main_extension(resource)
         self.update_extension(extension, resource)
 
     def delete(self, resource_id):

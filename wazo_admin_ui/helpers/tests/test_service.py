@@ -16,7 +16,6 @@ class TestBaseConfdService(unittest.TestCase):
     def setUp(self):
         self._resource1 = Mock()
         BaseConfdService.resource_confd = 'resource1'
-        BaseConfdService.resource_name = 'resource1'
         wazo_admin_ui.helpers.service.confd = Mock(resource1=self._resource1)
         self.service = BaseConfdService()
 
@@ -28,27 +27,17 @@ class TestBaseConfdService(unittest.TestCase):
     def test_get(self):
         self._resource1.get.return_value = {'name': 'value'}
         result = self.service.get(42)
-        assert_that(result, equal_to({'resource1': {'name': 'value'}}))
+        assert_that(result, equal_to({'name': 'value'}))
 
     def test_update(self):
-        resources = {'resource1': {'name': 'value2'}}
-        self.service.update(resources)
+        resource = {'name': 'value2'}
+        self.service.update(resource)
         self._resource1.update.assert_called_once_with({'name': 'value2'})
 
-    def test_update_when_no_bad_resource(self):
-        resources = {'bad_resource': {'name': 'value2'}}
-        self.service.update(resources)
-        self._resource1.update.assert_not_called()
-
     def test_create(self):
-        resources = {'resource1': {'name': 'value2'}}
-        self.service.create(resources)
+        resource = {'name': 'value2'}
+        self.service.create(resource)
         self._resource1.create.assert_called_once_with({'name': 'value2'})
-
-    def test_create_when_bad_resource(self):
-        resources = {'bad_resource': {'name': 'value2'}}
-        self.service.create(resources)
-        self._resource1.create.assert_not_called()
 
     def test_delete(self):
         self.service.delete(42)
@@ -61,7 +50,6 @@ class TestBaseConfdExtensionService(unittest.TestCase):
         self._resource1 = Mock()
         self._extensions = Mock()
         BaseConfdService.resource_confd = 'resource1'
-        BaseConfdService.resource_name = 'resource1'
         wazo_admin_ui.helpers.service.confd = Mock(resource1=self._resource1,
                                                    extensions=self._extensions)
         self.service = BaseConfdExtensionService()

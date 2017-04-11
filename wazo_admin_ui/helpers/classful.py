@@ -132,22 +132,21 @@ class BaseView(LoginRequiredView):
 
     def _get(self, id, form=None):
         try:
-            resources = self.service.get(id)
+            resource = self.service.get(id)
         except HTTPError as error:
             self._flash_http_error(error)
             return self._redirect_for('index')
 
-        form = form or self._map_resources_to_form(resources)
+        form = form or self._map_resources_to_form(resource)
         form = self._populate_form(form)
 
         return render_template(self._get_template('edit'),
                                form=form,
-                               resources=resources,
+                               resource=resource,
                                listing_urls=listing_urls)
 
-    def _map_resources_to_form(self, resources):
-        for resource in resources.values():
-            return self.form(data=resource)
+    def _map_resources_to_form(self, resource):
+        return self.form(data=resource)
 
     def _populate_form(self, form):
         return form
@@ -176,7 +175,10 @@ class BaseView(LoginRequiredView):
     def _map_form_to_resources(self, form, form_id=None):
         data = form.to_dict()
         if form_id:
-            data['id'] = form_id
+            try:
+                data['id'] = int(form_id)
+            except ValueError:
+                data['uuid'] = form_id
         return data
 
     def _map_resources_to_form_errors(self, form, resources):
