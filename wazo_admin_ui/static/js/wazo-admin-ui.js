@@ -151,6 +151,10 @@ function init_select2() {
           url: ajax_url,
           delay: 450,
       };
+      let ajax_data = $(this).attr('data-ajax_data');
+      if (ajax_data) {
+        config['ajax']['data'] = new Function("term", ajax_data);
+      }
 
     } else {
       if (! tags) {
