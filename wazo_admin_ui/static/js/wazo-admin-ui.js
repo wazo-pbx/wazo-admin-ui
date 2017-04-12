@@ -163,7 +163,10 @@ function init_select2() {
     }
 
     $(this).select2(config);
-    select2_sortable($(this));
+
+    if($(this).attr('multiple')) {
+      select2_sortable($(this));
+    }
   });
 };
 
