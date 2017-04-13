@@ -97,7 +97,7 @@ function init_destination_select() {
       toggle_destination.call(this);
   });
 
-};
+}
 
 
 function toggle_destination(current, value) {
@@ -107,7 +107,7 @@ function toggle_destination(current, value) {
 
     $('[class^=destination-]', context).addClass("hidden");
     destination.removeClass("hidden");
-};
+}
 
 
 function build_table_actions(get_url, delete_url, id) {
@@ -129,7 +129,7 @@ function build_table_actions(get_url, delete_url, id) {
   }))
 
   return view.prop('outerHTML') + " " + remove.prop('outerHTML');
-};
+}
 
 
 function init_select2() {
@@ -175,7 +175,7 @@ function init_select2() {
       select2_sortable($(this));
     }
   });
-};
+}
 
 
 // https://github.com/select2/select2/issues/3004
@@ -209,4 +209,4 @@ function create_table_serverside(config) {
       Table.search( this.value ).draw();
     }
   });
-};
+}
