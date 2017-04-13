@@ -139,12 +139,12 @@ function init_select2() {
       width: null,
     };
 
-    let tags = this.hasAttribute('data-allow_custom_values');
-    if (tags) {
+    let ajax_url = $(this).attr('data-listing_href');
+    let allow_custom_values = this.hasAttribute('data-allow_custom_values');
+    if (allow_custom_values || ajax_url === ""){
       config['tags'] = true;
     }
 
-    let ajax_url = $(this).attr('data-listing_href');
     if (ajax_url) {
       config['placeholder'] = 'Select...';
       config['ajax'] = {
@@ -157,7 +157,7 @@ function init_select2() {
       }
 
     } else {
-      if (! tags) {
+      if (! config.tags) {
         config['minimumResultsForSearch'] = 5;
       }
     }
