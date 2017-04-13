@@ -52,8 +52,11 @@ $(document).ready(function() {
   $('.add-row-entry').click(function(e) {
     e.preventDefault();
     let context = $(this).closest('.row')[0];
-    let row = $(".row-template", context).clone();
+    let template_row = $(".row-template", context)
+    let row = template_row.clone();
     let element_total = $('.dynamic-table', context).find("tr").length;  // including template
+
+    template_row.trigger("row:cloned", row);
 
     // Update name/id
     row.find(":input").not(":button").each(function() {
