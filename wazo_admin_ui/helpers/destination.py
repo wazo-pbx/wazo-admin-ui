@@ -2,7 +2,8 @@
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
-from wtforms.fields import SelectField, FormField, HiddenField
+from werkzeug.datastructures import ImmutableMultiDict
+from wtforms.fields import SelectField, FormField, HiddenField, StringField
 from wtforms.utils import unset_value
 
 from .form import BaseForm
@@ -26,8 +27,9 @@ class DestinationForm(BaseForm):
     type = SelectField('Destination', choices=[])
 
     def __init__(self, *args, **kwargs):
+        self.destination_choices = list(_destination_choices)
         super(DestinationForm, self).__init__(*args, **kwargs)
-        self.type.choices = [('none', 'None')] + list(_destination_choices)
+        self.type.choices = [('none', 'None')] + self.destination_choices
         self.listing_urls = listing_urls
 
     def to_dict(self):
@@ -49,13 +51,35 @@ class DestinationForm(BaseForm):
         return result
 
     def process(self, formdata=None, obj=None, data=None, **kwargs):
-        destination = kwargs
-        if destination and 'type' in destination:
-            destination_type = destination.pop('type')
+        destination_type = kwargs.pop('type', None)
+        destination_args = kwargs
+        wrapped_formdata = self.meta.wrap_formdata(self, formdata)
+        if wrapped_formdata and isinstance(wrapped_formdata, ImmutableMultiDict):
+            destination_type = wrapped_formdata.get(self._prefix + 'type', '')
+            key_prefix = self._prefix + destination_type + '-'
+            destination_args = {k[len(key_prefix):]: v for k, v in wrapped_formdata.iteritems() if key_prefix in k}
+
+        if destination_type:
             kwargs = {'type': destination_type,
-                      destination_type: kwargs}
+                      destination_type: destination_args}
+            if not getattr(self, destination_type, False):
+                self._create_dynamic_destination_form(kwargs)
 
         super(DestinationForm, self).process(formdata, obj, data, **kwargs)
+
+    def _create_dynamic_destination_form(self, destination):
+        class DynamicForm(BaseForm):
+            pass
+
+        for key in destination[destination['type']]:
+            setattr(DynamicForm, key, StringField())
+
+        options = dict(name=destination['type'],
+                       prefix=self._prefix,
+                       translations=self.meta.get_translations(self))
+        field = self.meta.bind_field(self, FormField(DynamicForm), options)
+        self._fields[destination['type']] = field
+        self.destination_choices.append((destination['type'], destination['type']))
 
 
 class DestinationField(FormField):

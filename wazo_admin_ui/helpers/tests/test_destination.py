@@ -111,6 +111,42 @@ class TestDestinationForm(unittest.TestCase):
                                            user={'user_id': 1,
                                                  'timeout': '2'}))
 
+    def test_process_with_kwargs_and_undefined_form(self):
+        data = {'type': 'queue',
+                'queue_id': 1,
+                'timeout': '2'}
+
+        with app.test_request_context():
+            form = DestinationForm(**data)
+
+        assert_that(form.data, has_entries(type='queue',
+                                           queue={'queue_id': 1,
+                                                  'timeout': '2'}))
+
+    def test_process_with_formdata(self):
+        data = {'type': 'user',
+                'user-user_id': 1,
+                'user-timeout': '2'}
+
+        with app.test_request_context(method='POST', data=data):
+            form = DestinationForm()
+
+        assert_that(form.data, has_entries(type='user',
+                                           user={'user_id': 1,
+                                                 'timeout': '2'}))
+
+    def test_process_with_formdata_and_undefined_form(self):
+        data = {'type': 'queue',
+                'queue-queue_id': 1,
+                'queue-timeout': '2'}
+
+        with app.test_request_context(method='POST', data=data):
+            form = DestinationForm()
+
+        assert_that(form.data, has_entries(type='queue',
+                                           queue={'queue_id': '1',
+                                                  'timeout': '2'}))
+
 
 class TestFallbacksForm(unittest.TestCase):
 
