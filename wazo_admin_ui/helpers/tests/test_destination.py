@@ -5,7 +5,7 @@
 import unittest
 
 from flask import Flask
-from hamcrest import assert_that, equal_to, empty, has_entries
+from hamcrest import assert_that, equal_to, empty, has_entries, has_key, not_
 from wtforms import StringField, FormField, IntegerField
 
 from ..destination import DestinationForm, FallbacksForm
@@ -98,6 +98,7 @@ class TestDestinationForm(unittest.TestCase):
             form = DestinationForm()
 
         assert_that(form.data, has_entries(type='none'))
+        assert_that(form.data, not_(has_key('none')))
 
     def test_process_with_kwargs(self):
         data = {'type': 'user',

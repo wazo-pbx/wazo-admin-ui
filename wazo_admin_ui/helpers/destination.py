@@ -62,7 +62,7 @@ class DestinationForm(BaseForm):
         if destination_type:
             kwargs = {'type': destination_type,
                       destination_type: destination_args}
-            if not getattr(self, destination_type, False):
+            if not getattr(self, destination_type, False) and destination_type != 'none':
                 self._create_dynamic_destination_form(kwargs)
 
         super(DestinationForm, self).process(formdata, obj, data, **kwargs)
