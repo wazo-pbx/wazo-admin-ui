@@ -21,6 +21,7 @@
 
   {%- if field.flags.required %}
     {% set class_ = class_ + ' required' %}
+    {% do kwargs_.update(required='') %}
   {% endif %}
 
   {%- call _wrap_label_input_with_div(field, inputclass, with_label) %}
@@ -52,9 +53,9 @@
         {{ field(class_=class_, placeholder=placeholder, **kwargs_) }}
       {% endif %}
 
-      {%- if field.errors %}
-        <span class="help-block"><i>{{ field.errors|join(', ') }}</i></span>
-      {% endif %}
+      <div class="help-block with-errors">
+        {{ '<i>' ~ field.errors|join(', ') ~ '</i>' if field.errors }}
+      </div>
     {%- endcall %}
 
     {%- if field.description %}
