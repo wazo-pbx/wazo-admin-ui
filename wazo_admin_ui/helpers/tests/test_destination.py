@@ -99,6 +99,18 @@ class TestDestinationForm(unittest.TestCase):
 
         assert_that(form.data, has_entries(type='none'))
 
+    def test_process_with_kwargs(self):
+        data = {'type': 'user',
+                'user_id': 1,
+                'timeout': '2'}
+
+        with app.test_request_context():
+            form = DestinationForm(**data)
+
+        assert_that(form.data, has_entries(type='user',
+                                           user={'user_id': 1,
+                                                 'timeout': '2'}))
+
 
 class TestFallbacksForm(unittest.TestCase):
 
