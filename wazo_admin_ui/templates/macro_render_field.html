@@ -140,7 +140,7 @@
 
 {% macro render_field_form(field, class_) %}
   <div class="">
-    {% for field in form %}
+    {% for field in field.form %}
       {% if field.type != 'CSRFTokenField' %}
         {{ render_field(field, class_=class_, **kwargs) }}
       {% endif %}
