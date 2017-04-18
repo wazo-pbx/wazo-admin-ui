@@ -8,10 +8,10 @@
 <script src="{{ url_for('static', filename='js/select2.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/adminlte.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/wazo-admin-ui.js') }}"></script>
-{% from "translations.html" import datatable_language %}
-{% set language = datatable_language() %}
+{% from "translations.html" import datatable_language, bootstrap_validator_language %}
 <script type="text/javascript">
   $.extend(true, $.fn.dataTable.defaults, {
-      language: $.parseJSON({{ language|tojson }})
+      language: $.parseJSON({{ datatable_language()|tojson }})
   });
+  $.fn.validator.Constructor.DEFAULTS.errors = $.parseJSON({{ bootstrap_validator_language()|tojson }});
 </script>
