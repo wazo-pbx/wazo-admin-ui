@@ -82,6 +82,16 @@ class TestBaseForm(unittest.TestCase):
 
         assert_that(result, has_entries(attribute1='default'))
 
+    def test_to_dict_with_default_to_false_and_no_data(self):
+        class MyForm(BaseForm):
+            attribute1 = StringField(default=False)
+
+        with app.test_request_context():
+            form = MyForm()
+        result = form.to_dict()
+
+        assert_that(result, has_entries(attribute1=False))
+
     def test_to_dict_with_no_data(self):
         class MyForm(BaseForm):
             attribute1 = StringField()

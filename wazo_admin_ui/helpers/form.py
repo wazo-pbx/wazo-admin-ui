@@ -17,7 +17,7 @@ class BaseForm(FlaskForm):
                 result[name] = f.form.to_dict()
             elif isinstance(f, FieldList):
                 result[name] = [entry.to_dict() for entry in f.entries]
-            elif not f.raw_data and not f.default:
+            elif not f.raw_data and f.default is None:
                 continue
             else:
                 default = f.default or f.data
