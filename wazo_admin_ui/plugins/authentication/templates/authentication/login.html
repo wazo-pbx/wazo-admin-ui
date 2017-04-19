@@ -15,7 +15,7 @@
       <form action="" method="post" name="login_user_form">
         {{ form.hidden_tag() }}
         {{ render_field(form.username, with_icon="user", with_label=False, placeholder=_("Username")) }}
-        {{ render_field(form.password, with_icon="lock", with_label=False, placeholder=_("Password")) }}
+        {{ render_field(form.password, divclass='form-group', with_label=False, placeholder=_("Password"), data_toggle='password') }}
         {{ render_field(form.language, divclass="form-group", with_label=False) }}
       <div class="box-footer text-center">
         {{ render_field(form.submit, class_="btn btn-primary pull-right", with_label=False) }}
