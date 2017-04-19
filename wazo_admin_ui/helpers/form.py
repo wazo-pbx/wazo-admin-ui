@@ -13,17 +13,16 @@ class BaseForm(FlaskForm):
         for name, f in self._fields.iteritems():
             if name == 'csrf_token' or isinstance(f, SubmitField):
                 continue
-            if isinstance(f, FormField):
+            elif isinstance(f, FormField):
                 result[name] = f.form.to_dict()
-            if isinstance(f, FieldList):
+            elif isinstance(f, FieldList):
                 result[name] = [entry.to_dict() for entry in f.entries]
+            elif not f.raw_data and not f.default:
                 continue
-            if not f.raw_data and not f.default:
-                continue
-
-            default = f.default or f.data
-            data = f.data if f.data else default
-            result[name] = data if data != '' else None
+            else:
+                default = f.default or f.data
+                data = f.data if f.data else default
+                result[name] = data if data != '' else None
         return result
 
     def populate_errors(self, resource):
