@@ -37,6 +37,11 @@ _DEFAULT_CONFIG = {
         'port': 9486,
         'verify_certificate': '/usr/share/xivo-certs/server.crt'
     },
+    'call_logd': {
+        'host': 'localhost',
+        'port': 9298,
+        'verify_certificate': '/usr/share/xivo-certs/server.crt'
+    },
     'enabled_plugins': {
         'authentication': True,
         'dashboard': True,

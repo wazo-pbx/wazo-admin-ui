@@ -62,6 +62,7 @@ class Server(object):
         app.permanent_session_lifetime = timedelta(minutes=60)
         AuthClient.set_config(global_config['auth'])
         app.config['confd'] = global_config.get('confd', {})
+        app.config['call_logd'] = global_config.get('call_logd', {})
 
         configure_error_handlers(app)
         self._override_url_for()
