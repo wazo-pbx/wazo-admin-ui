@@ -9,13 +9,13 @@ from xivo_call_logs_client import Client as CallLogdClient
 from wazo_admin_ui.core.server import app
 
 
-def get_calllogd_client():
-    client = g.get('calllogd_client')
+def get_call_logd_client():
+    client = g.get('call_logd_client')
     if not client:
-        client = g.calllogd_client = CallLogdClient(**app.config['call_logd'])
+        client = g.call_logd_client = CallLogdClient(**app.config['call_logd'])
         token = current_user.get_id()
         client.set_token(token)
     return client
 
 
-calllogd = LocalProxy(get_calllogd_client)
+call_logd = LocalProxy(get_call_logd_client)
