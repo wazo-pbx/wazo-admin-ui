@@ -199,8 +199,19 @@ function select2_sortable($select2){
 
 
 function create_table_serverside(config) {
-  config.serverSide = true
-  config.processing = true
+  let list_url = $('#table-list-serverside').attr('data-list_url');
+  let get_url = $('.list-table-action').attr('data-get_url');
+  let delete_url = $('.list-table-action').attr('data-delete_url');
+
+  config.serverSide = true;
+  config.processing = true;
+  config.ajax = list_url;
+  config.columns.push({
+    render: function(data, type, row) {
+      return build_table_actions(get_url, delete_url, row.uuid);
+    }
+  });
+
   var Table = $('#table-list-serverside').DataTable(config);
 
   // search only on 'enter', not on typing

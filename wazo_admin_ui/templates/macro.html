@@ -203,22 +203,22 @@
 {% endmacro %}
 
 
-{% macro build_table(id=None) %}
-  <table {{ 'id=' ~ id if id }} class="table table-condensed">
+{% macro build_table(id=None, data_list_url='') %}
+<table {{ 'id=' ~ id if id }} class="table table-condensed" {{ 'data-list_url=' ~ data_list_url if data_list_url }}>
     {{ caller() }}
   </table>
 {% endmacro %}
 
 
-{% macro build_list_table(serverside=False) %}
-  {% if serverside %}
+{% macro build_list_table(list='') %}
+  {% if list %}
     {% set table_id = "table-list-serverside" %}
   {% else %}
     {% set table_id = "table-list" %}
   {% endif %}
 
   {% set caller_ = caller %}
-  {% call build_table(id=table_id) %}
+  {% call build_table(id=table_id, data_list_url=list) %}
     {{ caller_() }}
   {% endcall %}
 {% endmacro %}
@@ -241,8 +241,10 @@
 {% endmacro %}
 
 
-{% macro add_list_table_header_action() %}
-  <th class="no-sort" style="width: 80px">{{ _('Actions')  }}</th>
+{% macro add_list_table_header_action(get='', delete='') %}
+<th class="no-sort list-table-action" style="width: 80px" {{ 'data-get_url=' ~ get if get }} {{ 'data-delete_url=' ~ delete  if delete }}">
+    {{ _('Actions') }}
+  </th>
 {% endmacro %}
 
 
