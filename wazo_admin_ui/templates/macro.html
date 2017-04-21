@@ -246,7 +246,7 @@
 {% endmacro %}
 
 
-{% macro build_table_body(class_=None) %}
+{% macro build_table_body(class_='') %}
   <tbody class="{{ class_ }}">
     {{ caller() }}
   </tbody>
