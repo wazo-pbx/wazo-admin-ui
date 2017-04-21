@@ -1,5 +1,6 @@
 $.extend(true, $.fn.dataTable.defaults, {
-  lengthMenu: [10, 20],
+  lengthMenu: [[20, 50, 100, -1], [20, 50, 100, "All"]],
+  pageLength: 20,
   order: [],
   autoWidth: false,
   responsive: true,

@@ -53,6 +53,9 @@ class IndexAjaxViewMixin(object):
     def list_json(self):
         # TODO: handle case when flask return 302 because token is expired
         limit = request.args.get('length')
+        if limit == '-1':
+            limit = None
+
         offset = request.args.get('start')
         direction = request.args.get('order[0][dir]')
         order_column = request.args.get('order[0][column]', 0)
