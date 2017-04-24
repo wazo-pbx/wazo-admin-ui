@@ -244,7 +244,7 @@
 
 
 {% macro add_list_table_header_action(get='', delete='') %}
-  <th class="no-sort list-table-action" style="width: 80px" {{ 'data-get_url=' ~ get if get }} {{ 'data-delete_url=' ~ delete  if delete }}">
+  <th class="no-sort list-table-action" style="width: 80px" {{ 'data-get_url=' ~ get if get }} {{ 'data-delete_url=' ~ delete  if delete }}>
     {{ _('Actions') }}
   </th>
 {% endmacro %}
