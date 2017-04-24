@@ -184,27 +184,27 @@
 
 
 {% macro build_list_containers(title, icon, add_url='#', size='8') %}
-    <div class="col-md-{{ size }}">
-      <div class="box box-primary">
-        <div class="box-header with-border">
-          <i class="fa fa-{{ icon }}"></i>
-          <h3 class="box-title">{{ title }}</h3>
-          <div class="box-tools">
-            <a href="{{ add_url }}" id="add-form" class="btn btn-box-tool">
-              <i class="fa fa-plus"></i>
-            </a>
-          </div>
-        </div>
-        <div class="box-body">
-          {{ caller() }}
+  <div class="col-md-{{ size }}">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <i class="fa fa-{{ icon }}"></i>
+        <h3 class="box-title">{{ title }}</h3>
+        <div class="box-tools">
+          <a href="{{ add_url }}" id="add-form" class="btn btn-box-tool">
+            <i class="fa fa-plus"></i>
+          </a>
         </div>
       </div>
+      <div class="box-body">
+        {{ caller() }}
+      </div>
     </div>
+  </div>
 {% endmacro %}
 
 
 {% macro build_table(id=None, data_list_url='') %}
-<table {{ 'id=' ~ id if id }} class="table table-condensed" {{ 'data-list_url=' ~ data_list_url if data_list_url }}>
+  <table {{ 'id=' ~ id if id }} class="table table-condensed" {{ 'data-list_url=' ~ data_list_url if data_list_url }}>
     {{ caller() }}
   </table>
 {% endmacro %}
@@ -242,7 +242,7 @@
 
 
 {% macro add_list_table_header_action(get='', delete='') %}
-<th class="no-sort list-table-action" style="width: 80px" {{ 'data-get_url=' ~ get if get }} {{ 'data-delete_url=' ~ delete  if delete }}">
+  <th class="no-sort list-table-action" style="width: 80px" {{ 'data-get_url=' ~ get if get }} {{ 'data-delete_url=' ~ delete  if delete }}">
     {{ _('Actions') }}
   </th>
 {% endmacro %}
