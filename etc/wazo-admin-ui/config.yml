@@ -32,3 +32,9 @@ confd:
   host: localhost
   port: 9486
   verify_certificate: /usr/share/xivo-certs/server.crt
+
+# xivo-call-logd connection information
+call_logd:
+  host: localhost
+  port: 9298
+  verify_certificate: /usr/share/xivo-certs/server.crt
