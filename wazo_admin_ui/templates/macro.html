@@ -183,17 +183,19 @@
 {% endmacro %}
 
 
-{% macro build_list_containers(title, icon, add_url='#', size='8') %}
+{% macro build_list_containers(title, icon, add_url='#', size='8', add_button=True) %}
   <div class="col-md-{{ size }}">
     <div class="box box-primary">
       <div class="box-header with-border">
         <i class="fa fa-{{ icon }}"></i>
         <h3 class="box-title">{{ title }}</h3>
-        <div class="box-tools">
-          <a href="{{ add_url }}" id="add-form" class="btn btn-box-tool">
-            <i class="fa fa-plus"></i>
-          </a>
-        </div>
+        {% if add_button %}
+          <div class="box-tools">
+            <a href="{{ add_url }}" id="add-form" class="btn btn-box-tool">
+              <i class="fa fa-plus"></i>
+            </a>
+          </div>
+        {% endif %}
       </div>
       <div class="box-body">
         {{ caller() }}
