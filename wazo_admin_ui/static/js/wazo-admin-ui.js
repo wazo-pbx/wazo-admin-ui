@@ -206,11 +206,13 @@ function create_table_serverside(config) {
   config.serverSide = true;
   config.processing = true;
   config.ajax = list_url;
-  config.columns.push({
-    render: function(data, type, row) {
-      return build_table_actions(get_url, delete_url, row.uuid);
-    }
-  });
+  if (get_url || delete_url) {
+    config.columns.push({
+      render: function(data, type, row) {
+        return build_table_actions(get_url, delete_url, row.uuid);
+      }
+    });
+  }
 
   var Table = $('#table-list-serverside').DataTable(config);
 
