@@ -71,9 +71,13 @@ $(document).ready(function() {
     init_destination_select.call(row);
     init_select2.call(row);
 
+    $('form').validator('update');
+    $('form').validator('validate');
+
     $('.delete-row-entry', context).click(function(e) {
       e.preventDefault();
       $(this).closest("tr").remove();
+      $('form').validator('update');
     });
   });
 
