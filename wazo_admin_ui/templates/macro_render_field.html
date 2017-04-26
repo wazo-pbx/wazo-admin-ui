@@ -21,7 +21,29 @@
 
   {%- if field.flags.required %}
     {% set class_ = class_ + ' required' %}
+    {% do kwargs_.update(required='') %}
   {% endif %}
+
+  {% for validator in field.validators %}
+    {% set validator_name = validator.__class__.__name__ %}
+    {% if validator_name == 'Length' %}
+      {% if validator.min != -1 %}
+        {% do kwargs_.update(data_minlength=validator.min) %}
+      {% endif %}
+      {% if validator.max != -1 %}
+        {% do kwargs_.update(maxlength=validator.max) %}
+      {% endif %}
+    {% elif validator_name == 'NumberRange' %}
+      {% if validator.min is not none %}
+        {% do kwargs_.update(min=validator.min) %}
+      {% endif %}
+      {% if validator.max is not none %}
+        {% do kwargs_.update(max=validator.max) %}
+      {% endif %}
+    {% elif validator_name == 'Regexp' %}
+      {% do kwargs_.update(pattern=validator.regex.pattern) %}
+    {% endif %}
+  {% endfor %}
 
   {%- call _wrap_label_input_with_div(field, inputclass, with_label) %}
 
@@ -52,9 +74,9 @@
         {{ field(class_=class_, placeholder=placeholder, **kwargs_) }}
       {% endif %}
 
-      {%- if field.errors %}
-        <span class="help-block"><i>{{ field.errors|join(', ') }}</i></span>
-      {% endif %}
+      <div class="help-block with-errors">
+        {{ '<i>' ~ field.errors|join(', ') ~ '</i>' if field.errors }}
+      </div>
     {%- endcall %}
 
     {%- if field.description %}

@@ -163,7 +163,7 @@
 
 
 {% macro build_form(method="post", action="") %}
-  <form class="form-horizontal" method="{{ method }}" action="{{ action }}">
+  <form class="form-horizontal" method="{{ method }}" action="{{ action }}" data-toggle="validator">
     {{ caller() }}
   </form>
 {% endmacro %}

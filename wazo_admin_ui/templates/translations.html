@@ -23,3 +23,9 @@
       }
   }
 {% endmacro %}
+{% macro bootstrap_validator_language() %}
+  {
+    "match": "{{ _("Does not match") }}",
+    "minlength": "{{ _("Not long enough") }}"
+  }
+{% endmacro %}

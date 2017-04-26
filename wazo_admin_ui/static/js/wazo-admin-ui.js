@@ -22,6 +22,8 @@ $.extend(true, $.fn.dataTable.defaults, {
   ]
 });
 
+$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not([type="hidden"], [type="submit"], [type="reset"], button, .hidden :input)';
+
 $(window).load(function() {
   setTimeout(function() {
     $.AdminLTE.layout.fix();
@@ -35,6 +37,7 @@ $(document).ready(function() {
 
   $('#add-form').click(function() {
     $('#view-add-form').removeClass('hidden').removeAttr('style');
+    $('form').validator('update');
   });
 
   $('#error-details-show').click(function(event) {
@@ -71,9 +74,13 @@ $(document).ready(function() {
     init_destination_select.call(row);
     init_select2.call(row);
 
+    $('form').validator('update');
+    $('form').validator('validate');
+
     $('.delete-row-entry', context).click(function(e) {
       e.preventDefault();
       $(this).closest("tr").remove();
+      $('form').validator('update');
     });
   });
 
@@ -102,12 +109,13 @@ function init_destination_select() {
 
 
 function toggle_destination(current, value) {
-    let context = $(this).closest(".destination-container")
-    let destination = $('.destination-'+$(this).val(), context);
-    let ajax_url = destination.attr('data-destination_href');
+  let context = $(this).closest(".destination-container")
+  let destination = $('.destination-'+$(this).val(), context);
+  let ajax_url = destination.attr('data-destination_href');
 
-    $('[class^=destination-]', context).addClass("hidden");
-    destination.removeClass("hidden");
+  $('[class^=destination-]', context).addClass("hidden");
+  destination.removeClass("hidden");
+  $('form').validator('update');
 }
 
 
