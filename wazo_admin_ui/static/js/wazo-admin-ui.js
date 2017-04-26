@@ -108,12 +108,13 @@ function init_destination_select() {
 
 
 function toggle_destination(current, value) {
-    let context = $(this).closest(".destination-container")
-    let destination = $('.destination-'+$(this).val(), context);
-    let ajax_url = destination.attr('data-destination_href');
+  let context = $(this).closest(".destination-container")
+  let destination = $('.destination-'+$(this).val(), context);
+  let ajax_url = destination.attr('data-destination_href');
 
-    $('[class^=destination-]', context).addClass("hidden");
-    destination.removeClass("hidden");
+  $('[class^=destination-]', context).addClass("hidden");
+  destination.removeClass("hidden");
+  $('form').validator('update');
 }
 
 
