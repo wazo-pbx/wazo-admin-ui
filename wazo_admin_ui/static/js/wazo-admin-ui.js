@@ -37,6 +37,7 @@ $(document).ready(function() {
 
   $('#add-form').click(function() {
     $('#view-add-form').removeClass('hidden').removeAttr('style');
+    $('form').validator('update');
   });
 
   $('#error-details-show').click(function(event) {
