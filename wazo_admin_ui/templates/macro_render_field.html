@@ -24,6 +24,27 @@
     {% do kwargs_.update(required='') %}
   {% endif %}
 
+  {% for validator in field.validators %}
+    {% set validator_name = validator.__class__.__name__ %}
+    {% if validator_name == 'Length' %}
+      {% if validator.min != -1 %}
+        {% do kwargs_.update(data_minlength=validator.min) %}
+      {% endif %}
+      {% if validator.max != -1 %}
+        {% do kwargs_.update(maxlength=validator.max) %}
+      {% endif %}
+    {% elif validator_name == 'NumberRange' %}
+      {% if validator.min is not none %}
+        {% do kwargs_.update(min=validator.min) %}
+      {% endif %}
+      {% if validator.max is not none %}
+        {% do kwargs_.update(max=validator.max) %}
+      {% endif %}
+    {% elif validator_name == 'Regexp' %}
+      {% do kwargs_.update(pattern=validator.regex.pattern) %}
+    {% endif %}
+  {% endfor %}
+
   {%- call _wrap_label_input_with_div(field, inputclass, with_label) %}
 
     {%- call _wrap_input_with_div(field, divclass, with_icon) %}
