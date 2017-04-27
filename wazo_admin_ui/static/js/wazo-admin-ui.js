@@ -174,7 +174,8 @@ function init_select2() {
       }
     }
 
-    if($(this).attr('multiple')) {
+    let allow_clear = this.hasAttribute('data-allow_clear');
+    if($(this).attr('multiple') || allow_clear) {
       config['allowClear'] = true;
     }
 
