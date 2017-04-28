@@ -38,3 +38,9 @@ call_logd:
   host: localhost
   port: 9298
   verify_certificate: /usr/share/xivo-certs/server.crt
+
+# wazo-plugind connection information
+plugind:
+  host: localhost
+  port: 9503
+  verify_certificate: /usr/share/xivo-certs/server.crt
