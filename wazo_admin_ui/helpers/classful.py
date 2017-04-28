@@ -66,7 +66,7 @@ class IndexAjaxViewMixin(object):
 
         return jsonify({
             'recordsTotal': result['total'],
-            'recordsFiltered': result['total'],
+            'recordsFiltered': result.get('filtered', result['total']),
             'data': result['items']
         })
 
