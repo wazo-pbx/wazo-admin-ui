@@ -63,6 +63,7 @@ class Server(object):
         AuthClient.set_config(global_config['auth'])
         app.config['confd'] = global_config.get('confd', {})
         app.config['call_logd'] = global_config.get('call_logd', {})
+        app.config['plugind'] = global_config.get('plugind', {})
 
         configure_error_handlers(app)
         self._override_url_for()
