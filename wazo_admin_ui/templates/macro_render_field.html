@@ -173,7 +173,7 @@
 
 {% macro render_field_destination(field, class_) %}
   <div class="destination-container">
-    {{ render_field(field.form.type, class_= class_ ~ ' destination-select', **kwargs) }}
+    {{ render_field(field.form[field.form.select_field], class_= class_ ~ ' destination-select', **kwargs) }}
 
     {% for destination in field.form %}
       {% if destination.type == 'FormField' %}

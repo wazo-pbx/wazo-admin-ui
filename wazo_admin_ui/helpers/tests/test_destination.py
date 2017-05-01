@@ -7,15 +7,22 @@ import unittest
 from flask import Flask
 from hamcrest import assert_that, equal_to, empty, has_entries
 from wtforms import StringField, FormField, IntegerField
+from wtforms.fields import SelectField
 
-from ..destination import DestinationForm, FallbacksForm
+from ..destination import BaseDestinationForm, FallbacksForm
 from ..form import BaseForm
 
 
 app = Flask('test_wazo_admin_ui')
 
 
-class TestDestinationForm(unittest.TestCase):
+class TemplateDestinationForm(BaseDestinationForm):
+    select_field = 'template'
+
+    template = SelectField()
+
+
+class TestBaseDestinationForm(unittest.TestCase):
 
     def setUp(self):
         app.config['TESTING'] = True
@@ -25,119 +32,136 @@ class TestDestinationForm(unittest.TestCase):
             user_id = IntegerField()
             timeout = StringField()
 
-        DestinationForm.user = FormField(UserForm)
+        TemplateDestinationForm.user = FormField(UserForm)
 
     def test_to_dict(self):
-        data = {'type': 'user',
+        data = {'template': 'user',
                 'user-user_id': 1,
                 'user-timeout': '2'}
 
         with app.test_request_context(method='POST', data=data):
-            form = DestinationForm()
+            form = TemplateDestinationForm()
         result = form.to_dict()
 
-        assert_that(result, equal_to({'type': 'user',
+        assert_that(result, equal_to({'template': 'user',
                                       'user_id': 1,
                                       'timeout': '2'}))
 
-    def test_to_dict_with_no_type(self):
+    def test_to_dict_without_template(self):
         data = {}
 
         with app.test_request_context(method='POST', data=data):
-            form = DestinationForm()
+            form = TemplateDestinationForm()
         result = form.to_dict()
 
         assert_that(result, empty())
 
-    def test_to_dict_with_no_destination_values(self):
-        data = {'type': 'none'}
+    def test_to_dict_without_destination_values(self):
+        data = {'template': 'none'}
 
         with app.test_request_context(method='POST', data=data):
-            form = DestinationForm()
+            form = TemplateDestinationForm()
         result = form.to_dict()
 
-        assert_that(result, equal_to({'type': 'none'}))
+        assert_that(result, equal_to({'template': 'none'}))
 
     def test_to_dict_with_empty_string(self):
-        data = {'type': 'user',
+        data = {'template': 'user',
                 'user-user_id': 1,
                 'user-timeout': ''}
 
         with app.test_request_context(method='POST', data=data):
-            form = DestinationForm()
+            form = TemplateDestinationForm()
         result = form.to_dict()
 
-        assert_that(result, equal_to({'type': 'user',
+        assert_that(result, equal_to({'template': 'user',
                                       'user_id': 1,
                                       'timeout': None}))
 
+    def test_to_dict_without_select_field(self):
+        data = {'template': 'none'}
+
+        with app.test_request_context(method='POST', data=data):
+            form = BaseDestinationForm()
+        result = form.to_dict()
+
+        assert_that(result, empty())
+
     def test_process(self):
-        data = {'type': 'user',
+        data = {'template': 'user',
                 'user-user_id': 1,
                 'user-timeout': '2'}
 
         with app.test_request_context(method='POST', data=data):
-            form = DestinationForm()
+            form = TemplateDestinationForm()
 
-        assert_that(form.data, has_entries(type='user',
+        assert_that(form.data, has_entries(template='user',
                                            user={'user_id': 1,
                                                  'timeout': '2'}))
 
-    def test_process_with_no_type(self):
+    def test_process_without_template(self):
         data = {}
 
         with app.test_request_context(method='POST', data=data):
-            form = DestinationForm()
+            form = TemplateDestinationForm()
 
-        assert_that(form.data, has_entries(type='None'))
+        assert_that(form.data, has_entries(template='None'))
 
     def test_process_with_kwargs(self):
-        data = {'type': 'user',
+        data = {'template': 'user',
                 'user_id': 1,
                 'timeout': '2'}
 
         with app.test_request_context():
-            form = DestinationForm(**data)
+            form = TemplateDestinationForm(**data)
 
-        assert_that(form.data, has_entries(type='user',
+        assert_that(form.data, has_entries(template='user',
                                            user={'user_id': 1,
                                                  'timeout': '2'}))
 
     def test_process_with_kwargs_and_undefined_form(self):
-        data = {'type': 'queue',
+        data = {'template': 'queue',
                 'queue_id': 1,
                 'timeout': '2'}
 
         with app.test_request_context():
-            form = DestinationForm(**data)
+            form = TemplateDestinationForm(**data)
 
-        assert_that(form.data, has_entries(type='queue',
+        assert_that(form.data, has_entries(template='queue',
                                            queue={'queue_id': 1,
                                                   'timeout': '2'}))
 
     def test_process_with_formdata(self):
-        data = {'type': 'user',
+        data = {'template': 'user',
                 'user-user_id': 1,
                 'user-timeout': '2'}
 
         with app.test_request_context(method='POST', data=data):
-            form = DestinationForm()
+            form = TemplateDestinationForm()
 
-        assert_that(form.data, has_entries(type='user',
+        assert_that(form.data, has_entries(template='user',
                                            user={'user_id': 1,
                                                  'timeout': '2'}))
 
     def test_process_with_formdata_and_undefined_form(self):
-        data = {'type': 'queue',
+        data = {'template': 'queue',
                 'queue-queue_id': 1,
                 'queue-timeout': '2'}
 
         with app.test_request_context(method='POST', data=data):
-            form = DestinationForm()
+            form = TemplateDestinationForm()
 
-        assert_that(form.data, has_entries(type='queue',
+        assert_that(form.data, has_entries(template='queue',
                                            queue={'queue_id': '1',
                                                   'timeout': '2'}))
+
+    def test_process_without_select_field(self):
+        data = {'template': 'none'}
+
+        with app.test_request_context():
+            form = BaseDestinationForm(**data)
+
+        assert_that(form.data, empty())
 
 
 class TestFallbacksForm(unittest.TestCase):

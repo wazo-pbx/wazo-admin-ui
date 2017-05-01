@@ -22,26 +22,23 @@ def register_destination_form(type_id, type_label, form):
     setattr(DestinationForm, type_id, FormField(form))
 
 
-class DestinationForm(BaseForm):
-
-    type = SelectField('Destination', choices=[])
-
-    def __init__(self, *args, **kwargs):
-        self.destination_choices = list(_destination_choices)
-        super(DestinationForm, self).__init__(*args, **kwargs)
-        self.type.choices = self.destination_choices
-        self.listing_urls = listing_urls
+class BaseDestinationForm(BaseForm):
+    select_field = None
+    added_dynamic_choice = ()
 
     def to_dict(self):
-        data = super(DestinationForm, self).to_dict()
-
-        destination_type = data.get('type')
-        if not destination_type:
+        if not self.select_field or not getattr(self, self.select_field, False):
             return {}
 
-        destination = data.get(destination_type, {})
-        result = self._convert_all_empty_string_to_none(destination)
-        result['type'] = destination_type
+        data = super(BaseDestinationForm, self).to_dict()
+
+        selected_value = data.get(self.select_field)
+        if not selected_value:
+            return {}
+
+        selected_args = data.get(selected_value, {})
+        result = self._convert_all_empty_string_to_none(selected_args)
+        result[self.select_field] = selected_value
         return result
 
     def _convert_all_empty_string_to_none(self, data):
@@ -51,35 +48,53 @@ class DestinationForm(BaseForm):
         return result
 
     def process(self, formdata=None, obj=None, data=None, **kwargs):
-        destination_type = kwargs.pop('type', None)
-        destination_args = kwargs
+        if not self.select_field or not getattr(self, self.select_field, False):
+            return
+
+        selected_value = kwargs.pop(self.select_field, None)
+        selected_args = kwargs
         wrapped_formdata = self.meta.wrap_formdata(self, formdata)
         if wrapped_formdata and isinstance(wrapped_formdata, ImmutableMultiDict):
-            destination_type = wrapped_formdata.get(self._prefix + 'type', '')
-            key_prefix = self._prefix + destination_type + '-'
-            destination_args = {k[len(key_prefix):]: v for k, v in wrapped_formdata.iteritems() if key_prefix in k}
+            selected_value = wrapped_formdata.get(self._prefix + self.select_field, '')
+            key_prefix = self._prefix + selected_value + '-'
+            selected_args = {k[len(key_prefix):]: v for k, v in wrapped_formdata.iteritems() if key_prefix in k}
 
-        if destination_type:
-            kwargs = {'type': destination_type,
-                      destination_type: destination_args}
-            if not getattr(self, destination_type, False):
+        if selected_value:
+            kwargs = {self.select_field: selected_value,
+                      selected_value: selected_args}
+            if not getattr(self, selected_value, False):
                 self._create_dynamic_destination_form(kwargs)
 
-        super(DestinationForm, self).process(formdata, obj, data, **kwargs)
+        super(BaseDestinationForm, self).process(formdata, obj, data, **kwargs)
 
     def _create_dynamic_destination_form(self, destination):
         class DynamicForm(BaseForm):
             pass
 
-        for key in destination[destination['type']]:
+        for key in destination[destination[self.select_field]]:
             setattr(DynamicForm, key, StringField())
 
-        options = dict(name=destination['type'],
+        options = dict(name=destination[self.select_field],
                        prefix=self._prefix,
                        translations=self.meta.get_translations(self))
         field = self.meta.bind_field(self, FormField(DynamicForm), options)
-        self._fields[destination['type']] = field
-        self.destination_choices.append((destination['type'], destination['type']))
+        self._fields[destination[self.select_field]] = field
+        self.added_dynamic_choice = (destination[self.select_field], destination[self.select_field])
+
+
+class DestinationForm(BaseDestinationForm):
+    select_field = 'type'
+
+    type = SelectField('Destination', choices=[])
+
+    def __init__(self, *args, **kwargs):
+        self.destination_choices = list(_destination_choices)
+        super(DestinationForm, self).__init__(*args, **kwargs)
+        if self.added_dynamic_choice:
+            self.type.choices = [(self.added_dynamic_choice)] + self.destination_choices
+        else:
+            self.type.choices = self.destination_choices
+        self.listing_urls = listing_urls
 
 
 class DestinationField(FormField):
