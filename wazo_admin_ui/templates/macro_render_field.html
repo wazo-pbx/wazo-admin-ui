@@ -180,6 +180,10 @@
         <div class="destination-{{ destination.short_name }} hidden">
           {{ _render_fields_destination(destination.form, destination.short_name, listing_urls=field.form.listing_urls, class_=class_, **kwargs) }}
         </div>
+      {% elif destination.type == 'DestinationField' %}
+        <div class="destination-{{ destination.short_name }} hidden">
+          {{ render_field(destination, class_=class_, with_label=False, **kwargs) }}
+        </div>
       {% endif %}
     {% endfor %}
   </div>

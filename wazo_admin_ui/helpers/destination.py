@@ -19,7 +19,10 @@ def register_listing_url(type_id, endpoint):
 
 def register_destination_form(type_id, type_label, form):
     _destination_choices.add((type_id, type_label))
-    setattr(DestinationForm, type_id, FormField(form))
+    if getattr(form, 'select_field', False):
+        setattr(DestinationForm, type_id, DestinationField(destination_form=form))
+    else:
+        setattr(DestinationForm, type_id, FormField(form))
 
 
 class BaseDestinationForm(BaseForm):
@@ -101,7 +104,8 @@ class DestinationField(FormField):
 
     def __init__(self, *args, **kwargs):
         self.destination_label = kwargs.pop('destination_label', None)
-        super(DestinationField, self).__init__(DestinationForm, *args, **kwargs)
+        self.destination_form = kwargs.pop('destination_form', DestinationForm)
+        super(DestinationField, self).__init__(self.destination_form, *args, **kwargs)
 
     def process(self, formdata, data=unset_value):
         super(DestinationField, self).process(formdata, data)

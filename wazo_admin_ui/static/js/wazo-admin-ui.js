@@ -113,7 +113,7 @@ function toggle_destination(current, value) {
   let destination = $('.destination-'+$(this).val(), context);
   let ajax_url = destination.attr('data-destination_href');
 
-  $('[class^=destination-]', context).addClass("hidden");
+  $('[class^=destination-]', context).not('.destination-container').addClass("hidden");
   destination.removeClass("hidden");
   $('form').validator('update');
 }
