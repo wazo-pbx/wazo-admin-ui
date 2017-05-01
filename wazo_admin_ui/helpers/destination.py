@@ -29,7 +29,7 @@ class DestinationForm(BaseForm):
     def __init__(self, *args, **kwargs):
         self.destination_choices = list(_destination_choices)
         super(DestinationForm, self).__init__(*args, **kwargs)
-        self.type.choices = [('none', 'None')] + self.destination_choices
+        self.type.choices = self.destination_choices
         self.listing_urls = listing_urls
 
     def to_dict(self):
