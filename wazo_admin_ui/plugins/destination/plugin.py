@@ -13,5 +13,5 @@ class Plugin(object):
         register_destination_form('application', 'Application', ApplicationDestination)
         register_destination_form('hangup', 'Hangup', HangupDestination)
         register_destination_form('custom', 'Custom', CustomDestination)
-        register_destination_form('none', 'None', NoneDestination)
+        register_destination_form('none', 'None', NoneDestination, position=0)
         register_destination_form('sound', 'Sound', SoundDestination)
