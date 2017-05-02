@@ -47,6 +47,7 @@ setup(
         'wazo_admin_ui.plugins': [
             'authentication = wazo_admin_ui.plugins.authentication.plugin:Plugin',
             'dashboard = wazo_admin_ui.plugins.dashboard.plugin:Plugin',
+            'destination = wazo_admin_ui.plugins.destination.plugin:Plugin',
             'index = wazo_admin_ui.plugins.index.plugin:Plugin',
         ]
     }

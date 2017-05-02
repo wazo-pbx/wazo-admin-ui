@@ -52,6 +52,7 @@ $(document).ready(function() {
 
   init_destination_select.call(this);
   init_select2.call(this);
+  $(':input[type=password]:not(.row-template :input, [data-toggle=password])').password();
 
   $('.add-row-entry').click(function(e) {
     e.preventDefault();
@@ -63,7 +64,7 @@ $(document).ready(function() {
     template_row.trigger("row:cloned", row);
 
     // Update name/id
-    row.find(":input").not(":button").each(function() {
+    row.find(":input[id]").not(":button").each(function() {
       id = $(this).attr('id').replace(/-template-/, '-' + element_total + '-');
       $(this).attr('name', id).attr('id', id);
     });
@@ -73,6 +74,7 @@ $(document).ready(function() {
     row.insertAfter(last_tr);
     init_destination_select.call(row);
     init_select2.call(row);
+    $(':input[type=password]', row).password();
 
     $('form').validator('update');
     $('form').validator('validate');
@@ -85,7 +87,7 @@ $(document).ready(function() {
   });
 
   // Update name/id of template row
-  $('.row-template :input').not(":button").each(function() {
+  $('.row-template :input[id]').not(":button").each(function() {
     let template_id = $(this).attr('id').replace(/-\d{1,4}-/, '-template-');
     $(this).attr('name', template_id).attr('id', template_id);
   });
@@ -104,16 +106,15 @@ function init_destination_select() {
   $('.destination-select', this).each(function(index) {
       toggle_destination.call(this);
   });
-
 }
 
 
 function toggle_destination(current, value) {
   let context = $(this).closest(".destination-container")
   let destination = $('.destination-'+$(this).val(), context);
-  let ajax_url = destination.attr('data-destination_href');
 
-  $('[class^=destination-]', context).addClass("hidden");
+  let sub_dst_container = $('.destination-container div[class^=destination-]', context);
+  $('[class^=destination-]', context).not('.destination-container').not(sub_dst_container).addClass("hidden");
   destination.removeClass("hidden");
   $('form').validator('update');
 }

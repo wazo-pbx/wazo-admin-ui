@@ -50,6 +50,7 @@ _DEFAULT_CONFIG = {
     'enabled_plugins': {
         'authentication': True,
         'dashboard': True,
+        'destination': True,
         'index': True,
     }
 }
