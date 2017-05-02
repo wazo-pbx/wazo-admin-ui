@@ -1,13 +1,20 @@
 FROM wazopbx/wazo-admin-ui
 
-RUN for plugin in conference \
+RUN for plugin in cdr \
+                  conference \
+                  context \
+                  device \
+                  extension \
                   group \
                   incall \
+                  ivr \
                   moh \
                   outcall \
                   paging \
                   parking-lot \
+                  plugin \
                   switchboard \
+                  trunk \
                   user \
                   voicemail; do \
     cd /usr/src; \

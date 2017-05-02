@@ -22,13 +22,20 @@ confd:
   verify_certificate: /usr/local/share/ssl/confd/server.crt
 
 enabled_plugins:
-  user: true
+  cdr: true
   conference: true
+  context: true
+  device: true
+  extension: true
   group: true
-  parking_lot: true
-  switchboard: true
-  paging: true
-  voicemail: true
-  moh: true
   incall: true
+  ivr: true
+  moh: true
   outcall: true
+  paging: true
+  parking_lot: true
+  plugin: true
+  switchboard: true
+  trunk: true
+  user: true
+  voicemail: true
