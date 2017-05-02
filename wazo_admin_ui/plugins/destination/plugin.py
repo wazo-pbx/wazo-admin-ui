@@ -4,7 +4,7 @@
 
 from wazo_admin_ui.helpers.destination import register_destination_form
 
-from .form import ApplicationDestination, CustomDestination, HangupDestination, NoneDestination
+from .form import ApplicationDestination, CustomDestination, HangupDestination, NoneDestination, SoundDestination
 
 
 class Plugin(object):
@@ -14,3 +14,4 @@ class Plugin(object):
         register_destination_form('hangup', 'Hangup', HangupDestination)
         register_destination_form('custom', 'Custom', CustomDestination)
         register_destination_form('none', 'None', NoneDestination)
+        register_destination_form('sound', 'Sound', SoundDestination)

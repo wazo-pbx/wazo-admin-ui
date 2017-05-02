@@ -2,7 +2,7 @@
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
-from wtforms.fields import StringField, SelectField, FormField
+from wtforms.fields import StringField, SelectField, FormField, BooleanField
 from wtforms.fields.html5 import IntegerField, EmailField
 from wtforms.validators import InputRequired, Length, NumberRange, Regexp
 
@@ -82,3 +82,10 @@ class CustomDestination(BaseForm):
 
 class NoneDestination(BaseForm):
     pass
+
+
+class SoundDestination(BaseForm):
+
+    filename = StringField('Filename', [InputRequired(), Length(max=255)])
+    skip = BooleanField('Skip')
+    no_answer = BooleanField('No Answer')
