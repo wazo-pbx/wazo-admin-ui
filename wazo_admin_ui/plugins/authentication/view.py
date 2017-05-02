@@ -28,14 +28,14 @@ class Login(FlaskView):
 
     def _login(self):
         if current_user.is_authenticated:
-            return redirect(url_for('dashboard.Dashboard:get'))
+            return redirect(url_for('index.Index:get'))
 
         form = LoginForm()
         form.language.choices = self._build_language_list()
         if form.validate_on_submit():
             session['language'] = form.language.data
             login_user(form.user)
-            return redirect(url_for('dashboard.Dashboard:get'))
+            return redirect(url_for('index.Index:get'))
 
         return render_template('authentication/login.html', form=form)
 
