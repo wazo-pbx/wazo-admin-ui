@@ -9,7 +9,7 @@ from wtforms.utils import unset_value
 from .form import BaseForm
 
 
-_destination_choices = set()
+_destination_choices = []
 listing_urls = {}
 
 
@@ -17,8 +17,10 @@ def register_listing_url(type_id, endpoint):
     listing_urls[type_id] = endpoint
 
 
-def register_destination_form(type_id, type_label, form):
-    _destination_choices.add((type_id, type_label))
+def register_destination_form(type_id, type_label, form, position=-1):
+    if (type_id, type_label) not in _destination_choices:
+        _destination_choices.insert(position, (type_id, type_label))
+
     if getattr(form, 'select_field', False):
         setattr(DestinationForm, type_id, DestinationField(destination_form=form))
     else:
@@ -91,12 +93,10 @@ class DestinationForm(BaseDestinationForm):
     type = SelectField('Destination', choices=[])
 
     def __init__(self, *args, **kwargs):
-        self.destination_choices = list(_destination_choices)
         super(DestinationForm, self).__init__(*args, **kwargs)
+        self.type.choices = _destination_choices
         if self.added_dynamic_choice:
-            self.type.choices = [(self.added_dynamic_choice)] + self.destination_choices
-        else:
-            self.type.choices = self.destination_choices
+            self.type.choices.insert(0, (self.added_dynamic_choice))
         self.listing_urls = listing_urls
 
 
