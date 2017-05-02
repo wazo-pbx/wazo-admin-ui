@@ -52,6 +52,7 @@ $(document).ready(function() {
 
   init_destination_select.call(this);
   init_select2.call(this);
+  $(':input[type=password]:not(.row-template :input, [data-toggle=password])').password();
 
   $('.add-row-entry').click(function(e) {
     e.preventDefault();
@@ -73,6 +74,7 @@ $(document).ready(function() {
     row.insertAfter(last_tr);
     init_destination_select.call(row);
     init_select2.call(row);
+    $(':input[type=password]', row).password();
 
     $('form').validator('update');
     $('form').validator('validate');
@@ -104,7 +106,6 @@ function init_destination_select() {
   $('.destination-select', this).each(function(index) {
       toggle_destination.call(this);
   });
-
 }
 
 
