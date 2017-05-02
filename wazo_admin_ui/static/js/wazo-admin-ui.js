@@ -113,7 +113,8 @@ function toggle_destination(current, value) {
   let context = $(this).closest(".destination-container")
   let destination = $('.destination-'+$(this).val(), context);
 
-  $('[class^=destination-]', context).not('.destination-container').addClass("hidden");
+  let sub_dst_container = $('.destination-container div[class^=destination-]', context);
+  $('[class^=destination-]', context).not('.destination-container').not(sub_dst_container).addClass("hidden");
   destination.removeClass("hidden");
   $('form').validator('update');
 }
