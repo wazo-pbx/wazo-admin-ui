@@ -10,7 +10,6 @@ https:
   certificate: /usr/local/share/ssl/admin-ui/server.crt
   private_key: /usr/local/share/ssl/admin-ui/server.key
 
-
 auth:
   host: auth
   port: 9497
@@ -20,22 +19,3 @@ confd:
   host: confd
   port: 9486
   verify_certificate: /usr/local/share/ssl/confd/server.crt
-
-enabled_plugins:
-  cdr: true
-  conference: true
-  context: true
-  device: true
-  extension: true
-  group: true
-  incall: true
-  ivr: true
-  moh: true
-  outcall: true
-  paging: true
-  parking_lot: true
-  plugin: true
-  switchboard: true
-  trunk: true
-  user: true
-  voicemail: true

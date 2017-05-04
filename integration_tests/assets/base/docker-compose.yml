@@ -23,23 +23,6 @@ admin-ui:
     - "../../..:/usr/src/wazo-admin-ui"
     - "./etc/wazo-admin-ui:/etc/wazo-admin-ui"
     - "./ssl:/usr/local/share/ssl"
-    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-cdr/cdr:/usr/src/wazo-admin-ui-cdr/cdr"
-    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-conference/conference:/usr/src/wazo-admin-ui-conference/conference"
-    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-context/context:/usr/src/wazo-admin-ui-context/context"
-    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-device/device:/usr/src/wazo-admin-ui-device/device"
-    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-extension/extension:/usr/src/wazo-admin-ui-extension/extension"
-    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-group/group:/usr/src/wazo-admin-ui-group/group"
-    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-incall/incall:/usr/src/wazo-admin-ui-incall/incall"
-    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-ivr/ivr:/usr/src/wazo-admin-ui-ivr/ivr"
-    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-moh/moh:/usr/src/wazo-admin-ui-moh/moh"
-    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-outcall/outcall:/usr/src/wazo-admin-ui-outcall/outcall"
-    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-paging/paging:/usr/src/wazo-admin-ui-paging/paging"
-    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-parking-lot/parking_lot:/usr/src/wazo-admin-ui-parking-lot/parking_lot"
-    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-plugin/plugin:/usr/src/wazo-admin-ui-plugin/plugin"
-    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-switchboard/switchboard:/usr/src/wazo-admin-ui-switchboard/switchboard"
-    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-trunk/trunk:/usr/src/wazo-admin-ui-trunk/trunk"
-    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-user/user:/usr/src/wazo-admin-ui-user/user"
-    # - "${LOCAL_GIT_REPOS}/wazo-admin-ui-voicemail/voicemail:/usr/src/wazo-admin-ui-voicemail/voicemail"
 
 auth:
   image: p0bailey/docker-flask
