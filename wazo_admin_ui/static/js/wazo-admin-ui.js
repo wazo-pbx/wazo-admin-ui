@@ -120,10 +120,11 @@ function toggle_destination(current, value) {
 }
 
 
-function build_table_actions(get_url, delete_url, id) {
+function build_table_actions(get_url, delete_url, id, tooltips) {
   remove = $('<a>', {
     'href': delete_url + id,
     'class': 'btn btn-xs btn-danger',
+    'title': tooltips.delete,
     'onclick': "return confirm('Are you sure you want to delete this item?');"
   })
  .append($('<i>', {
@@ -133,6 +134,7 @@ function build_table_actions(get_url, delete_url, id) {
   view = $('<a>', {
     'href': get_url + id,
     'class': 'btn btn-xs btn-info',
+    'title': tooltips.get,
   })
   .append($('<i>', {
     'class': 'fa fa-eye'
@@ -212,6 +214,8 @@ function create_table_serverside(config) {
   let list_url = $('#table-list-serverside').attr('data-list_url');
   let get_url = $('.list-table-action').attr('data-get_url');
   let delete_url = $('.list-table-action').attr('data-delete_url');
+  let tooltips = {'get': $('.list-table-action').attr('data-get_tooltip'),
+                  'delete': $('.list-table-action').attr('data-delete_tooltip')}
 
   config.serverSide = true;
   config.processing = true;
@@ -219,7 +223,7 @@ function create_table_serverside(config) {
   if (get_url || delete_url) {
     config.columns.push({
       render: function(data, type, row) {
-        return build_table_actions(get_url, delete_url, row.uuid);
+        return build_table_actions(get_url, delete_url, row.uuid, tooltips);
       }
     });
   }

@@ -244,7 +244,7 @@
 
 
 {% macro add_list_table_header_action(get='', delete='') %}
-  <th class="no-sort list-table-action" style="width: 80px" {{ 'data-get_url=' ~ get if get }} {{ 'data-delete_url=' ~ delete  if delete }}>
+  <th class="no-sort list-table-action" style="width: 80px" {{ 'data-get_url=' ~ get if get }} {{ 'data-delete_url=' ~ delete  if delete }} data-get_tooltip={{ _('Edit') }} data-delete_tooltip={{ _('Delete') }}>
     {{ _('Actions') }}
   </th>
 {% endmacro %}
@@ -270,14 +270,14 @@
 
 
 {% macro add_edit_button(href) %}
-  <a href="{{ href }}" class="btn btn-xs btn-info">
+  <a href="{{ href }}" class="btn btn-xs btn-info", title={{ _('Edit') }}>
     <i class="fa fa-eye"></i>
   </a>
 {% endmacro %}
 
 
 {% macro add_delete_button(href) %}
-  <a href="{{ href }}" class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">
+  <a href="{{ href }}" class="btn btn-xs btn-danger" title={{ _('Delete') }} onclick="return confirm('Are you sure you want to delete this item?');">
     <i class="fa fa-minus"></i>
   </a>
 {% endmacro %}
