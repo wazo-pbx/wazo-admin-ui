@@ -1,5 +1,7 @@
 git+https://github.com/wazo-pbx/xivo-auth-client.git
+git+https://github.com/wazo-pbx/xivo-call-logs-client.git
 git+https://github.com/wazo-pbx/xivo-confd-client.git
+git+https://github.com/wazo-pbx/wazo-plugind-client.git
 git+https://github.com/wazo-pbx/xivo-lib-python.git
 git+https://github.com/wazo-pbx/xivo-lib-rest-client.git  # from xivo-*-client
 babel==2.3.4
