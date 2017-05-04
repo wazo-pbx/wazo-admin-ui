@@ -7,3 +7,6 @@ import os
 ASSET_ROOT = os.path.join(os.path.dirname(__file__), '..', '..', 'assets')
 INVALID_ACL_TOKEN = 'invalid-acl-token'
 VALID_TOKEN = 'valid-token'
+
+REQUIRED_ERROR = 'Please fill out this field.'
+USERNAME_PASSWORD_ERROR = 'Wrong username and/or password'
