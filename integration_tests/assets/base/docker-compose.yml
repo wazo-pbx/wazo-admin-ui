@@ -3,13 +3,8 @@ sync:
   links:
     - admin-ui
     - auth
-    - confd
-    - postgres
-    - provd
-    - rabbitmq
-    - sysconfd
   environment:
-    PORTS: "5432 5672 8666 8668 9296 9486 9497"
+    PORTS: "9296 9497"
     TIMEOUT: "${INTEGRATION_TEST_TIMEOUT}"
 
 admin-ui:
@@ -17,7 +12,6 @@ admin-ui:
   ports:
     - "19296:9296"
   links:
-    - confd
     - auth
   volumes:
     - "../../..:/usr/src/wazo-admin-ui"
@@ -32,42 +26,3 @@ auth:
     - "./mocks/auth.py:/tmp/auth.py"
     - "./ssl:/usr/local/share/ssl"
   command: "python /tmp/auth.py"
-
-confd:
-  image: wazopbx/xivo-confd
-  expose:
-    - "9486"
-  links:
-    - auth
-    - postgres
-    - provd
-    - rabbitmq
-    - sysconfd
-  volumes:
-    - "./etc/xivo-confd:/etc/xivo-confd"
-    - "./ssl:/usr/local/share/ssl"
-
-postgres:
-  image: wazopbx/postgres-test
-  expose:
-    - "5432"
-
-provd:
-  image: wazopbx/xivo-provd
-  expose:
-    - "8666"
-  volumes:
-    - "./etc/xivo-provd/provd.conf:/etc/xivo/provd/provd.conf"
-
-rabbitmq:
-  image: rabbitmq
-  expose:
-    - "5672"
-
-sysconfd:
-  image: p0bailey/docker-flask
-  expose:
-    - "8668"
-  volumes:
-    - "./mocks/sysconfd.py:/tmp/sysconfd.py"
-  command: "python /tmp/sysconfd.py"
