@@ -4,7 +4,7 @@
 
 from selenium.webdriver.common.by import By
 
-from .page import Page
+from xivo_test_helpers.admin_ui.pages.page import Page
 
 
 class IndexPage(Page):
