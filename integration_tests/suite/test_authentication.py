@@ -11,7 +11,7 @@ from .test_api.constants import REQUIRED_ERROR, USERNAME_PASSWORD_ERROR
 
 class TestLogin(IntegrationTest):
 
-    asset = 'all_plugins'
+    asset = 'base'
 
     def setUp(self):
         self.browser.logout()
