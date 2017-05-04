@@ -11,6 +11,12 @@ from .pages.browser import Browser
 from .pages.page import Page
 
 
+class SSLIntegrationTest(AssetLaunchingTestCase):
+
+    assets_root = ASSET_ROOT
+    service = 'admin-ui'
+
+
 class IntegrationTest(AssetLaunchingTestCase):
 
     assets_root = ASSET_ROOT

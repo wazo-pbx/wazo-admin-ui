@@ -6,10 +6,10 @@ from hamcrest import assert_that
 from hamcrest import contains_string
 from xivo_test_helpers import until
 
-from .test_api.base import IntegrationTest
+from .test_api.base import SSLIntegrationTest
 
 
-class TestHTTPSMissingCertificate(IntegrationTest):
+class TestHTTPSMissingCertificate(SSLIntegrationTest):
     asset = 'no_ssl_certificate'
 
     def test_given_no_ssl_certificate_when_admin_ui_starts_then_admin_ui_stops(self):
@@ -23,7 +23,7 @@ class TestHTTPSMissingCertificate(IntegrationTest):
         assert_that(log, contains_string("No such file or directory: '/usr/share/xivo-certs/server.crt'"))
 
 
-class TestHTTPSMissingPrivateKey(IntegrationTest):
+class TestHTTPSMissingPrivateKey(SSLIntegrationTest):
     asset = 'no_ssl_private_key'
 
     def test_given_no_ssl_private_key_when_admin_ui_starts_then_admin_ui_stops(self):
