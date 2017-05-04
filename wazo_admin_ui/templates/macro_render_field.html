@@ -75,7 +75,9 @@
       {% endif %}
 
       <div class="help-block with-errors">
-        {{ '<i>' ~ field.errors|join(', ') ~ '</i>' if field.errors }}
+        {% if field.errors %}
+          <i>{{ field.errors|join(', ') }}</i>
+        {% endif %}
       </div>
     {%- endcall %}
 
