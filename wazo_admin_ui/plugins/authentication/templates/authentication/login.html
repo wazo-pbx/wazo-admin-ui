@@ -12,7 +12,7 @@
         {{ _('Authentication') }}
       </h3>
       <hr>
-      <form action="" method="post" name="login_user_form">
+      <form action="" method="post" name="login_user_form" data-toggle="validator">
         {{ form.hidden_tag() }}
         {{ render_field(form.username, with_icon="user", with_label=False, placeholder=_("Username")) }}
         {{ render_field(form.password, divclass='form-group', with_label=False, placeholder=_("Password"), data_toggle='password') }}
