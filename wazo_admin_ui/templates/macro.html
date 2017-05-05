@@ -206,7 +206,7 @@
 
 
 {% macro build_table(id=None, data_list_url='') %}
-  <table {{ 'id=' ~ id if id }} class="table table-condensed" {{ 'data-list_url=' ~ data_list_url if data_list_url }}>
+  <table {{ 'id=' ~ id if id }} class="table table-condensed table-striped table-bordered" {{ 'data-list_url=' ~ data_list_url if data_list_url }}>
     {{ caller() }}
   </table>
 {% endmacro %}
