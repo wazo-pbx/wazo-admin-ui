@@ -19,7 +19,13 @@ $.extend(true, $.fn.dataTable.defaults, {
       targets: 'no-sort',
       orderable: false
     }
-  ]
+  ],
+  initComplete: function(oSettings, json) {
+    $('select[name^=table-list]').select2({
+      theme: 'bootstrap',
+      tags: true
+    });
+  },
 });
 
 $.fn.validator.Constructor.INPUT_SELECTOR = ':input:not([type="hidden"], [type="submit"], [type="reset"], button, .hidden :input)';
