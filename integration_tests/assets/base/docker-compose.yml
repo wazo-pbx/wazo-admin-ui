@@ -1,0 +1,24 @@
+sync:
+  image: n3llyb0y/wait
+  links:
+    - admin-ui
+    - auth
+  environment:
+    PORTS: "9296 9497"
+    TIMEOUT: "${INTEGRATION_TEST_TIMEOUT}"
+
+admin-ui:
+  image: wazo-admin-ui-test
+  ports:
+    - "19296:9296"
+  links:
+    - auth
+  volumes:
+    - "../../..:/usr/src/wazo-admin-ui"
+    - "./etc/wazo-admin-ui:/etc/wazo-admin-ui"
+    - "./ssl:/usr/local/share/ssl"
+
+auth:
+  image: wazopbx/xivo-auth-mock
+  ports:
+    - "9497"
