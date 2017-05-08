@@ -1,4 +1,4 @@
-.PHONY: test-setup test
+.PHONY: test-setup test docker-pull build-admin-ui egg-info
 
 test-setup: docker-pull build-admin-ui egg-info
 
