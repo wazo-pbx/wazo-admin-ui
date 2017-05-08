@@ -34,8 +34,8 @@ class TestLogin(IntegrationTest):
 
     def test_invalid_login(self):
         login = self.browser.login
-        login.fill_name('username', 'invalid')
-        login.fill_name('password', 'invalid')
+        login.fill_name('username', 'test')
+        login.fill_name('password', 'foobar')
 
         submit = login.driver.find_element_by_id('submit')
         assert_that(submit.get_attribute('class'), not_(contains_string('disabled')))

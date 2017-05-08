@@ -13,7 +13,7 @@ https:
 auth:
   host: auth
   port: 9497
-  verify_certificate: /usr/local/share/ssl/auth/server.crt
+  verify_certificate: False
 
 confd:
   host: confd
