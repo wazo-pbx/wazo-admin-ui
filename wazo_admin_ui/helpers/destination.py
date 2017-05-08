@@ -2,6 +2,7 @@
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
+from flask_babel import lazy_gettext as l_
 from werkzeug.datastructures import ImmutableMultiDict
 from wtforms.fields import SelectField, FormField, HiddenField, StringField
 from wtforms.utils import unset_value
@@ -90,7 +91,7 @@ class BaseDestinationForm(BaseForm):
 class DestinationForm(BaseDestinationForm):
     select_field = 'type'
 
-    type = SelectField('Destination', choices=[])
+    type = SelectField(l_('Destination'), choices=[])
 
     def __init__(self, *args, **kwargs):
         super(DestinationForm, self).__init__(*args, **kwargs)
@@ -114,10 +115,10 @@ class DestinationField(FormField):
 
 
 class FallbacksForm(BaseForm):
-    busy_destination = DestinationField('Busy')
-    congestion_destination = DestinationField('Congestion')
-    fail_destination = DestinationField('Fail')
-    noanswer_destination = DestinationField('No answer')
+    busy_destination = DestinationField(l_('Busy'))
+    congestion_destination = DestinationField(l_('Congestion'))
+    fail_destination = DestinationField(l_('Fail'))
+    noanswer_destination = DestinationField(l_('No answer'))
 
     def to_dict(self):
         data = super(FallbacksForm, self).to_dict()

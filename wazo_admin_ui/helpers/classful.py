@@ -12,6 +12,7 @@ from flask import (flash,
                    render_template,
                    request,
                    url_for)
+from flask_babel import gettext as _
 from flask_classful import FlaskView
 from flask_classful import route
 from flask_login import login_required
@@ -121,7 +122,7 @@ class BaseView(LoginRequiredView):
             self._flash_http_error(error)
             return self._new(form)
 
-        flash('{}: Resource has been created'.format(self.resource), 'success')
+        flash(_(u'$(resource)s: Resource has been created', resource=self.resource), 'success')
         return self._redirect_for('index')
 
     def _new(self, form=None):
@@ -169,7 +170,7 @@ class BaseView(LoginRequiredView):
             self._flash_http_error(error)
             return self._get(id, form)
 
-        flash(u'{}: Resource has been updated'.format(self.resource), 'success')
+        flash(_(u'$(resource)s: Resource has been updated', resource=self.resource), 'success')
         return self._redirect_for('index')
 
     def _map_form_to_resources_put(self, form, form_id):
