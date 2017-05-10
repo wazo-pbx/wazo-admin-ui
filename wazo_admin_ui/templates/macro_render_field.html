@@ -175,7 +175,9 @@
 
 {% macro render_field_destination(field, class_) %}
   <div class="destination-container">
-    {{ render_field(field.form[field.form.select_field], class_= class_ ~ ' destination-select', **kwargs) }}
+    {% call _append_dynamic_choice(field.form) %}
+      {{ render_field(field.form[field.form.select_field], class_= class_ ~ ' destination-select', **kwargs) }}
+    {% endcall %}
 
     {% for destination in field.form %}
       {% if destination.type == 'FormField' %}
@@ -189,6 +191,17 @@
       {% endif %}
     {% endfor %}
   </div>
+{% endmacro %}
+
+
+{% macro _append_dynamic_choice(form) %}
+  {% if form.added_dynamic_choice %}
+    {% do form[form.select_field].choices.insert(0, (form.added_dynamic_choice)) %}
+    {{ caller() }}
+    {% do form[form.select_field].choices.pop(0) %}
+  {% else %}
+    {{ caller() }}
+  {% endif %}
 {% endmacro %}
 
 

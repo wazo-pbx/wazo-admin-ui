@@ -30,7 +30,10 @@ def register_destination_form(type_id, type_label, form, position=-1):
 
 class BaseDestinationForm(BaseForm):
     select_field = None
-    added_dynamic_choice = ()
+
+    def __init__(self, *args, **kwargs):
+        self.added_dynamic_choice = ()
+        super(BaseDestinationForm, self).__init__(*args, **kwargs)
 
     def to_dict(self):
         if not self.select_field or not getattr(self, self.select_field, False):
@@ -96,8 +99,6 @@ class DestinationForm(BaseDestinationForm):
     def __init__(self, *args, **kwargs):
         super(DestinationForm, self).__init__(*args, **kwargs)
         self.type.choices = _destination_choices
-        if self.added_dynamic_choice:
-            self.type.choices.insert(0, (self.added_dynamic_choice))
         self.listing_urls = listing_urls
 
 
