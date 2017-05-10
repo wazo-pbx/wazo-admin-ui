@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wazo-admin-ui 0.1\n"
 "Report-Msgid-Bugs-To: dev@wazo.community\n"
-"POT-Creation-Date: 2017-03-07 15:10-0500\n"
-"PO-Revision-Date: 2017-03-07 15:10-0500\n"
+"POT-Creation-Date: 2017-05-08 13:47-0400\n"
+"PO-Revision-Date: 2017-05-08 13:47-0400\n"
 "Last-Translator: Francois Blackburn <fblackburn@wazo.community>, 2017\n"
 "Language-Team: French (https://www.transifex.com/wazo/teams/69545/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -20,6 +20,36 @@ msgstr ""
 "Generated-By: Babel 2.3.4\n"
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: wazo_admin_ui/helpers/classful.py:125
+msgid "$(resource)s: Resource has been created"
+msgstr "$(resource)s: La ressource a été créé"
+
+#: wazo_admin_ui/helpers/classful.py:173
+msgid "$(resource)s: Resource has been updated"
+msgstr "$(resource)s: La ressource a été modifiée"
+
+#: wazo_admin_ui/helpers/destination.py:94
+msgid "Destination"
+msgstr "Destination"
+
+#: wazo_admin_ui/helpers/destination.py:118
+#: wazo_admin_ui/plugins/destination/form.py:32
+msgid "Busy"
+msgstr "Occupé"
+
+#: wazo_admin_ui/helpers/destination.py:119
+#: wazo_admin_ui/plugins/destination/form.py:33
+msgid "Congestion"
+msgstr "Saturé"
+
+#: wazo_admin_ui/helpers/destination.py:120
+msgid "Fail"
+msgstr "Échoué"
+
+#: wazo_admin_ui/helpers/destination.py:121
+msgid "No answer"
+msgstr "Aucune réponse"
 
 #: wazo_admin_ui/helpers/error.py:19
 msgid "Resource not found"
@@ -130,31 +160,79 @@ msgstr "Plage invalide"
 msgid "String does not match expected pattern"
 msgstr "La chaîne de caractère ne correspond pas au modèle attendu"
 
-#: wazo_admin_ui/helpers/error.py:93
+#: wazo_admin_ui/helpers/error.py:105
 msgid "call permission"
 msgstr "droit d'appel"
 
-#: wazo_admin_ui/helpers/error.py:94
+#: wazo_admin_ui/helpers/error.py:106
 msgid "conference"
 msgstr "conférence"
 
-#: wazo_admin_ui/helpers/error.py:95
+#: wazo_admin_ui/helpers/error.py:107
+msgid "context"
+msgstr "contexte"
+
+#: wazo_admin_ui/helpers/error.py:108
+msgid "endpoint"
+msgstr "terminaison"
+
+#: wazo_admin_ui/helpers/error.py:109
+msgid "entity"
+msgstr "entitée"
+
+#: wazo_admin_ui/helpers/error.py:110
 msgid "extension"
 msgstr "extension"
 
-#: wazo_admin_ui/helpers/error.py:96
+#: wazo_admin_ui/helpers/error.py:111
+msgid "function keys"
+msgstr "touches de fonction"
+
+#: wazo_admin_ui/helpers/error.py:112
+msgid "group"
+msgstr "groupe"
+
+#: wazo_admin_ui/helpers/error.py:113
+msgid "incall"
+msgstr "appel entrant"
+
+#: wazo_admin_ui/helpers/error.py:114
+msgid "ivr"
+msgstr "svi"
+
+#: wazo_admin_ui/helpers/error.py:115
+msgid "line"
+msgstr "ligne"
+
+#: wazo_admin_ui/helpers/error.py:116
+msgid "music on hold"
+msgstr "musique d'attente"
+
+#: wazo_admin_ui/helpers/error.py:117
+msgid "outcall"
+msgstr "appel sortant"
+
+#: wazo_admin_ui/helpers/error.py:118
+msgid "paging"
+msgstr "intercom"
+
+#: wazo_admin_ui/helpers/error.py:119
 msgid "parking lot"
 msgstr "terrain de stationnement"
 
-#: wazo_admin_ui/helpers/error.py:97
+#: wazo_admin_ui/helpers/error.py:120
 msgid "switchboard"
 msgstr "popc"
 
-#: wazo_admin_ui/helpers/error.py:98
+#: wazo_admin_ui/helpers/error.py:121
+msgid "trunk"
+msgstr "interconnexion"
+
+#: wazo_admin_ui/helpers/error.py:122
 msgid "user"
 msgstr "utilisateur"
 
-#: wazo_admin_ui/helpers/error.py:99
+#: wazo_admin_ui/helpers/error.py:123
 msgid "voicemail"
 msgstr "boite vocale"
 
@@ -197,7 +275,97 @@ msgstr "Authentification"
 msgid "All rights reserved."
 msgstr "Tous droits réservés."
 
-#: wazo_admin_ui/templates/macro.html:338
+#: wazo_admin_ui/plugins/destination/form.py:16
+#: wazo_admin_ui/plugins/destination/form.py:21
+msgid "Timeout"
+msgstr "Temps de sonnerie"
+
+#: wazo_admin_ui/plugins/destination/form.py:31
+msgid "Cause"
+msgstr "Cause"
+
+#: wazo_admin_ui/plugins/destination/form.py:31
+msgid "Normal"
+msgstr "Normal"
+
+#: wazo_admin_ui/plugins/destination/form.py:41
+msgid "PIN"
+msgstr "PIN"
+
+#: wazo_admin_ui/plugins/destination/form.py:44
+#: wazo_admin_ui/plugins/destination/form.py:53
+#: wazo_admin_ui/plugins/destination/form.py:63
+msgid "Context"
+msgstr "Contexte"
+
+#: wazo_admin_ui/plugins/destination/form.py:58
+msgid "Email"
+msgstr "Email"
+
+#: wazo_admin_ui/plugins/destination/form.py:69
+#: wazo_admin_ui/plugins/destination/plugin.py:14
+msgid "Application"
+msgstr "Application"
+
+#: wazo_admin_ui/plugins/destination/form.py:69
+msgid "CallBack DISA"
+msgstr "CallBack DISA"
+
+#: wazo_admin_ui/plugins/destination/form.py:70
+msgid "Directory"
+msgstr "Répertoire"
+
+#: wazo_admin_ui/plugins/destination/form.py:71
+msgid "DISA"
+msgstr "DISA"
+
+#: wazo_admin_ui/plugins/destination/form.py:72
+msgid "Fax To Mail"
+msgstr "Fax à Message"
+
+#: wazo_admin_ui/plugins/destination/form.py:73
+msgid "Voicemail"
+msgstr "Messagerie vocale"
+
+#: wazo_admin_ui/plugins/destination/form.py:92
+msgid "Filename"
+msgstr "Nom du fichier"
+
+#: wazo_admin_ui/plugins/destination/form.py:93
+msgid "Skip"
+msgstr "Passer"
+
+#: wazo_admin_ui/plugins/destination/form.py:94
+msgid "No Answer"
+msgstr "Aucune réponse"
+
+#: wazo_admin_ui/plugins/destination/plugin.py:15
+msgid "Hangup"
+msgstr "Raccrocher"
+
+#: wazo_admin_ui/plugins/destination/plugin.py:16
+msgid "Custom"
+msgstr "Personnalisée"
+
+#: wazo_admin_ui/plugins/destination/plugin.py:17
+msgid "None"
+msgstr "Aucune"
+
+#: wazo_admin_ui/plugins/destination/plugin.py:18
+msgid "Sound"
+msgstr "Son"
+
+#: wazo_admin_ui/templates/macro.html:247
+#: wazo_admin_ui/templates/macro.html:273
+msgid "Edit"
+msgstr "Modifier"
+
+#: wazo_admin_ui/templates/macro.html:247
+#: wazo_admin_ui/templates/macro.html:280
+msgid "Delete"
+msgstr "Supprimer"
+
+#: wazo_admin_ui/templates/macro.html:248
 msgid "Actions"
 msgstr "Actions"
 
@@ -260,3 +428,11 @@ msgstr ": activer pour trier la colonne par ordre croissant"
 #: wazo_admin_ui/templates/translations.html:22
 msgid ": activate to sort column descending"
 msgstr ": activer pour trier la colonne par ordre décroissant"
+
+#: wazo_admin_ui/templates/translations.html:28
+msgid "Does not match"
+msgstr "Ne correspond pas"
+
+#: wazo_admin_ui/templates/translations.html:29
+msgid "Not long enough"
+msgstr "Pas assez long"

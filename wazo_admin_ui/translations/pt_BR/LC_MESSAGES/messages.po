@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wazo-admin-ui 0.1\n"
 "Report-Msgid-Bugs-To: dev@wazo.community\n"
-"POT-Creation-Date: 2017-03-07 15:10-0500\n"
-"PO-Revision-Date: 2017-03-07 15:10-0500\n"
+"POT-Creation-Date: 2017-05-08 13:47-0400\n"
+"PO-Revision-Date: 2017-05-08 13:47-0400\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/wazo/teams/69545/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -17,6 +17,36 @@ msgstr ""
 "Generated-By: Babel 2.3.4\n"
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: wazo_admin_ui/helpers/classful.py:125
+msgid "$(resource)s: Resource has been created"
+msgstr ""
+
+#: wazo_admin_ui/helpers/classful.py:173
+msgid "$(resource)s: Resource has been updated"
+msgstr ""
+
+#: wazo_admin_ui/helpers/destination.py:94
+msgid "Destination"
+msgstr ""
+
+#: wazo_admin_ui/helpers/destination.py:118
+#: wazo_admin_ui/plugins/destination/form.py:32
+msgid "Busy"
+msgstr ""
+
+#: wazo_admin_ui/helpers/destination.py:119
+#: wazo_admin_ui/plugins/destination/form.py:33
+msgid "Congestion"
+msgstr ""
+
+#: wazo_admin_ui/helpers/destination.py:120
+msgid "Fail"
+msgstr ""
+
+#: wazo_admin_ui/helpers/destination.py:121
+msgid "No answer"
+msgstr ""
 
 #: wazo_admin_ui/helpers/error.py:19
 msgid "Resource not found"
@@ -126,31 +156,79 @@ msgstr ""
 msgid "String does not match expected pattern"
 msgstr ""
 
-#: wazo_admin_ui/helpers/error.py:93
+#: wazo_admin_ui/helpers/error.py:105
 msgid "call permission"
 msgstr ""
 
-#: wazo_admin_ui/helpers/error.py:94
+#: wazo_admin_ui/helpers/error.py:106
 msgid "conference"
 msgstr ""
 
-#: wazo_admin_ui/helpers/error.py:95
+#: wazo_admin_ui/helpers/error.py:107
+msgid "context"
+msgstr ""
+
+#: wazo_admin_ui/helpers/error.py:108
+msgid "endpoint"
+msgstr ""
+
+#: wazo_admin_ui/helpers/error.py:109
+msgid "entity"
+msgstr ""
+
+#: wazo_admin_ui/helpers/error.py:110
 msgid "extension"
 msgstr ""
 
-#: wazo_admin_ui/helpers/error.py:96
+#: wazo_admin_ui/helpers/error.py:111
+msgid "function keys"
+msgstr ""
+
+#: wazo_admin_ui/helpers/error.py:112
+msgid "group"
+msgstr ""
+
+#: wazo_admin_ui/helpers/error.py:113
+msgid "incall"
+msgstr ""
+
+#: wazo_admin_ui/helpers/error.py:114
+msgid "ivr"
+msgstr ""
+
+#: wazo_admin_ui/helpers/error.py:115
+msgid "line"
+msgstr ""
+
+#: wazo_admin_ui/helpers/error.py:116
+msgid "music on hold"
+msgstr ""
+
+#: wazo_admin_ui/helpers/error.py:117
+msgid "outcall"
+msgstr ""
+
+#: wazo_admin_ui/helpers/error.py:118
+msgid "paging"
+msgstr ""
+
+#: wazo_admin_ui/helpers/error.py:119
 msgid "parking lot"
 msgstr ""
 
-#: wazo_admin_ui/helpers/error.py:97
+#: wazo_admin_ui/helpers/error.py:120
 msgid "switchboard"
 msgstr ""
 
-#: wazo_admin_ui/helpers/error.py:98
+#: wazo_admin_ui/helpers/error.py:121
+msgid "trunk"
+msgstr ""
+
+#: wazo_admin_ui/helpers/error.py:122
 msgid "user"
 msgstr ""
 
-#: wazo_admin_ui/helpers/error.py:99
+#: wazo_admin_ui/helpers/error.py:123
 msgid "voicemail"
 msgstr ""
 
@@ -193,7 +271,97 @@ msgstr ""
 msgid "All rights reserved."
 msgstr ""
 
-#: wazo_admin_ui/templates/macro.html:338
+#: wazo_admin_ui/plugins/destination/form.py:16
+#: wazo_admin_ui/plugins/destination/form.py:21
+msgid "Timeout"
+msgstr ""
+
+#: wazo_admin_ui/plugins/destination/form.py:31
+msgid "Cause"
+msgstr ""
+
+#: wazo_admin_ui/plugins/destination/form.py:31
+msgid "Normal"
+msgstr ""
+
+#: wazo_admin_ui/plugins/destination/form.py:41
+msgid "PIN"
+msgstr ""
+
+#: wazo_admin_ui/plugins/destination/form.py:44
+#: wazo_admin_ui/plugins/destination/form.py:53
+#: wazo_admin_ui/plugins/destination/form.py:63
+msgid "Context"
+msgstr ""
+
+#: wazo_admin_ui/plugins/destination/form.py:58
+msgid "Email"
+msgstr ""
+
+#: wazo_admin_ui/plugins/destination/form.py:69
+#: wazo_admin_ui/plugins/destination/plugin.py:14
+msgid "Application"
+msgstr ""
+
+#: wazo_admin_ui/plugins/destination/form.py:69
+msgid "CallBack DISA"
+msgstr ""
+
+#: wazo_admin_ui/plugins/destination/form.py:70
+msgid "Directory"
+msgstr ""
+
+#: wazo_admin_ui/plugins/destination/form.py:71
+msgid "DISA"
+msgstr ""
+
+#: wazo_admin_ui/plugins/destination/form.py:72
+msgid "Fax To Mail"
+msgstr ""
+
+#: wazo_admin_ui/plugins/destination/form.py:73
+msgid "Voicemail"
+msgstr ""
+
+#: wazo_admin_ui/plugins/destination/form.py:92
+msgid "Filename"
+msgstr ""
+
+#: wazo_admin_ui/plugins/destination/form.py:93
+msgid "Skip"
+msgstr ""
+
+#: wazo_admin_ui/plugins/destination/form.py:94
+msgid "No Answer"
+msgstr ""
+
+#: wazo_admin_ui/plugins/destination/plugin.py:15
+msgid "Hangup"
+msgstr ""
+
+#: wazo_admin_ui/plugins/destination/plugin.py:16
+msgid "Custom"
+msgstr ""
+
+#: wazo_admin_ui/plugins/destination/plugin.py:17
+msgid "None"
+msgstr ""
+
+#: wazo_admin_ui/plugins/destination/plugin.py:18
+msgid "Sound"
+msgstr ""
+
+#: wazo_admin_ui/templates/macro.html:247
+#: wazo_admin_ui/templates/macro.html:273
+msgid "Edit"
+msgstr ""
+
+#: wazo_admin_ui/templates/macro.html:247
+#: wazo_admin_ui/templates/macro.html:280
+msgid "Delete"
+msgstr ""
+
+#: wazo_admin_ui/templates/macro.html:248
 msgid "Actions"
 msgstr ""
 
@@ -255,4 +423,12 @@ msgstr ""
 
 #: wazo_admin_ui/templates/translations.html:22
 msgid ": activate to sort column descending"
+msgstr ""
+
+#: wazo_admin_ui/templates/translations.html:28
+msgid "Does not match"
+msgstr ""
+
+#: wazo_admin_ui/templates/translations.html:29
+msgid "Not long enough"
 msgstr ""
