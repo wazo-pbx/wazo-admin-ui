@@ -1,15 +1,15 @@
-# Translations template for PROJECT.
-# Copyright (C) 2017 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+# Translations template for wazo-admin-ui.
+# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
+# This file is distributed under the same license as the wazo-admin-ui
+# project.
+# Wazo Dev Team <dev@wazo.community>, 2017.
 # 
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"Project-Id-Version: wazo-admin-ui 0.1\n"
+"Report-Msgid-Bugs-To: dev@wazo.community\n"
 "POT-Creation-Date: 2017-05-11 07:44-0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-05-11 07:44-0400\n"
 "Language-Team: Japanese (https://www.transifex.com/wazo/teams/69545/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
