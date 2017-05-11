@@ -1,17 +1,15 @@
-# Translations template for wazo-admin-ui.
-# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
-# This file is distributed under the same license as the wazo-admin-ui
-# project.
-# Wazo Dev Team <dev@wazo.community>, 2017.
+# Translations template for PROJECT.
+# Copyright (C) 2017 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
 # 
-# Translators:
-# Ettore Atalan <atalanttore@googlemail.com>, 2017
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: wazo-admin-ui 0.1\n"
-"Report-Msgid-Bugs-To: dev@wazo.community\n"
-"POT-Creation-Date: 2017-05-08 13:47-0400\n"
-"PO-Revision-Date: 2017-05-08 13:47-0400\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2017-05-11 07:44-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>, 2017\n"
 "Language-Team: German (https://www.transifex.com/wazo/teams/69545/de/)\n"
 "MIME-Version: 1.0\n"
@@ -22,32 +20,39 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: wazo_admin_ui/helpers/classful.py:125
-msgid "$(resource)s: Resource has been created"
+#, python-format
+msgid "%(resource)s: Resource has been created"
 msgstr ""
 
 #: wazo_admin_ui/helpers/classful.py:173
-msgid "$(resource)s: Resource has been updated"
+#, python-format
+msgid "%(resource)s: Resource has been updated"
 msgstr ""
 
-#: wazo_admin_ui/helpers/destination.py:94
+#: wazo_admin_ui/helpers/classful.py:201
+#, python-format
+msgid "%(resource)s: Resource %(id)s has been deleted"
+msgstr ""
+
+#: wazo_admin_ui/helpers/destination.py:97
 msgid "Destination"
 msgstr ""
 
-#: wazo_admin_ui/helpers/destination.py:118
+#: wazo_admin_ui/helpers/destination.py:119
 #: wazo_admin_ui/plugins/destination/form.py:32
 msgid "Busy"
 msgstr ""
 
-#: wazo_admin_ui/helpers/destination.py:119
+#: wazo_admin_ui/helpers/destination.py:120
 #: wazo_admin_ui/plugins/destination/form.py:33
 msgid "Congestion"
 msgstr ""
 
-#: wazo_admin_ui/helpers/destination.py:120
+#: wazo_admin_ui/helpers/destination.py:121
 msgid "Fail"
 msgstr ""
 
-#: wazo_admin_ui/helpers/destination.py:121
+#: wazo_admin_ui/helpers/destination.py:122
 msgid "No answer"
 msgstr ""
 
