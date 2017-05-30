@@ -282,6 +282,11 @@
   </a>
 {% endmacro %}
 
+{% macro add_action_button(href, icon, title, color, confirm) %}
+  <a href="{{ href }}" class="btn btn-xs btn-{{ color }}" title={{ _(title) }} {% if confim %} onclick="return confirm('{{ confirm }}');" {% endif %}>
+    <i class="fa fa-{{ icon }}"></i>
+  </a>
+{% endmacro %}
 
 {% macro build_hidden_add_containers(title) %}
   <div class="col-lg-4">
