@@ -6,7 +6,6 @@ import argparse
 
 from xivo.chain_map import ChainMap
 from xivo.config_helper import read_config_file_hierarchy
-from xivo.http_helpers import DEFAULT_CIPHERS
 from xivo.xivo_logging import get_log_level_by_name
 
 
@@ -25,7 +24,6 @@ _DEFAULT_CONFIG = {
         'port': 9296,
         'certificate': '/usr/share/xivo-certs/server.crt',
         'private_key': '/usr/share/xivo-certs/server.key',
-        'ciphers': DEFAULT_CIPHERS
     },
     'auth': {
         'host': 'localhost',
