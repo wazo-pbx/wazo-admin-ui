@@ -10,7 +10,7 @@ from datetime import timedelta
 import requests
 from requests.exceptions import HTTPError
 
-from cherrypy import wsgiserver
+from cheroot import wsgi
 from flask import Flask
 from flask import request, session, url_for
 from flask_babel import Babel
@@ -79,9 +79,9 @@ class Server(object):
     def run(self):
         bind_addr = (self.config['listen'], self.config['port'])
 
-        wsgi_app = ReverseProxied(wsgiserver.WSGIPathInfoDispatcher({'/': app}))
-        self.server = wsgiserver.CherryPyWSGIServer(bind_addr=bind_addr,
-                                                    wsgi_app=wsgi_app)
+        wsgi_app = ReverseProxied(wsgi.WSGIPathInfoDispatcher({'/': app}))
+        self.server = wsgi.WSGIServer(bind_addr=bind_addr,
+                                      wsgi_app=wsgi_app)
         self.server.ssl_adapter = http_helpers.ssl_adapter(self.config['certificate'],
                                                            self.config['private_key'],
                                                            self.config['ciphers'])
