@@ -13,7 +13,6 @@ flask-menu==0.5.1
 flask-session==0.3.0
 flask-wtf==0.14.2
 flask==0.10.1
-pyopenssl==0.14  # from xivo-lib-python
 pyyaml==3.11  # from xivo-lib-python
 requests==2.4.3
 stevedore==1.17.1
