@@ -1,3 +1,13 @@
 .content-wrapper {
   overflow: auto;
 }
+
+.logo-full-svg {
+  max-width: 130px;
+  max-height: 34px;
+}
+
+.logo-bird-svg {
+  max-width: 32px;
+  max-height: 27px;
+}
