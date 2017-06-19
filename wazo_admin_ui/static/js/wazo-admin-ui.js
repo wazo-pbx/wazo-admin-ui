@@ -1,3 +1,22 @@
+$.fn.dataTable.ext.buttons.delete_selected = {
+  className: 'btn-danger delete-selected-rows',
+  text: 'Delete',
+  action: function (e, dt, node, config) {
+    if (confirm('Are you sure you want to delete these items?')) {
+      dt.rows({selected: true}).every(function(rowIdx, tableLoop, rowLoop) {
+        let row = this;
+        $.ajax({
+          url: row.nodes().to$().find('.delete-entry').attr('href'),
+          success: function(response) {
+            row.remove().draw();
+            $('.delete-selected-rows').hide();
+          }
+        });
+      });
+    }
+  }
+};
+
 $.extend(true, $.fn.dataTable.defaults, {
   lengthMenu: [[20, 50, 100, -1], [20, 50, 100, "All"]],
   pageLength: 20,
@@ -5,6 +24,9 @@ $.extend(true, $.fn.dataTable.defaults, {
   autoWidth: false,
   responsive: true,
   searching: true,
+  select: {
+    style: 'os'
+  },
   search: {
     smart: false
   },
@@ -19,6 +41,10 @@ $.extend(true, $.fn.dataTable.defaults, {
       targets: 'no-sort',
       orderable: false
     }
+  ],
+  dom: 'lBfrtip',
+  buttons: [
+    'delete_selected'
   ],
   initComplete: function(oSettings, json) {
     $('select[name^=table-list]').select2({
@@ -35,6 +61,16 @@ $(window).load(function() {
     $.AdminLTE.layout.fix();
     $.AdminLTE.layout.fixSidebar();
   }, 250);
+});
+
+$(document).on('select.dt deselect.dt', function (e, dt, type, indexes) {
+  let selected = dt.rows({ selected: true }).count();
+  if (selected > 0) {
+    $('.delete-selected-rows').show();
+  }
+  else if (selected < 1) {
+    $('.delete-selected-rows').hide();
+  }
 });
 
 $(document).ready(function() {
@@ -129,7 +165,7 @@ function toggle_destination(current, value) {
 function build_table_actions(get_url, delete_url, id, tooltips) {
   remove = $('<a>', {
     'href': delete_url + id,
-    'class': 'btn btn-xs btn-danger',
+    'class': 'btn btn-xs btn-danger delete-entry',
     'title': tooltips.delete,
     'onclick': "return confirm('Are you sure you want to delete this item?');"
   })
@@ -235,7 +271,6 @@ function create_table_serverside(config) {
   }
 
   var Table = $('#table-list-serverside').DataTable(config);
-
   // search only on 'enter', not on typing
   $('#table-list-serverside_filter input').unbind();
   $('#table-list-serverside_filter input').bind('keypress', function(e) {

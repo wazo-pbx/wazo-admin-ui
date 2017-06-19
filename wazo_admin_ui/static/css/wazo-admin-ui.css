@@ -11,3 +11,17 @@
   max-width: 32px;
   max-height: 27px;
 }
+
+#table-list-serverside_length, #table-list_length {
+  float: left;
+  margin-right: 5px;
+}
+
+#table-list-serverside_filter, #table-list_filter {
+  clear: left;
+}
+
+.delete-selected-rows {
+  display: none;
+  color: white;
+}
