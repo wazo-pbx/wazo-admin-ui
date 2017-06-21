@@ -5,7 +5,7 @@
 from flask import g
 from flask_login import current_user
 from werkzeug.local import LocalProxy
-from xivo_call_logs_client import Client as CallLogdClient
+from wazo_call_logd_client import Client as CallLogdClient
 from wazo_admin_ui.core.server import app
 
 

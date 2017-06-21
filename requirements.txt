@@ -1,4 +1,4 @@
-git+https://github.com/wazo-pbx/wazo-call-logs-client.git
+git+https://github.com/wazo-pbx/wazo-call-logd-client.git
 git+https://github.com/wazo-pbx/wazo-plugind-client.git
 git+https://github.com/wazo-pbx/xivo-auth-client.git
 git+https://github.com/wazo-pbx/xivo-confd-client.git
