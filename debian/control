@@ -10,7 +10,7 @@ Package: wazo-admin-ui
 Architecture: all
 Depends: ${python:Depends},
          ${misc:Depends},
-         wazo-call-logs-client,
+         wazo-call-logd-client,
          wazo-plugind-client,
          xivo-auth-client,
          xivo-confd-client,
