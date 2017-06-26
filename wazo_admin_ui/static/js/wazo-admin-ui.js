@@ -30,6 +30,7 @@ $.extend(true, $.fn.dataTable.defaults, {
   search: {
     smart: false
   },
+  stateSave: true,
   columnDefs: [
     { responsivePriority: 1, targets: 0 },
     { responsivePriority: 2, targets: -1 },
