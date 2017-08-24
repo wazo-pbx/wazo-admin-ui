@@ -4,7 +4,7 @@
 
 import logging
 
-from wazo_admin_ui.core import plugin_manager
+from xivo import plugin_helpers
 from wazo_admin_ui.core.server import Server
 
 logger = logging.getLogger(__name__)
@@ -14,7 +14,14 @@ class Controller(object):
 
     def __init__(self, config):
         self.server = Server(config)
-        self._load_plugins(config)
+        plugin_helpers.load(
+            namespace='wazo_admin_ui.plugins',
+            names=config['enabled_plugins'],
+            dependencies={
+                'config': config,
+                'flask': self.server.get_app(),
+            }
+        )
 
     def run(self):
         logger.info('wazo-admin-ui starting...')
@@ -22,10 +29,3 @@ class Controller(object):
             self.server.run()
         finally:
             logger.info('wazo-admin-ui stopping...')
-
-    def _load_plugins(self, global_config):
-        load_args = [{
-            'config': global_config,
-            'flask': self.server.get_app(),
-        }]
-        plugin_manager.load_plugins(global_config['enabled_plugins'], load_args)

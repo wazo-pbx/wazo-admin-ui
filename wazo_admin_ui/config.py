@@ -100,15 +100,7 @@ def _get_reinterpreted_raw_values(config):
     if log_level:
         result['log_level'] = get_log_level_by_name(log_level)
 
-    enabled_plugins = config.get('enabled_plugins')
-    if enabled_plugins:
-        result['enabled_plugins'] = _extract_enabled_plugins(enabled_plugins)
-
     return result
-
-
-def _extract_enabled_plugins(plugins):
-    return [plugin for plugin, enabled in plugins.iteritems() if enabled]
 
 
 def load(argv):
