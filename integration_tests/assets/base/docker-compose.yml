@@ -17,6 +17,7 @@ admin-ui:
     - "../../..:/usr/src/wazo-admin-ui"
     - "./etc/wazo-admin-ui:/etc/wazo-admin-ui"
     - "./ssl:/usr/local/share/ssl"
+    - "${LOCAL_GIT_REPOS}/xivo-lib-python/xivo:/usr/local/lib/python2.7/site-packages/xivo"
 
 auth:
   image: wazopbx/xivo-auth-mock
