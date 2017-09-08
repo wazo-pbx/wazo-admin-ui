@@ -10,7 +10,7 @@ sync:
 admin-ui:
   image: wazo-admin-ui-test
   ports:
-    - "19296:9296"
+    - "9296"
   links:
     - auth
   volumes:
