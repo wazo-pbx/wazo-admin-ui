@@ -18,8 +18,10 @@ from flask_menu import Menu
 from flask_session import Session
 from flask_login import LoginManager
 from pkg_resources import iter_entry_points, resource_filename, resource_isdir
+from werkzeug.contrib.fixers import ProxyFix
 
 from xivo import http_helpers
+from xivo.http_helpers import ReverseProxied
 from xivo.auth_verifier import AuthVerifier
 
 from .errors import configure_error_handlers
@@ -32,22 +34,6 @@ BABEL_DEFAULT_LOCALE = 'en'
 logger = logging.getLogger(__name__)
 app = Flask('wazo_admin_ui')
 auth_verifier = AuthVerifier()
-
-
-class ReverseProxied(object):
-    '''
-    From http://flask.pocoo.org/snippets/35/
-    '''
-
-    def __init__(self, application):
-        self.app = application
-
-    def __call__(self, environ, start_response):
-        script_name = environ.get('HTTP_X_SCRIPT_NAME', '')
-        if script_name:
-            environ['SCRIPT_NAME'] = script_name
-
-        return self.app(environ, start_response)
 
 
 class Server(object):
@@ -79,7 +65,7 @@ class Server(object):
     def run(self):
         bind_addr = (self.config['listen'], self.config['port'])
 
-        wsgi_app = ReverseProxied(wsgi.WSGIPathInfoDispatcher({'/': app}))
+        wsgi_app = ReverseProxied(ProxyFix(wsgi.WSGIPathInfoDispatcher({'/': app})))
         self.server = wsgi.WSGIServer(bind_addr=bind_addr,
                                       wsgi_app=wsgi_app)
         self.server.ssl_adapter = http_helpers.ssl_adapter(self.config['certificate'],
