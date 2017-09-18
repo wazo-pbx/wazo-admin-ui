@@ -12,8 +12,8 @@ from flask_wtf import FlaskForm
 from wtforms.fields import PasswordField, StringField, SubmitField, SelectField
 from wtforms.validators import InputRequired, ValidationError
 
-from wazo_admin_ui.core.auth import AuthClient
-from wazo_admin_ui.core.user import UserUI
+from wazo_admin_ui.auth import AuthClient
+from wazo_admin_ui.user import UserUI
 
 
 USERNAME_PASSWORD_ERROR = l_('Wrong username and/or password')

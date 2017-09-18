@@ -6,7 +6,7 @@ from flask import g
 from flask_login import current_user
 from werkzeug.local import LocalProxy
 from xivo_confd_client import Client as ConfdClient
-from wazo_admin_ui.core.server import app
+from wazo_admin_ui.server import app
 
 
 def get_confd_client():

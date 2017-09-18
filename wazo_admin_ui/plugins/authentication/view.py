@@ -9,7 +9,7 @@ from flask import url_for, render_template, redirect, session
 from flask_babel import Locale, get_locale
 from flask_classful import FlaskView
 from flask_login import login_user, logout_user, current_user
-from wazo_admin_ui.core.auth import AuthClient
+from wazo_admin_ui.auth import AuthClient
 
 from .form import LoginForm
 

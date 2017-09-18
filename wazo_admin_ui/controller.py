@@ -5,7 +5,7 @@
 import logging
 
 from xivo import plugin_helpers
-from wazo_admin_ui.core.server import Server
+from .server import Server
 
 logger = logging.getLogger(__name__)
 
