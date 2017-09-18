@@ -6,7 +6,7 @@ from flask import g
 from flask_login import current_user
 from werkzeug.local import LocalProxy
 from wazo_plugind_client import Client as PlugindClient
-from wazo_admin_ui.server import app
+from wazo_admin_ui.http_server import app
 
 
 def get_plugind_client():

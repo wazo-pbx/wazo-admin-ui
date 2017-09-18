@@ -5,7 +5,7 @@
 import logging
 
 from xivo import plugin_helpers
-from .server import Server
+from .http_server import Server
 
 logger = logging.getLogger(__name__)
 
