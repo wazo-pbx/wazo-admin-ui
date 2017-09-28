@@ -21,7 +21,7 @@ https:
   certificate: /usr/share/xivo-certs/server.crt
   private_key: /usr/share/xivo-certs/server.key
 
-# xivo-auth connection information
+# wazo-auth connection information
 auth:
   host: localhost
   port: 9497
