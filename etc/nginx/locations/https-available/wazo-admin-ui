@@ -1,4 +1,4 @@
-location ^~ /admin/ {
+location ^~ /admin {
     proxy_pass https://127.0.0.1:9296/;
 
     proxy_set_header    Host                $http_host;
