@@ -8,7 +8,7 @@ RUN pip install -r requirements.txt
 RUN python setup.py install
 
 # Configure environment
-RUN adduser wazo-admin-ui
+RUN adduser --quiet --system --group --no-create-home --home /var/lib/wazo-admin-ui wazo-admin-ui \
 RUN cp -av etc/wazo-admin-ui /etc
 RUN mkdir -p /etc/wazo-admin-ui/conf.d
 
