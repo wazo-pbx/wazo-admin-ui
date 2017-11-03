@@ -25,3 +25,11 @@
   display: none;
   color: white;
 }
+
+#Patch AdminLTE
+.select2-selection__rendered {
+    padding-left:0;
+    padding-right:0;
+    height:auto;
+    #margin-top:-4px
+}
