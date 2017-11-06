@@ -4,4 +4,4 @@ COPY . /usr/src/wazo-admin-ui
 WORKDIR /usr/src/wazo-admin-ui
 
 RUN pybabel compile --directory=wazo_admin_ui/translations
-RUN python setup.py develop
+RUN python3 setup.py develop

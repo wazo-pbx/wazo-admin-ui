@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
-
-from __future__ import unicode_literals
 
 import logging
 
@@ -122,7 +119,7 @@ class BaseView(LoginRequiredView):
             self._flash_http_error(error)
             return self._new(form)
 
-        flash(_(u'%(resource)s: Resource has been created', resource=self.resource), 'success')
+        flash(_('%(resource)s: Resource has been created', resource=self.resource), 'success')
         return self._redirect_for('index')
 
     def _new(self, form=None):
@@ -170,7 +167,7 @@ class BaseView(LoginRequiredView):
             self._flash_http_error(error)
             return self._get(id, form)
 
-        flash(_(u'%(resource)s: Resource has been updated', resource=self.resource), 'success')
+        flash(_('%(resource)s: Resource has been updated', resource=self.resource), 'success')
         return self._redirect_for('index')
 
     def _map_form_to_resources_put(self, form, form_id):
@@ -198,7 +195,7 @@ class BaseView(LoginRequiredView):
     def delete(self, id):
         try:
             self.service.delete(id)
-            flash(_(u'%(resource)s: Resource %(id)s has been deleted', resource=self.resource, id=id), 'success')
+            flash(_('%(resource)s: Resource %(id)s has been deleted', resource=self.resource, id=id), 'success')
         except HTTPError as error:
             self._flash_http_error(error)
 

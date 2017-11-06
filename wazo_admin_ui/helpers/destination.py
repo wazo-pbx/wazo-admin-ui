@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
@@ -52,7 +51,7 @@ class BaseDestinationForm(BaseForm):
 
     def _convert_all_empty_string_to_none(self, data):
         result = {}
-        for key, val in data.iteritems():
+        for key, val in data.items():
             result[key] = val if val != '' else None
         return result
 
@@ -66,7 +65,7 @@ class BaseDestinationForm(BaseForm):
         if wrapped_formdata and isinstance(wrapped_formdata, ImmutableMultiDict):
             selected_value = wrapped_formdata.get(self._prefix + self.select_field, '')
             key_prefix = self._prefix + selected_value + '-'
-            selected_args = {k[len(key_prefix):]: v for k, v in wrapped_formdata.iteritems() if key_prefix in k}
+            selected_args = {k[len(key_prefix):]: v for k, v in wrapped_formdata.items() if key_prefix in k}
 
         if selected_value:
             kwargs = {self.select_field: selected_value,
@@ -124,7 +123,7 @@ class FallbacksForm(BaseForm):
     def to_dict(self):
         data = super(FallbacksForm, self).to_dict()
 
-        for key, val in data.iteritems():
+        for key, val in data.items():
             if val.get('type') == 'none':
                 data[key] = None
         return data

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
@@ -10,7 +9,7 @@ class BaseForm(FlaskForm):
 
     def to_dict(self):
         result = {}
-        for name, f in self._fields.iteritems():
+        for name, f in self._fields.items():
             if name == 'csrf_token' or isinstance(f, SubmitField):
                 continue
             elif isinstance(f, FormField):
@@ -26,7 +25,7 @@ class BaseForm(FlaskForm):
         return result
 
     def populate_errors(self, resource):
-        for form_name, form_value in self._fields.iteritems():
+        for form_name, form_value in self._fields.items():
             if form_name not in resource:
                 continue
 
