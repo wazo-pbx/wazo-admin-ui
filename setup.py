@@ -37,12 +37,14 @@ setup(
     setup_requires=['babel'],
     install_requires=['babel'],
     zip_safe=False,
-    scripts=['bin/wazo-admin-ui'],
 
     cmdclass={'build_py': build_py,
               'compile_catalog': babel_wrapper.compile_catalog},
 
     entry_points={
+        'console_scripts': [
+            'wazo-admin-ui=wazo_admin_ui.bin.daemon:main',
+        ],
         'wazo_admin_ui.plugins': [
             'authentication = wazo_admin_ui.plugins.authentication.plugin:Plugin',
             'destination = wazo_admin_ui.plugins.destination.plugin:Plugin',
