@@ -5,8 +5,8 @@
 from hamcrest import assert_that, contains_string, equal_to, not_, calling, raises
 from selenium.common.exceptions import TimeoutException
 
-from .test_api.base import IntegrationTest
-from .test_api.constants import REQUIRED_ERROR, USERNAME_PASSWORD_ERROR
+from .helpers.base import IntegrationTest
+from .helpers.constants import REQUIRED_ERROR, USERNAME_PASSWORD_ERROR
 
 
 class TestLogin(IntegrationTest):
