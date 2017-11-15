@@ -1,29 +1,29 @@
 Source: wazo-admin-ui
 Section: python
 Priority: extra
-Maintainer: Wazo Maintainers <dev@wazo.community>
-Build-Depends: debhelper (>= 9), dh-python, dh-systemd (>= 1.5), python-all (>= 2.7), python-setuptools, python-babel
+Maintainer: Wazo Maintainers <dev+pkg@wazo.community>
+Build-Depends: debhelper (>= 9), dh-python, dh-systemd (>= 1.5), python3-all, python3-setuptools, python3-babel
 Standards-Version: 3.9.6
-X-Python-Version: >= 2.7
+X-Python3-Version: >= 3.4
 
 Package: wazo-admin-ui
 Architecture: all
-Depends: ${python:Depends},
+Depends: ${python3:Depends},
          ${misc:Depends},
-         wazo-call-logd-client,
-         wazo-plugind-client,
-         xivo-auth-client,
-         xivo-confd-client,
-         xivo-lib-python,
-         python-cheroot,
-         python-flask,
-         python-flask-babel,
-         python-flask-classful,
-         python-flask-login,
-         python-flask-menu,
-         python-flask-session,
-         python-flask-wtf,
-         python-stevedore,
+         wazo-call-logd-client-python3,
+         wazo-plugind-client-python3,
+         xivo-auth-client-python3,
+         xivo-confd-client-python3,
+         xivo-lib-python-python3,
+         python3-cheroot,
+         python3-flask,
+         python3-flask-babel,
+         python3-flask-classful,
+         python3-flask-login,
+         python3-flask-menu,
+         python3-flask-session,
+         python3-flask-wtf,
+         python3-stevedore,
 Description: Wazo admin UI
  Wazo is a system based on a powerful IPBX, to bring an easy to
  install solution for telephony and related services.

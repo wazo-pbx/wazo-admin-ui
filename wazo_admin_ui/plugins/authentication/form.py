@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
-
-from __future__ import unicode_literals
 
 import requests
 from requests.exceptions import HTTPError

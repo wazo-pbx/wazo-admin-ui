@@ -1,4 +1,4 @@
-FROM python:2.7.9
+FROM python:3.4.2
 MAINTAINER Wazo Maintainers <dev@wazo.community>
 
 ADD . /usr/src/wazo-admin-ui

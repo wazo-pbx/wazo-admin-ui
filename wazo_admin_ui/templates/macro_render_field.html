@@ -218,7 +218,7 @@
         {% endif %}
 
         {% if not field.choices and field.data and field.data != 'None' %}  {# issue github wtform #324 #}
-          {% set text = form.setted_value_template.format(**form.data) if form.setted_value_template else field.data%}
+          {% set text = form.set_value_template.format(**form.data) if form.set_value_template else field.data%}
           {% do field.choices.append((field.data, text)) %}
           {{ render_field(field, class_=class_, data_listing_href=data_listing_href, **kwargs) }}
           {% do field.choices.pop() %}

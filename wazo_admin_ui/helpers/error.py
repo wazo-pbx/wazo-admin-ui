@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
-
-from __future__ import unicode_literals
 
 import ast
 import re
@@ -147,7 +144,7 @@ class ErrorTranslator(object):
     @classmethod
     def translate_specific_error_id_from_fields(cls, fields):
         result = {}
-        for field, value in fields.iteritems():
+        for field, value in fields.items():
             if isinstance(value, dict):
                 result[field] = cls.translate_specific_error_id_from_fields(value)
                 continue
@@ -185,7 +182,7 @@ class ErrorExtractor(object):
     def extract_specific_error_id_from_fields(cls, fields):
         # Allow only 1 error_id by field
         result = {}
-        for field, value in fields.iteritems():
+        for field, value in fields.items():
             if isinstance(value, dict):
                 result[field] = cls.extract_specific_error_id_from_fields(value)
                 continue
@@ -195,10 +192,10 @@ class ErrorExtractor(object):
                 except TypeError:
                     pass
 
-            if not isinstance(value, unicode):
-                value = unicode(value)
+            if not isinstance(value, str):
+                value = str(value)
 
-            for error_id, pattern in cls.specific_patterns.iteritems():
+            for error_id, pattern in cls.specific_patterns.items():
                 regex = re.compile(pattern)
                 if regex.search(value):
                     result[field] = error_id
@@ -229,7 +226,7 @@ class ConfdErrorExtractor(ErrorExtractor):
         if not isinstance(response, list):
             return None
 
-        for error_id, pattern in cls.generic_patterns.iteritems():
+        for error_id, pattern in cls.generic_patterns.items():
             regex = re.compile(pattern)
             for message in response:
                 if regex.search(message):

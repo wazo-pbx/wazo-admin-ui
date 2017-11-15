@@ -11,7 +11,7 @@ build-admin-ui:
 	docker build --no-cache -t wazo-admin-ui-test -f Dockerfile ..
 
 egg-info:
-	cd .. && python setup.py egg_info
+	cd .. && python3 setup.py egg_info
 
 test:
 	nosetests

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
@@ -11,8 +10,8 @@ from wazo_admin_ui.config import load as load_config
 from wazo_admin_ui.controller import Controller
 
 
-def main(argv):
-    config = load_config(argv)
+def main():
+    config = load_config(sys.argv[1:])
 
     if config.get('user'):
         change_user(config['user'])
@@ -26,7 +25,3 @@ def main(argv):
 
     with pidfile_context(config['pid_filename'], config['foreground']):
         controller.run()
-
-
-if __name__ == '__main__':
-    main(sys.argv[1:])
