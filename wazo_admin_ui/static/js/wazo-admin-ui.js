@@ -1,6 +1,6 @@
 $.fn.dataTable.ext.buttons.delete_selected = {
-  className: 'btn-danger delete-selected-rows',
-  text: 'Delete',
+  className: 'btn delete-selected-rows disabled',
+  text: '<i class="fa fa-remove"></i>',
   action: function (e, dt, node, config) {
     if (confirm('Are you sure you want to delete these items?')) {
       dt.rows({selected: true}).every(function(rowIdx, tableLoop, rowLoop) {
@@ -9,7 +9,7 @@ $.fn.dataTable.ext.buttons.delete_selected = {
           url: row.nodes().to$().find('.delete-entry').attr('href'),
           success: function(response) {
             row.remove().draw();
-            $('.delete-selected-rows').hide();
+            $('.delete-selected-rows').addClass('disabled');
           }
         });
       });
@@ -91,10 +91,10 @@ function init_datatable_buttons() {
 $(document).on('select.dt deselect.dt', function (e, dt, type, indexes) {
   let selected = dt.rows({ selected: true }).count();
   if (selected > 0) {
-    $('.delete-selected-rows').show();
+    $('.delete-selected-rows').removeClass('disabled');
   }
   else if (selected < 1) {
-    $('.delete-selected-rows').hide();
+    $('.delete-selected-rows').addClass('disabled');
   }
 });
 

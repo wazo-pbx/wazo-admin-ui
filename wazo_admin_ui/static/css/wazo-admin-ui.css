@@ -12,11 +12,6 @@
   max-height: 27px;
 }
 
-.delete-selected-rows {
-  display: none;
-  color: white;
-}
-
 #Patch AdminLTE
 .select2-selection__rendered {
     padding-left:0;
