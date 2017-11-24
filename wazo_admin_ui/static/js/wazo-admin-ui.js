@@ -59,9 +59,18 @@ $.fn.validator.Constructor.INPUT_SELECTOR = ':input:not([type="hidden"], [type="
 
 $(window).load(function() {
   setTimeout(function() {
-    $.AdminLTE.layout.fix();
-    $.AdminLTE.layout.fixSidebar();
+    $('body').layout('fix');
+    $('body').layout('fixSidebar');
   }, 250);
+
+  $('.add-entry-rows').attr('id', 'add-form');
+  $('.add-entry-rows').attr('data-toggle', 'modal');
+  $('.add-entry-rows').attr('data-target', '#view-add-form');
+
+  $('#add-form').click(function() {
+    $('#view-add-form').removeClass('hidden').removeAttr('style');
+    $('form').validator('update');
+  });
 });
 
 $(document).on('select.dt deselect.dt', function (e, dt, type, indexes) {
@@ -75,13 +84,7 @@ $(document).on('select.dt deselect.dt', function (e, dt, type, indexes) {
 });
 
 $(document).ready(function() {
-
   $('#table-list').DataTable();
-
-  $('#add-form').click(function() {
-    $('#view-add-form').removeClass('hidden').removeAttr('style');
-    $('form').validator('update');
-  });
 
   $('#error-details-show').click(function(event) {
       $('#error-details-show').hide();
