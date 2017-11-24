@@ -17,6 +17,17 @@ $.fn.dataTable.ext.buttons.delete_selected = {
   }
 };
 
+$.fn.dataTable.ext.buttons.add_entry = {
+  className: 'btn add-entry-rows',
+  text: '<i class="fa fa-plus"></i>',
+  action: function (e, dt, node, config) {
+    let add_url = $('.list-table-action').attr('data-add_url');
+    if (add_url) {
+      window.location.href = add_url;
+    }
+  }
+};
+
 $.extend(true, $.fn.dataTable.defaults, {
   lengthMenu: [[20, 50, 100, -1], [20, 50, 100, "All"]],
   pageLength: 20,
@@ -43,9 +54,12 @@ $.extend(true, $.fn.dataTable.defaults, {
       orderable: false
     }
   ],
-  dom: 'lBfrtip',
+  dom: "<'row'<'col-sm-6'B><'col-sm-6'f>>" +
+       "<'row'<'col-sm-12'tr>>" +
+       "<'row'<'col-sm-5'il><'col-sm-7'p>>",
   buttons: [
-    'delete_selected'
+    'add_entry',
+    'delete_selected',
   ],
   initComplete: function(oSettings, json) {
     $('select[name^=table-list]').select2({
@@ -62,16 +76,17 @@ $(window).load(function() {
     $('body').layout('fix');
     $('body').layout('fixSidebar');
   }, 250);
+  init_datatable_buttons();
+});
 
-  $('.add-entry-rows').attr('id', 'add-form');
+function init_datatable_buttons() {
   $('.add-entry-rows').attr('data-toggle', 'modal');
   $('.add-entry-rows').attr('data-target', '#view-add-form');
-
-  $('#add-form').click(function() {
+  $('.add-entry-rows').click(function() {
     $('#view-add-form').removeClass('hidden').removeAttr('style');
     $('form').validator('update');
   });
-});
+}
 
 $(document).on('select.dt deselect.dt', function (e, dt, type, indexes) {
   let selected = dt.rows({ selected: true }).count();
@@ -274,7 +289,7 @@ function create_table_serverside(config) {
     });
   }
 
-  var Table = $('#table-list-serverside').DataTable(config);
+  let Table = $('#table-list-serverside').DataTable(config);
   // search only on 'enter', not on typing
   $('#table-list-serverside_filter input').unbind();
   $('#table-list-serverside_filter input').bind('keypress', function(e) {
@@ -282,4 +297,5 @@ function create_table_serverside(config) {
       Table.search( this.value ).draw();
     }
   });
+  return Table;
 }

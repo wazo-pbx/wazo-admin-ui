@@ -12,15 +12,6 @@
   max-height: 27px;
 }
 
-#table-list-serverside_length, #table-list_length {
-  float: left;
-  margin-right: 5px;
-}
-
-#table-list-serverside_filter, #table-list_filter {
-  clear: left;
-}
-
 .delete-selected-rows {
   display: none;
   color: white;
@@ -32,4 +23,8 @@
     padding-right:0;
     height:auto;
     #margin-top:-4px
+}
+
+.select2-selection {
+    margin-top:4px
 }

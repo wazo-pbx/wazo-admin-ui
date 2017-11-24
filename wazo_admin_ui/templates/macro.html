@@ -53,7 +53,7 @@
 {% macro build_breadcrumb(name, description, icon, path) %}
   <section class="content-header">
     <h1>
-      {{ name }}
+      <i class="fa fa-{{ icon }}"></i> {{ name }}
       {% if description %}
         <small>{{ description }}</small>
       {% endif %}
@@ -81,8 +81,8 @@
 {% endmacro %}
 
 
-{% macro build_form_tabs_box(box_class, without_tab=False) %}
-  <div class="col-xs-12">
+{% macro build_form_tabs_box(box_class, without_tab=False, container_class='col-xs-12') %}
+  <div class="{{ container_class }}">
     <div class="{{ box_class }}{{ ' box box-primary' if without_tab }}">
       <div class="nav-tabs-custom">
         {{ caller() }}
@@ -92,9 +92,9 @@
 {% endmacro %}
 
 
-{% macro build_form_box(title, subtitle, icon, box_class) %}
+{% macro build_form_box(title, subtitle, icon, box_class, container_class) %}
   {% set caller_ = caller %}
-  {% call build_form_tabs_box(box_class, without_tab=True) %}
+  {% call build_form_tabs_box(box_class, without_tab=True, container_class=container_class) %}
     {% call build_tabs_navigation() %}
       {{ add_tab_navigation_header(title, subtitle, icon) }}
     {% endcall %}
@@ -183,20 +183,9 @@
 {% endmacro %}
 
 
-{% macro build_list_containers(title, icon, add_url='#', size='12', add_button=True) %}
-  <div class="col-md-{{ size }}">
+{% macro build_list_containers(title, icon, size='12') %}
+  <div class="col-xs-{{ size }}">
     <div class="box box-primary">
-      <div class="box-header with-border">
-        <i class="fa fa-{{ icon }}"></i>
-        <h3 class="box-title">{{ title }}</h3>
-        {% if add_button %}
-          <div class="box-tools">
-            <a href="{{ add_url }}" id="add-form" class="btn btn-box-tool add-entry-rows">
-              <i class="fa fa-plus"></i>
-            </a>
-          </div>
-        {% endif %}
-      </div>
       <div class="box-body">
         {{ caller() }}
       </div>
@@ -243,8 +232,8 @@
 {% endmacro %}
 
 
-{% macro add_list_table_header_action(get='', delete='') %}
-  <th class="no-sort list-table-action" style="width: 80px" {{ 'data-get_url=' ~ get if get }} {{ 'data-delete_url=' ~ delete  if delete }} data-get_tooltip={{ _('Edit') }} data-delete_tooltip={{ _('Delete') }}>
+{% macro add_list_table_header_action(get='', delete='', add='') %}
+  <th class="no-sort list-table-action" style="width: 80px" {{ 'data-add_url=' ~ add if add }} {{ 'data-get_url=' ~ get if get }} {{ 'data-delete_url=' ~ delete if delete }} data-add_tooltip={{ _('Add') }} data-get_tooltip={{ _('Edit') }} data-delete_tooltip={{ _('Delete') }}>
     {{ _('Actions') }}
   </th>
 {% endmacro %}
