@@ -17,6 +17,17 @@ $.fn.dataTable.ext.buttons.delete_selected = {
   }
 };
 
+$.fn.dataTable.ext.buttons.edit_selected = {
+  className: 'btn edit-selected-rows disabled',
+  text: '<i class="fa fa-edit"></i>',
+  action: function (e, dt, node, config) {
+    dt.rows({selected: true}).every(function(rowIdx, tableLoop, rowLoop) {
+      let row = this;
+      window.location.href = row.nodes().to$().find('.edit-entry').attr('href');
+    });
+  }
+};
+
 $.fn.dataTable.ext.buttons.add_entry = {
   className: 'btn add-entry-rows',
   text: '<i class="fa fa-plus"></i>',
@@ -59,6 +70,7 @@ $.extend(true, $.fn.dataTable.defaults, {
        "<'row'<'col-sm-5'il><'col-sm-7'p>>",
   buttons: [
     'add_entry',
+    'edit_selected',
     'delete_selected',
   ],
   initComplete: function(oSettings, json) {
@@ -92,9 +104,14 @@ $(document).on('select.dt deselect.dt', function (e, dt, type, indexes) {
   let selected = dt.rows({ selected: true }).count();
   if (selected > 0) {
     $('.delete-selected-rows').removeClass('disabled');
+    $('.edit-selected-rows').removeClass('disabled');
   }
   else if (selected < 1) {
     $('.delete-selected-rows').addClass('disabled');
+    $('.edit-selected-rows').addClass('disabled');
+  }
+  if (selected > 1) {
+    $('.edit-selected-rows').addClass('disabled');
   }
 });
 
@@ -194,7 +211,7 @@ function build_table_actions(get_url, delete_url, id, tooltips) {
 
   view = $('<a>', {
     'href': get_url + id,
-    'class': 'btn btn-xs btn-info',
+    'class': 'btn btn-xs btn-info edit-entry',
     'title': tooltips.get,
   })
   .append($('<i>', {
