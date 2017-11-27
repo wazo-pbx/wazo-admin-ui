@@ -1,12 +1,20 @@
 $.fn.dataTable.ext.buttons.delete_selected = {
   className: 'btn delete-selected-rows disabled',
   text: '<i class="fa fa-remove"></i>',
+  titleAttr: $('#table-data-tooltip').attr('data-delete_tooltip'),
   action: function (e, dt, node, config) {
     if (confirm('Are you sure you want to delete these items?')) {
       dt.rows({selected: true}).every(function(rowIdx, tableLoop, rowLoop) {
         let row = this;
+        let data_uuid = row.nodes().to$().attr('data-uuid');
+        let data_id = row.nodes().to$().attr('data-id');
+        if (data_uuid) {
+          delete_url = $('#table-data-tooltip').attr('data-delete_url') + data_uuid;
+        } else {
+          delete_url = $('#table-data-tooltip').attr('data-delete_url') + data_id;
+        }
         $.ajax({
-          url: row.nodes().to$().find('.delete-entry').attr('href'),
+          url: delete_url,
           success: function(response) {
             row.remove().draw();
             $('.delete-selected-rows').addClass('disabled');
@@ -20,10 +28,17 @@ $.fn.dataTable.ext.buttons.delete_selected = {
 $.fn.dataTable.ext.buttons.edit_selected = {
   className: 'btn edit-selected-rows disabled',
   text: '<i class="fa fa-edit"></i>',
+  titleAttr: $('#table-data-tooltip').attr('data-get_tooltip'),
   action: function (e, dt, node, config) {
     dt.rows({selected: true}).every(function(rowIdx, tableLoop, rowLoop) {
       let row = this;
-      window.location.href = row.nodes().to$().find('.edit-entry').attr('href');
+      let data_uuid = row.nodes().to$().attr('data-uuid');
+      let data_id = row.nodes().to$().attr('data-id');
+      if (data_uuid) {
+        window.location.href = $('#table-data-tooltip').attr('data-get_url') + data_uuid;
+      } else {
+        window.location.href = $('#table-data-tooltip').attr('data-get_url') + data_id;
+      }
     });
   }
 };
@@ -31,8 +46,9 @@ $.fn.dataTable.ext.buttons.edit_selected = {
 $.fn.dataTable.ext.buttons.add_entry = {
   className: 'btn add-entry-rows',
   text: '<i class="fa fa-plus"></i>',
+  titleAttr: $('#table-data-tooltip').attr('data-add_tooltip'),
   action: function (e, dt, node, config) {
-    let add_url = $('.list-table-action').attr('data-add_url');
+    let add_url = $('#table-data-tooltip').attr('data-add_url');
     if (add_url) {
       window.location.href = add_url;
     }
@@ -205,30 +221,6 @@ function toggle_destination(current, value) {
 }
 
 
-function build_table_actions(get_url, delete_url, id, tooltips) {
-  remove = $('<a>', {
-    'href': delete_url + id,
-    'class': 'btn btn-xs btn-danger delete-entry',
-    'title': tooltips.delete,
-    'onclick': "return confirm('Are you sure you want to delete this item?');"
-  })
- .append($('<i>', {
-    'class': 'fa fa-minus'
-  }))
-
-  view = $('<a>', {
-    'href': get_url + id,
-    'class': 'btn btn-xs btn-info edit-entry',
-    'title': tooltips.get,
-  })
-  .append($('<i>', {
-    'class': 'fa fa-eye'
-  }))
-
-  return view.prop('outerHTML') + " " + remove.prop('outerHTML');
-}
-
-
 function init_select2() {
   $('.selectfield', this).each(function(index) {
     if ($(this).parents('.row-template').length) {
@@ -297,21 +289,13 @@ function select2_sortable($select2){
 
 function create_table_serverside(config) {
   let list_url = $('#table-list-serverside').attr('data-list_url');
-  let get_url = $('.list-table-action').attr('data-get_url');
-  let delete_url = $('.list-table-action').attr('data-delete_url');
-  let tooltips = {'get': $('.list-table-action').attr('data-get_tooltip'),
-                  'delete': $('.list-table-action').attr('data-delete_tooltip')}
 
   config.serverSide = true;
   config.processing = true;
   config.ajax = list_url;
-  if (get_url || delete_url) {
-    config.columns.push({
-      render: function(data, type, row) {
-        return build_table_actions(get_url, delete_url, row.uuid, tooltips);
-      }
-    });
-  }
+  config.createdRow = function(row, data, dataIndex) {
+    $(row).attr('data-uuid', data.uuid);
+  };
 
   let Table = $('#table-list-serverside').DataTable(config);
   // search only on 'enter', not on typing
