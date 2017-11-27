@@ -215,18 +215,21 @@
 {% endmacro %}
 
 
-{% macro build_table_headers() %}
+{% macro build_table_headers(get='', delete='', checkbox=True) %}
   <thead>
     <tr>
+    {% if checkbox %}
+      <th rowspan="1" style="width: 12px;" {{ 'data-get_url=' ~ get if get }} {{ 'data-delete_url=' ~ delete  if delete }} data-get_tooltip={{ _('Edit') }} data-delete_tooltip={{ _('Delete') }}></th>
+    {% endif %}
       {{ caller() }}
     </tr>
   </thead>
 {% endmacro %}
 
 
-{% macro build_list_table_headers() %}
+{% macro build_list_table_headers(get='', delete='', checkbox=True) %}
   {% set caller_ = caller %}
-  {% call build_table_headers() %}
+  {% call build_table_headers(get, delete, checkbox) %}
     {{ caller_() }}
   {% endcall %}
 {% endmacro %}
@@ -246,11 +249,14 @@
 {% endmacro %}
 
 
-{% macro build_list_table_rows(items) %}
+{% macro build_list_table_rows(items, checkbox=True) %}
   {% set caller_ = caller %}
   {% call build_table_body() %}
     {% for item in items %}
       <tr>
+      {% if checkbox %}
+        <td rowspan="1" style="width: 12px;"></td>
+      {% endif %}
         {{ caller_(item) }}
       </tr>
     {% endfor %}

@@ -54,6 +54,11 @@ $.extend(true, $.fn.dataTable.defaults, {
   },
   stateSave: true,
   columnDefs: [
+    {
+      orderable: false,
+      className: 'select-checkbox',
+      targets:   0
+    },
     { responsivePriority: 1, targets: 0 },
     { responsivePriority: 2, targets: -1 },
     {
@@ -69,6 +74,8 @@ $.extend(true, $.fn.dataTable.defaults, {
        "<'row'<'col-sm-12'tr>>" +
        "<'row'<'col-sm-5'il><'col-sm-7'p>>",
   buttons: [
+    'selectAll',
+    'selectNone',
     'add_entry',
     'edit_selected',
     'delete_selected',
