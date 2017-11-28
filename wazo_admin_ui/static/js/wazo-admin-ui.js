@@ -6,6 +6,7 @@ $.fn.dataTable.ext.buttons.delete_selected = {
     if (confirm('Are you sure you want to delete these items?')) {
       dt.rows({selected: true}).every(function(rowIdx, tableLoop, rowLoop) {
         let row = this;
+        let delete_url;
         let data_uuid = row.nodes().to$().attr('data-uuid');
         let data_id = row.nodes().to$().attr('data-id');
         if (data_uuid) {
@@ -128,6 +129,7 @@ function init_datatable_buttons() {
     event.preventDefault();
     clicks++;
 
+    let get_url;
     let data_uuid = $(this).attr('data-uuid');
     let data_id = $(this).attr('data-id');
     if (data_uuid) {
@@ -151,7 +153,7 @@ function init_datatable_buttons() {
 }
 
 function get_delete_button(delete_url) {
-  delete_button = $('<a>', {
+  let delete_button = $('<a>', {
     'href': delete_url,
     'class': 'btn btn-xs btn-default delete-entry',
     'title': $('#table-data-tooltip').attr('data-delete_tooltip'),
@@ -166,6 +168,7 @@ function get_delete_button(delete_url) {
 function build_column_actions() {
   $('#table-data-tooltip').append("<th width='10'></th>");
   $('.dataTable tbody tr').each(function() {
+    let delete_url;
     let data_uuid = $(this).attr('data-uuid');
     let data_id = $(this).attr('data-id');
     if (data_uuid) {
@@ -173,7 +176,9 @@ function build_column_actions() {
     } else if(data_id) {
       delete_url = $('#table-data-tooltip').attr('data-delete_url') + data_id;
     }
-    $(this).append('<td>' + get_delete_button(delete_url) + '</td>');
+    if (delete_url) {
+      $(this).append('<td>' + get_delete_button(delete_url) + '</td>');
+    }
   });
 }
 
@@ -324,7 +329,7 @@ function init_select2() {
 
 // https://github.com/select2/select2/issues/3004
 function select2_sortable($select2){
-    var ul = $select2.next('.select2-container').first('ul.select2-selection__rendered');
+    let ul = $select2.next('.select2-container').first('ul.select2-selection__rendered');
     ul.sortable({
         placeholder : 'ui-state-highlight',
         forcePlaceholderSize: true,
@@ -332,8 +337,8 @@ function select2_sortable($select2){
         tolerance   : 'pointer',
         stop: function() {
             $($(ul).find('.select2-selection__choice').get().reverse()).each(function() {
-                var id = $(this).data('data').id;
-                var option = $select2.find('option[value="' + id + '"]')[0];
+                let id = $(this).data('data').id;
+                let option = $select2.find('option[value="' + id + '"]')[0];
                 $select2.prepend(option);
             });
         }
@@ -352,6 +357,7 @@ function create_table_serverside(config) {
   };
   config.columns.push({
     render: function(data, type, row) {
+      let delete_url;
       if (row.uuid) {
         delete_url = $('#table-data-tooltip').attr('data-delete_url') + row.uuid;
       } else if(row.id)  {
