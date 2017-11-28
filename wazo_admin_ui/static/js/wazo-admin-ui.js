@@ -112,6 +112,7 @@ $(window).load(function() {
     $('body').layout('fixSidebar');
   }, 250);
   init_datatable_buttons();
+  build_column_actions();
 });
 
 function init_datatable_buttons() {
@@ -146,6 +147,33 @@ function init_datatable_buttons() {
     } else {
         // mousedown event handler should be here
     }
+  });
+}
+
+function get_delete_button(delete_url) {
+  delete_button = $('<a>', {
+    'href': delete_url,
+    'class': 'btn btn-xs btn-default delete-entry',
+    'title': $('#table-data-tooltip').attr('data-delete_tooltip'),
+    'onclick': "return confirm('Are you sure you want to delete this item?');"
+  }).append($('<i>', {
+      'class': 'fa fa-times'
+  }));
+
+  return delete_button.prop('outerHTML');
+}
+
+function build_column_actions() {
+  $('#table-data-tooltip').append("<th width='10'></th>");
+  $('.dataTable tbody tr').each(function() {
+    let data_uuid = $(this).attr('data-uuid');
+    let data_id = $(this).attr('data-id');
+    if (data_uuid) {
+      delete_url = $('#table-data-tooltip').attr('data-delete_url') + data_uuid;
+    } else if(data_id) {
+      delete_url = $('#table-data-tooltip').attr('data-delete_url') + data_id;
+    }
+    $(this).append('<td>' + get_delete_button(delete_url) + '</td>');
   });
 }
 
@@ -322,6 +350,16 @@ function create_table_serverside(config) {
   config.createdRow = function(row, data, dataIndex) {
     $(row).attr('data-uuid', data.uuid);
   };
+  config.columns.push({
+    render: function(data, type, row) {
+      if (row.uuid) {
+        delete_url = $('#table-data-tooltip').attr('data-delete_url') + row.uuid;
+      } else if(row.id)  {
+        delete_url = $('#table-data-tooltip').attr('data-get_url') + row.id;
+      }
+      return get_delete_button(delete_url);
+    }
+  });
 
   let Table = $('#table-list-serverside').DataTable(config);
   // search only on 'enter', not on typing
