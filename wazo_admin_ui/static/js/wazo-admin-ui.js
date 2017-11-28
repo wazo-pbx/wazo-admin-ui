@@ -121,6 +121,32 @@ function init_datatable_buttons() {
     $('#view-add-form').removeClass('hidden').removeAttr('style');
     $('form').validator('update');
   });
+
+  let clicks = 0, delay = 400;
+  $('.dataTable').on('mousedown','tbody tr', function(event) {
+    event.preventDefault();
+    clicks++;
+
+    let data_uuid = $(this).attr('data-uuid');
+    let data_id = $(this).attr('data-id');
+    if (data_uuid) {
+      get_url = $('#table-data-tooltip').attr('data-get_url') + data_uuid;
+    } else if(data_id)  {
+      get_url = $('#table-data-tooltip').attr('data-get_url') + data_id;
+    }
+
+    setTimeout(function() {
+        clicks = 0;
+    }, delay);
+
+    if (clicks === 2 && get_url) {
+        window.location.href = get_url;
+        clicks = 0;
+        return;
+    } else {
+        // mousedown event handler should be here
+    }
+  });
 }
 
 $(document).on('select.dt deselect.dt', function (e, dt, type, indexes) {

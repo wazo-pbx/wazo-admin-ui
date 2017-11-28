@@ -23,3 +23,15 @@
 .select2-selection {
     margin-top:4px
 }
+
+.dataTable tbody tr {
+    cursor: pointer;
+}
+
+.dataTable tbody tr.even:hover, .dataTable tbody tr.even td.highlighted {
+    background-color: #eeeeee;
+}
+
+.dataTable tbody tr.odd:hover, .dataTable tbody tr.odd td.highlighted {
+    background-color: #dddddd;
+}
