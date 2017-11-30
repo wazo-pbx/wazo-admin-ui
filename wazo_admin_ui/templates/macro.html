@@ -224,10 +224,14 @@
 {% endmacro %}
 
 
-{% macro build_list_table_headers(get='', delete='', add='') %}
+{% macro build_list_table_headers(get='', delete='', add='', actions_column=true) %}
   <thead>
+  {% if actions_column %}
     <tr id="table-data-tooltip" {{ 'data-add_url=' ~ add if add }} {{ 'data-get_url=' ~ get if get }} {{ 'data-delete_url=' ~ delete if delete }} data-add_tooltip={{ _('Add') }} data-get_tooltip={{ _('Edit') }} data-delete_tooltip={{ _('Delete') }}>
-      {{ caller() }}
+  {%  else %}
+    <tr>
+  {% endif %}
+    {{ caller() }}
     </tr>
   </thead>
 {% endmacro %}
