@@ -116,87 +116,6 @@ $(window).load(function() {
   build_column_actions();
 });
 
-function init_datatable_buttons() {
-  $('.add-entry-rows').attr('data-toggle', 'modal');
-  $('.add-entry-rows').attr('data-target', '#view-add-form');
-  $('.add-entry-rows').click(function() {
-    $('#view-add-form').removeClass('hidden').removeAttr('style');
-    $('form').validator('update');
-  });
-
-  let clicks = 0, delay = 400;
-  $('.dataTable').on('mousedown','tbody tr', function(event) {
-    event.preventDefault();
-    clicks++;
-
-    let get_url;
-    let data_uuid = $(this).attr('data-uuid');
-    let data_id = $(this).attr('data-id');
-    if (data_uuid) {
-      get_url = $('#table-data-tooltip').attr('data-get_url') + data_uuid;
-    } else if(data_id)  {
-      get_url = $('#table-data-tooltip').attr('data-get_url') + data_id;
-    }
-
-    setTimeout(function() {
-        clicks = 0;
-    }, delay);
-
-    if (clicks === 2 && get_url) {
-        window.location.href = get_url;
-        clicks = 0;
-        return;
-    } else {
-        // mousedown event handler should be here
-    }
-  });
-}
-
-function get_delete_button(delete_url) {
-  let delete_button = $('<a>', {
-    'href': delete_url,
-    'class': 'btn btn-xs btn-default delete-entry',
-    'title': $('#table-data-tooltip').attr('data-delete_tooltip'),
-    'onclick': "return confirm('Are you sure you want to delete this item?');"
-  }).append($('<i>', {
-      'class': 'fa fa-times'
-  }));
-
-  return delete_button.prop('outerHTML');
-}
-
-function build_column_actions() {
-  $('#table-data-tooltip').append("<th width='10'></th>");
-  $('.dataTable tbody tr').each(function() {
-    let delete_url;
-    let data_uuid = $(this).attr('data-uuid');
-    let data_id = $(this).attr('data-id');
-    if (data_uuid) {
-      delete_url = $('#table-data-tooltip').attr('data-delete_url') + data_uuid;
-    } else if(data_id) {
-      delete_url = $('#table-data-tooltip').attr('data-delete_url') + data_id;
-    }
-    if (delete_url) {
-      $(this).append('<td>' + get_delete_button(delete_url) + '</td>');
-    }
-  });
-}
-
-$(document).on('select.dt deselect.dt', function (e, dt, type, indexes) {
-  let selected = dt.rows({ selected: true }).count();
-  if (selected > 0) {
-    $('.delete-selected-rows').removeClass('disabled');
-    $('.edit-selected-rows').removeClass('disabled');
-  }
-  else if (selected < 1) {
-    $('.delete-selected-rows').addClass('disabled');
-    $('.edit-selected-rows').addClass('disabled');
-  }
-  if (selected > 1) {
-    $('.edit-selected-rows').addClass('disabled');
-  }
-});
-
 $(document).ready(function() {
   $('#table-list').DataTable();
 
@@ -256,6 +175,21 @@ $(document).ready(function() {
     e.preventDefault();
     $(this).closest("tr").remove();
   });
+});
+
+$(document).on('select.dt deselect.dt', function (e, dt, type, indexes) {
+  let selected = dt.rows({ selected: true }).count();
+  if (selected > 0) {
+    $('.delete-selected-rows').removeClass('disabled');
+    $('.edit-selected-rows').removeClass('disabled');
+  }
+  else if (selected < 1) {
+    $('.delete-selected-rows').addClass('disabled');
+    $('.edit-selected-rows').addClass('disabled');
+  }
+  if (selected > 1) {
+    $('.edit-selected-rows').addClass('disabled');
+  }
 });
 
 
@@ -346,6 +280,75 @@ function select2_sortable($select2){
 }
 
 
+function init_datatable_buttons() {
+  $('.add-entry-rows').attr('data-toggle', 'modal');
+  $('.add-entry-rows').attr('data-target', '#view-add-form');
+  $('.add-entry-rows').click(function() {
+    $('#view-add-form').removeClass('hidden').removeAttr('style');
+    $('form').validator('update');
+  });
+
+  let clicks = 0, delay = 400;
+  $('.dataTable').on('mousedown','tbody tr', function(event) {
+    event.preventDefault();
+    clicks++;
+
+    let get_url;
+    let data_uuid = $(this).attr('data-uuid');
+    let data_id = $(this).attr('data-id');
+    if (data_uuid) {
+      get_url = $('#table-data-tooltip').attr('data-get_url') + data_uuid;
+    } else if(data_id)  {
+      get_url = $('#table-data-tooltip').attr('data-get_url') + data_id;
+    }
+
+    setTimeout(function() {
+        clicks = 0;
+    }, delay);
+
+    if (clicks === 2 && get_url) {
+        window.location.href = get_url;
+        clicks = 0;
+        return;
+    } else {
+        // mousedown event handler should be here
+    }
+  });
+}
+
+
+function get_delete_button(delete_url) {
+  let delete_button = $('<a>', {
+    'href': delete_url,
+    'class': 'btn btn-xs btn-default delete-entry',
+    'title': $('#table-data-tooltip').attr('data-delete_tooltip'),
+    'onclick': "return confirm('Are you sure you want to delete this item?');"
+  }).append($('<i>', {
+      'class': 'fa fa-times'
+  }));
+
+  return delete_button.prop('outerHTML');
+}
+
+
+function build_column_actions() {
+  $('#table-data-tooltip').append("<th width='10'></th>");
+  $('.dataTable tbody tr').each(function() {
+    let delete_url;
+    let data_uuid = $(this).attr('data-uuid');
+    let data_id = $(this).attr('data-id');
+    if (data_uuid) {
+      delete_url = $('#table-data-tooltip').attr('data-delete_url') + data_uuid;
+    } else if(data_id) {
+      delete_url = $('#table-data-tooltip').attr('data-delete_url') + data_id;
+    }
+    if (delete_url) {
+      $(this).append('<td>' + get_delete_button(delete_url) + '</td>');
+    }
+  });
+}
+
+
 function create_table_serverside(config, actions_column=true) {
   let list_url = $('#table-list-serverside').attr('data-list_url');
 
@@ -358,7 +361,6 @@ function create_table_serverside(config, actions_column=true) {
   if (actions_column) {
     config.columns.push({
       render: function(data, type, row) {
-        get_row_infos($(row))
         let delete_url;
         if (row.uuid) {
           delete_url = $('#table-data-tooltip').attr('data-delete_url') + row.uuid;
