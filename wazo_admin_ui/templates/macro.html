@@ -215,25 +215,21 @@
 {% endmacro %}
 
 
-{% macro build_table_headers(get='', delete='', add='', checkbox=True) %}
+{% macro build_table_headers() %}
   <thead>
-    {% if checkbox %}
-    <tr id="table-data-tooltip" {{ 'data-add_url=' ~ add if add }} {{ 'data-get_url=' ~ get if get }} {{ 'data-delete_url=' ~ delete if delete }} data-add_tooltip={{ _('Add') }} data-get_tooltip={{ _('Edit') }} data-delete_tooltip={{ _('Delete') }}>
-      <th rowspan="1" style="width: 12px;"></th>
-    {% else %}
     <tr>
-    {% endif %}
       {{ caller() }}
     </tr>
   </thead>
 {% endmacro %}
 
 
-{% macro build_list_table_headers(get='', delete='', add='', checkbox=True) %}
-  {% set caller_ = caller %}
-  {% call build_table_headers(get, delete, add, checkbox) %}
-    {{ caller_() }}
-  {% endcall %}
+{% macro build_list_table_headers(get='', delete='', add='') %}
+  <thead>
+    <tr id="table-data-tooltip" {{ 'data-add_url=' ~ add if add }} {{ 'data-get_url=' ~ get if get }} {{ 'data-delete_url=' ~ delete if delete }} data-add_tooltip={{ _('Add') }} data-get_tooltip={{ _('Edit') }} data-delete_tooltip={{ _('Delete') }}>
+      {{ caller() }}
+    </tr>
+  </thead>
 {% endmacro %}
 
 
@@ -244,14 +240,11 @@
 {% endmacro %}
 
 
-{% macro build_list_table_rows(items, checkbox=True) %}
+{% macro build_list_table_rows(items) %}
   {% set caller_ = caller %}
   {% call build_table_body() %}
     {% for item in items %}
       <tr{{ ' data-id=' ~ item.id if item.id }}{{ ' data-uuid=' ~ item.uuid if item.uuid }}>
-      {% if checkbox %}
-        <td rowspan="1" style="width: 12px;"></td>
-      {% endif %}
         {{ caller_(item) }}
       </tr>
     {% endfor %}

@@ -72,12 +72,13 @@ $.extend(true, $.fn.dataTable.defaults, {
   stateSave: true,
   columnDefs: [
     {
-      orderable: false,
-      className: 'select-checkbox',
-      targets:   0
+      targets:   0,
+      responsivePriority: 1
     },
-    { responsivePriority: 1, targets: 0 },
-    { responsivePriority: 2, targets: -1 },
+    {
+      targets: -1,
+      responsivePriority: 2
+    },
     {
       targets: '_all',
       defaultContent: "-"
