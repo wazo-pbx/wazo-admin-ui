@@ -346,7 +346,7 @@ function select2_sortable($select2){
 }
 
 
-function create_table_serverside(config) {
+function create_table_serverside(config, actions_column=true) {
   let list_url = $('#table-list-serverside').attr('data-list_url');
 
   config.serverSide = true;
@@ -355,17 +355,20 @@ function create_table_serverside(config) {
   config.createdRow = function(row, data, dataIndex) {
     $(row).attr('data-uuid', data.uuid);
   };
-  config.columns.push({
-    render: function(data, type, row) {
-      let delete_url;
-      if (row.uuid) {
-        delete_url = $('#table-data-tooltip').attr('data-delete_url') + row.uuid;
-      } else if(row.id)  {
-        delete_url = $('#table-data-tooltip').attr('data-get_url') + row.id;
+  if (actions_column) {
+    config.columns.push({
+      render: function(data, type, row) {
+        get_row_infos($(row))
+        let delete_url;
+        if (row.uuid) {
+          delete_url = $('#table-data-tooltip').attr('data-delete_url') + row.uuid;
+        } else if(row.id)  {
+          delete_url = $('#table-data-tooltip').attr('data-delete_url') + row.id;
+        }
+        return get_delete_button(delete_url);
       }
-      return get_delete_button(delete_url);
-    }
-  });
+    });
+  }
 
   let Table = $('#table-list-serverside').DataTable(config);
   // search only on 'enter', not on typing
