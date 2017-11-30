@@ -357,6 +357,7 @@ function create_table_serverside(config, actions_column=true) {
   config.ajax = list_url;
   config.createdRow = function(row, data, dataIndex) {
     $(row).attr('data-uuid', data.uuid);
+    $(row).attr('data-id', data.id);
   };
   if (actions_column) {
     config.columns.push({
