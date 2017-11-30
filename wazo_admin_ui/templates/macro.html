@@ -53,7 +53,7 @@
 {% macro build_breadcrumb(name, description, icon, path) %}
   <section class="content-header">
     <h1>
-      {{ name }}
+      <i class="fa fa-{{ icon }}"></i> {{ name }}
       {% if description %}
         <small>{{ description }}</small>
       {% endif %}
@@ -81,8 +81,8 @@
 {% endmacro %}
 
 
-{% macro build_form_tabs_box(box_class, without_tab=False) %}
-  <div class="col-md-6">
+{% macro build_form_tabs_box(box_class, without_tab=False, container_class='col-xs-12') %}
+  <div class="{{ container_class }}">
     <div class="{{ box_class }}{{ ' box box-primary' if without_tab }}">
       <div class="nav-tabs-custom">
         {{ caller() }}
@@ -92,9 +92,9 @@
 {% endmacro %}
 
 
-{% macro build_form_box(title, subtitle, icon, box_class) %}
+{% macro build_form_box(title, subtitle, icon, box_class, container_class) %}
   {% set caller_ = caller %}
-  {% call build_form_tabs_box(box_class, without_tab=True) %}
+  {% call build_form_tabs_box(box_class, without_tab=True, container_class=container_class) %}
     {% call build_tabs_navigation() %}
       {{ add_tab_navigation_header(title, subtitle, icon) }}
     {% endcall %}
@@ -183,20 +183,9 @@
 {% endmacro %}
 
 
-{% macro build_list_containers(title, icon, add_url='#', size='8', add_button=True) %}
-  <div class="col-md-{{ size }}">
+{% macro build_list_containers(title, icon, size='12') %}
+  <div class="col-xs-{{ size }}">
     <div class="box box-primary">
-      <div class="box-header with-border">
-        <i class="fa fa-{{ icon }}"></i>
-        <h3 class="box-title">{{ title }}</h3>
-        {% if add_button %}
-          <div class="box-tools">
-            <a href="{{ add_url }}" id="add-form" class="btn btn-box-tool">
-              <i class="fa fa-plus"></i>
-            </a>
-          </div>
-        {% endif %}
-      </div>
       <div class="box-body">
         {{ caller() }}
       </div>
@@ -235,18 +224,16 @@
 {% endmacro %}
 
 
-{% macro build_list_table_headers() %}
-  {% set caller_ = caller %}
-  {% call build_table_headers() %}
-    {{ caller_() }}
-  {% endcall %}
-{% endmacro %}
-
-
-{% macro add_list_table_header_action(get='', delete='') %}
-  <th class="no-sort list-table-action" style="width: 80px" {{ 'data-get_url=' ~ get if get }} {{ 'data-delete_url=' ~ delete  if delete }} data-get_tooltip={{ _('Edit') }} data-delete_tooltip={{ _('Delete') }}>
-    {{ _('Actions') }}
-  </th>
+{% macro build_list_table_headers(get='', delete='', add='', actions_column=true) %}
+  <thead>
+  {% if actions_column %}
+    <tr id="table-data-tooltip" {{ 'data-add_url=' ~ add if add }} {{ 'data-get_url=' ~ get if get }} {{ 'data-delete_url=' ~ delete if delete }} data-add_tooltip={{ _('Add') }} data-get_tooltip={{ _('Edit') }} data-delete_tooltip={{ _('Delete') }}>
+  {%  else %}
+    <tr>
+  {% endif %}
+    {{ caller() }}
+    </tr>
+  </thead>
 {% endmacro %}
 
 
@@ -261,7 +248,7 @@
   {% set caller_ = caller %}
   {% call build_table_body() %}
     {% for item in items %}
-      <tr>
+      <tr{{ ' data-id=' ~ item.id if item.id }}{{ ' data-uuid=' ~ item.uuid if item.uuid }}>
         {{ caller_(item) }}
       </tr>
     {% endfor %}
@@ -269,37 +256,16 @@
 {% endmacro %}
 
 
-{% macro add_edit_button(href) %}
-  <a href="{{ href }}" class="btn btn-xs btn-info", title={{ _('Edit') }}>
-    <i class="fa fa-eye"></i>
-  </a>
-{% endmacro %}
-
-
-{% macro add_delete_button(href) %}
-  <a href="{{ href }}" class="btn btn-xs btn-danger" title={{ _('Delete') }} onclick="return confirm('Are you sure you want to delete this item?');">
-    <i class="fa fa-minus"></i>
-  </a>
-{% endmacro %}
-
-{% macro add_action_button(href, icon, title, color, confirm) %}
-  <a href="{{ href }}" class="btn btn-xs btn-{{ color }}" title={{ _(title) }} {% if confim %} onclick="return confirm('{{ confirm }}');" {% endif %}>
-    <i class="fa fa-{{ icon }}"></i>
-  </a>
-{% endmacro %}
-
 {% macro build_hidden_add_containers(title) %}
-  <div class="col-lg-4">
-    <div class="box box-info hidden" id="view-add-form">
-      <div class="box-header with-border">
-        <h3 class="box-title">{{ title }}</h3>
-        <div class="pull-right box-tools">
-          <button data-original-title="Remove" type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="">
-            <i class="fa fa-minus"></i>
-          </button>
+    <div class="hidden modal fade" id="view-add-form">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
+            <h4 class="modal-title">{{ title }}</h4>
+          </div>
+          <div class="modal-body">{{ caller() }}</div>
         </div>
       </div>
-      {{ caller() }}
     </div>
-  </div>
 {% endmacro %}

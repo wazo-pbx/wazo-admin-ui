@@ -12,24 +12,28 @@
   max-height: 27px;
 }
 
-#table-list-serverside_length, #table-list_length {
-  float: left;
-  margin-right: 5px;
-}
-
-#table-list-serverside_filter, #table-list_filter {
-  clear: left;
-}
-
-.delete-selected-rows {
-  display: none;
-  color: white;
-}
-
 #Patch AdminLTE
 .select2-selection__rendered {
     padding-left:0;
     padding-right:0;
     height:auto;
     #margin-top:-4px
+}
+
+.select2-selection {
+    margin-top:4px
+}
+
+.dataTable tbody tr {
+    cursor: pointer;
+}
+
+.dataTable tbody tr.even:hover, .dataTable tbody tr.even td.selected {
+    background-color: #eeeeee;
+    color: #111111;
+}
+
+.dataTable tbody tr.odd:hover, .dataTable tbody tr.odd td.selected {
+    background-color: #dddddd;
+    color: #111111;
 }
