@@ -28,10 +28,12 @@
     cursor: pointer;
 }
 
-.dataTable tbody tr.even:hover, .dataTable tbody tr.even td.highlighted {
+.dataTable tbody tr.even:hover, .dataTable tbody tr.even td.selected {
     background-color: #eeeeee;
+    color: #111111;
 }
 
-.dataTable tbody tr.odd:hover, .dataTable tbody tr.odd td.highlighted {
+.dataTable tbody tr.odd:hover, .dataTable tbody tr.odd td.selected {
     background-color: #dddddd;
+    color: #111111;
 }
