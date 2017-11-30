@@ -297,10 +297,11 @@ function init_datatable_buttons() {
     let get_url;
     let data_uuid = $(this).attr('data-uuid');
     let data_id = $(this).attr('data-id');
-    if (data_uuid) {
-      get_url = $('#table-data-tooltip').attr('data-get_url') + data_uuid;
-    } else if(data_id)  {
-      get_url = $('#table-data-tooltip').attr('data-get_url') + data_id;
+    let base_get_url = $('#table-data-tooltip').attr('data-get_url');
+    if (base_get_url && data_uuid) {
+      get_url = base_get_url + data_uuid;
+    } else if(base_get_url && data_id)  {
+      get_url = base_get_url + data_id;
     }
 
     setTimeout(function() {
