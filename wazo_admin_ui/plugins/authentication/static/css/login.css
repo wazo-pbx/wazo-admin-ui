@@ -1,16 +1,94 @@
-body {
-  background: #7f99b1;
-  background: linear-gradient(to left, #7f99b1, #7f99b1);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;      
+html, body {
+  height: 100%;
+  overflow: hidden;
+  --webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input.login {
+  margin-bottom: 15px;
+  color: white !important;
+  background-color: transparent !important;
+  border: white solid 1px !important;
+}
+
+::placeholder {
+  color: white !important;
+}
+
+.btn.active.focus,
+.btn.active:focus,
+.btn.active:hover,
+.btn:active.focus,
+.btn:active:focus,
+.btn:active:hover {
+  background-color: #C0392B !important;
+}
+
+.btn-flat {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  background-image: none;
+  background: #ef3e42;
+  border: 0;
+}
+
+.center {
+  margin: auto;
+  width: 70%;
+  margin-top: 30%;
+}
+
+.one {
+  background: #233e99;
+  z-index: 10;
+}
+
+.two {
+  background: #c4e8fa;
+}
+
+.btn {
+  margin-top: 20px;
+}
+
+.wazo-logo {
+  display: block;
+  margin: auto;
+  width: 70%;
+  margin-bottom: 50px;
+}
+
+hr {
+  margin-top: 100px;
+}
+
+.alert {
+  margin-top: 20px;
+}
+
+.background {
+  width: auto;
+  height: 100vh;
+  margin-left: -120px;
+}
+
+.col {
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
 }
 
 .login-footer {
-  text-align: center;
   color: white;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 3%;
+  z-index: 111;
 }
 
-a, a:focus, a:hover {
-  color: #fff;
-  text-decoration-line: underline;
+.login-footer a {
+  color: #ef3e42;
 }
