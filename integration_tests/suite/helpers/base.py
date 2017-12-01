@@ -2,10 +2,9 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from xivo_test_helpers.asset_launching_test_case import AssetLaunchingTestCase
-from xivo_test_helpers.admin_ui.asset_launching_test_case import AdminUIAssetLaunchingTestCase
 
+from .asset_launching_test_case import AdminUIAssetLaunchingTestCase
 from .constants import ASSET_ROOT
-
 from .pages.index import IndexPage
 
 

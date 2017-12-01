@@ -3,7 +3,7 @@
 
 from selenium.webdriver.common.by import By
 
-from xivo_test_helpers.admin_ui.pages.page import Page
+from .page import Page
 
 
 class IndexPage(Page):
