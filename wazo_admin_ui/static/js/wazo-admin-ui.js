@@ -6,21 +6,16 @@ $.fn.dataTable.ext.buttons.delete_selected = {
     if (confirm('Are you sure you want to delete these items?')) {
       dt.rows({selected: true}).every(function(rowIdx, tableLoop, rowLoop) {
         let row = this;
-        let delete_url;
-        let data_uuid = row.nodes().to$().attr('data-uuid');
-        let data_id = row.nodes().to$().attr('data-id');
-        if (data_uuid) {
-          delete_url = $('#table-data-tooltip').attr('data-delete_url') + data_uuid;
-        } else {
-          delete_url = $('#table-data-tooltip').attr('data-delete_url') + data_id;
+        let row_infos = get_row_infos(row.nodes().to$());
+        if (row_infos.delete_url) {
+          $.ajax({
+            url: row_infos.delete_url,
+            success: function (response) {
+              row.remove().draw();
+              $('.delete-selected-rows').addClass('disabled');
+            }
+          });
         }
-        $.ajax({
-          url: delete_url,
-          success: function(response) {
-            row.remove().draw();
-            $('.delete-selected-rows').addClass('disabled');
-          }
-        });
       });
     }
   }
@@ -32,14 +27,10 @@ $.fn.dataTable.ext.buttons.edit_selected = {
   titleAttr: $('#table-data-tooltip').attr('data-get_tooltip'),
   action: function (e, dt, node, config) {
     dt.rows({selected: true}).every(function(rowIdx, tableLoop, rowLoop) {
-      let row = this;
-      let data_uuid = row.nodes().to$().attr('data-uuid');
-      let data_id = row.nodes().to$().attr('data-id');
-      if (data_uuid) {
-        window.location.href = $('#table-data-tooltip').attr('data-get_url') + data_uuid;
-      } else {
-        window.location.href = $('#table-data-tooltip').attr('data-get_url') + data_id;
-      }
+        let row_infos = get_row_infos(this.nodes().to$());
+        if (row_infos.get_url) {
+          window.location.href = row_infos.get_url
+        }
     });
   }
 };
@@ -294,22 +285,13 @@ function init_datatable_buttons() {
     event.preventDefault();
     clicks++;
 
-    let get_url;
-    let data_uuid = $(this).attr('data-uuid');
-    let data_id = $(this).attr('data-id');
-    let base_get_url = $('#table-data-tooltip').attr('data-get_url');
-    if (base_get_url && data_uuid) {
-      get_url = base_get_url + data_uuid;
-    } else if(base_get_url && data_id)  {
-      get_url = base_get_url + data_id;
-    }
-
     setTimeout(function() {
         clicks = 0;
     }, delay);
 
-    if (clicks === 2 && get_url) {
-        window.location.href = get_url;
+    let row_infos = get_row_infos($(this));
+    if (clicks === 2 && row_infos.get_url) {
+        window.location.href = row_infos.get_url;
         clicks = 0;
         return;
     } else {
@@ -336,16 +318,9 @@ function get_delete_button(delete_url) {
 function build_column_actions() {
   $('#table-data-tooltip').append("<th width='10'></th>");
   $('.dataTable tbody tr').each(function() {
-    let delete_url;
-    let data_uuid = $(this).attr('data-uuid');
-    let data_id = $(this).attr('data-id');
-    if (data_uuid) {
-      delete_url = $('#table-data-tooltip').attr('data-delete_url') + data_uuid;
-    } else if(data_id) {
-      delete_url = $('#table-data-tooltip').attr('data-delete_url') + data_id;
-    }
-    if (delete_url) {
-      $(this).append('<td>' + get_delete_button(delete_url) + '</td>');
+    let row_infos = get_row_infos($(this));
+    if (row_infos.delete_url) {
+      $(this).append('<td>' + get_delete_button(row_infos.delete_url) + '</td>');
     }
   });
 }
@@ -384,4 +359,37 @@ function create_table_serverside(config, actions_column=true) {
     }
   });
   return Table;
+}
+
+
+function get_data_infos() {
+  let data_infos = {
+    'add_url': $('#table-data-tooltip').attr('data-add_url'),
+    'get_url': $('#table-data-tooltip').attr('data-get_url'),
+    'delete_url': $('#table-data-tooltip').attr('data-delete_url'),
+    'tooltips': {
+      'add': $('#table-data-tooltip').attr('data-add_tooltip'),
+      'get': $('#table-data-tooltip').attr('data-get_tooltip'),
+      'delete': $('#table-data-tooltip').attr('data-delete_tooltip')
+    }
+  }
+  return data_infos
+}
+
+
+function get_row_infos(row) {
+  let result = {};
+  let data_uuid = row.attr('data-uuid');
+  let data_id = row.attr('data-id');
+  let data_infos = get_data_infos();
+
+  if (data_uuid) {
+    result.get_url = data_infos.get_url + data_uuid;
+    result.delete_url = data_infos.delete_url + data_uuid;
+  } else if(data_id) {
+    result.get_url = data_infos.get_url + data_id;
+    result.delete_url = data_infos.delete_url + data_id;
+  }
+
+  return result
 }
