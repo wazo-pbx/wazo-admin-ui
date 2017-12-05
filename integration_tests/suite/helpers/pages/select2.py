@@ -41,6 +41,12 @@ class Select2(object):
                 self.click(item)
                 return
 
+    def ajax_complete(self, driver):
+        try:
+            return driver.execute_script("return jQuery.active == 0")
+        except WebDriverException:
+            return False
+
     @property
     def is_open(self):
         try:
@@ -53,16 +59,9 @@ class Select2(object):
     def dropdown(self):
         return self.browser.find_element_by_css_selector('span.select2-dropdown')
 
-    def ajax_complete(self, driver):
-        try:
-            return 0 == driver.execute_script("return jQuery.active")
-        except WebDriverException:
-            pass
-
     @property
     def items(self):
         self.open()
-        ajax_complete = getattr(self, 'ajax_complete')
-        WebDriverWait(self.browser, self.TIMEOUT).until(ajax_complete, "Timeout waiting for page to load")
+        WebDriverWait(self.browser, self.TIMEOUT).until(self.ajax_complete, "Timeout waiting for page to load")
         return self.dropdown.find_elements_by_css_selector(
             'ul.select2-results__options li.select2-results__option')
