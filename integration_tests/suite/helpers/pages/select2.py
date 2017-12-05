@@ -3,7 +3,7 @@
 
 # Based from https://gist.github.com/rafaelugolini/d2067a8c8c54026ac029
 
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, WebDriverException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -41,6 +41,12 @@ class Select2(object):
                 self.click(item)
                 return
 
+    def ajax_complete(self, driver):
+        try:
+            return driver.execute_script("return jQuery.active == 0")
+        except WebDriverException:
+            return False
+
     @property
     def is_open(self):
         try:
@@ -56,5 +62,6 @@ class Select2(object):
     @property
     def items(self):
         self.open()
+        WebDriverWait(self.browser, self.TIMEOUT).until(self.ajax_complete, "Timeout waiting for page to load")
         return self.dropdown.find_elements_by_css_selector(
             'ul.select2-results__options li.select2-results__option')

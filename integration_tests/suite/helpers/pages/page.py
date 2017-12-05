@@ -84,6 +84,9 @@ class Page(object):
         element = root.find_element_by_id(id_)
         return element.get_attribute('value')
 
+    def get_int_value(self, id_, root=None):
+        return int(self.get_value(id_, root))
+
     def get_checked(self, id_, root=None):
         root = root or self.driver
         element = root.find_element_by_id(id_)
@@ -184,7 +187,7 @@ class ListPage(Page, metaclass=abc.ABCMeta):
         return self.form_page(self.driver)
 
     def add_form(self):
-        btn = self.driver.find_element_by_id('view-add-form')
+        btn = self.driver.find_element_by_id('add-form')
         btn.click()
 
     def display_add_form(self):
@@ -200,10 +203,13 @@ class ListPage(Page, metaclass=abc.ABCMeta):
         self.wait().until(condition)
 
     def edit(self, name):
-        xpath = self.edit_xpath.format(name=name)
+        xpath = self.line_xpath.format(name=name)
 
-        button = self.driver.find_element_by_xpath(xpath)
-        button.click()
+        line = self.driver.find_element_by_xpath(xpath)
+        line.click()
+
+        btn = self.driver.find_element_by_id('edit-selected-row')
+        btn.click()
 
         self.wait_for_form()
 

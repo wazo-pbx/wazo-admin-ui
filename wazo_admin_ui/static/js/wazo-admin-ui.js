@@ -273,6 +273,8 @@ function select2_sortable($select2){
 
 
 function init_datatable_buttons() {
+  $('.edit-selected-rows').attr('id', 'edit-selected-row');
+  $('.add-entry-rows').attr('id', 'add-form');
   $('.add-entry-rows').attr('data-toggle', 'modal');
   $('.add-entry-rows').attr('data-target', '#view-add-form');
   $('.add-entry-rows').click(function() {
