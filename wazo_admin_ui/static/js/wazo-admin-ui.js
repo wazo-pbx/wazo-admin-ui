@@ -1,52 +1,3 @@
-$.fn.dataTable.ext.buttons.delete_selected = {
-  className: 'btn delete-selected-rows disabled',
-  text: '<i class="fa fa-remove"></i>',
-  titleAttr: $('#table-data-tooltip').attr('data-delete_tooltip'),
-  action: function (e, dt, node, config) {
-    if (confirm('Are you sure you want to delete these items?')) {
-      dt.rows({selected: true}).every(function(rowIdx, tableLoop, rowLoop) {
-        let row = this;
-        let row_infos = get_row_infos(row.nodes().to$());
-        if (row_infos.delete_url) {
-          $.ajax({
-            url: row_infos.delete_url,
-            success: function (response) {
-              row.remove().draw();
-              $('.delete-selected-rows').addClass('disabled');
-            }
-          });
-        }
-      });
-    }
-  }
-};
-
-$.fn.dataTable.ext.buttons.edit_selected = {
-  className: 'btn edit-selected-rows disabled',
-  text: '<i class="fa fa-edit"></i>',
-  titleAttr: $('#table-data-tooltip').attr('data-get_tooltip'),
-  action: function (e, dt, node, config) {
-    dt.rows({selected: true}).every(function(rowIdx, tableLoop, rowLoop) {
-        let row_infos = get_row_infos(this.nodes().to$());
-        if (row_infos.get_url) {
-          window.location.href = row_infos.get_url
-        }
-    });
-  }
-};
-
-$.fn.dataTable.ext.buttons.add_entry = {
-  className: 'btn add-entry-rows',
-  text: '<i class="fa fa-plus"></i>',
-  titleAttr: $('#table-data-tooltip').attr('data-add_tooltip'),
-  action: function (e, dt, node, config) {
-    let add_url = $('#table-data-tooltip').attr('data-add_url');
-    if (add_url) {
-      window.location.href = add_url;
-    }
-  }
-};
-
 $.extend(true, $.fn.dataTable.defaults, {
   lengthMenu: [[20, 50, 100, -1], [20, 50, 100, "All"]],
   pageLength: 20,
@@ -84,10 +35,7 @@ $.extend(true, $.fn.dataTable.defaults, {
        "<'row'<'col-sm-5'il><'col-sm-7'p>>",
   buttons: [
     'selectAll',
-    'selectNone',
-    'add_entry',
-    'edit_selected',
-    'delete_selected',
+    'selectNone'
   ],
   initComplete: function(oSettings, json) {
     $('select[name^=table-list]').select2({
@@ -104,12 +52,10 @@ $(window).load(function() {
     $('body').layout('fix');
     $('body').layout('fixSidebar');
   }, 250);
-  init_datatable_buttons();
-  build_column_actions();
 });
 
 $(document).ready(function() {
-  $('#table-list').DataTable();
+  create_table_clientside();
 
   $('#error-details-show').click(function(event) {
       $('#error-details-show').hide();
@@ -169,20 +115,55 @@ $(document).ready(function() {
   });
 });
 
-$(document).on('select.dt deselect.dt', function (e, dt, type, indexes) {
-  let selected = dt.rows({ selected: true }).count();
-  if (selected > 0) {
-    $('.delete-selected-rows').removeClass('disabled');
-    $('.edit-selected-rows').removeClass('disabled');
+
+function create_table_clientside() {
+  if ($('#table-list').length) {
+    let datatable = $('#table-list').DataTable();
+
+    init_datatable_buttons(datatable);
+    init_events_on_datatable(datatable);
+    build_column_actions(datatable);
   }
-  else if (selected < 1) {
-    $('.delete-selected-rows').addClass('disabled');
-    $('.edit-selected-rows').addClass('disabled');
-  }
-  if (selected > 1) {
-    $('.edit-selected-rows').addClass('disabled');
-  }
-});
+}
+
+
+function init_events_on_datatable(datatable) {
+  datatable.on('select.dt deselect.dt', function (e, dt, type, indexes) {
+    if (dt) {
+      let selected = dt.rows({selected: true}).count();
+      if (selected > 0) {
+        $('.delete-selected-rows').removeClass('disabled');
+        $('.edit-selected-rows').removeClass('disabled');
+      }
+      else if (selected < 1) {
+        $('.delete-selected-rows').addClass('disabled');
+        $('.edit-selected-rows').addClass('disabled');
+      }
+      if (selected > 1) {
+        $('.edit-selected-rows').addClass('disabled');
+      }
+    }
+  });
+
+  let clicks = 0, delay = 400;
+  datatable.on('mousedown','tbody tr', function(event) {
+    event.preventDefault();
+    clicks++;
+
+    setTimeout(function() {
+        clicks = 0;
+    }, delay);
+
+    let row_infos = get_row_infos($(this));
+    if (clicks === 2 && row_infos.get_url) {
+        window.location.href = row_infos.get_url;
+        clicks = 0;
+        return;
+    } else {
+        // mousedown event handler should be here
+    }
+  });
+}
 
 
 function init_destination_select() {
@@ -272,42 +253,77 @@ function select2_sortable($select2){
 }
 
 
-function init_datatable_buttons() {
-  $('.edit-selected-rows').attr('id', 'edit-selected-row');
-  $('.add-entry-rows').attr('id', 'add-form');
-  $('.add-entry-rows').attr('data-toggle', 'modal');
-  $('.add-entry-rows').attr('data-target', '#view-add-form');
-  $('.add-entry-rows').click(function() {
-    $('#view-add-form').removeClass('hidden').removeAttr('style');
-    $('form').validator('update');
+function init_datatable_buttons(datatable) {
+  let data_infos = get_data_infos();
+
+  datatable.button().add( 2, {
+    className: 'btn delete-selected-rows disabled',
+    text: '<i class="fa fa-remove"></i>',
+    titleAttr: data_infos.tooltips.delete,
+    action: function (e, dt, node, config) {
+      if (confirm('Are you sure you want to delete these items?')) {
+        dt.rows({selected: true}).every(function(rowIdx, tableLoop, rowLoop) {
+          let row = this;
+          let row_infos = get_row_infos(row.nodes().to$());
+          if (row_infos.delete_url) {
+            $.ajax({
+              url: row_infos.delete_url,
+              success: function (response) {
+                row.remove().draw();
+                $('.delete-selected-rows').addClass('disabled');
+              }
+            });
+          }
+        });
+      }
+    }
   });
 
-  let clicks = 0, delay = 400;
-  $('.dataTable').on('mousedown','tbody tr', function(event) {
-    event.preventDefault();
-    clicks++;
+  datatable.button().add( 2, {
+    className: 'btn edit-selected-rows disabled',
+    text: '<i class="fa fa-edit"></i>',
+    titleAttr: data_infos.tooltips.get,
+    action: function (e, dt, node, config) {
+      dt.rows({selected: true}).every(function(rowIdx, tableLoop, rowLoop) {
+          let row_infos = get_row_infos(this.nodes().to$());
+          if (row_infos.get_url) {
+            window.location.href = row_infos.get_url
+          }
+      });
+    },
+    init: function (dt, node, config) {
+      node.attr('id', 'edit-selected-row');
+    }
+  });
 
-    setTimeout(function() {
-        clicks = 0;
-    }, delay);
-
-    let row_infos = get_row_infos($(this));
-    if (clicks === 2 && row_infos.get_url) {
-        window.location.href = row_infos.get_url;
-        clicks = 0;
-        return;
-    } else {
-        // mousedown event handler should be here
+  datatable.button().add( 2, {
+    className: 'btn',
+    text: '<i class="fa fa-plus"></i>',
+    titleAttr: data_infos.tooltips.add,
+    action: function (e, dt, node, config) {
+      let row_infos = get_row_infos($(this));
+      if (row_infos.add_url) {
+        window.location.href = row_infos.add_url;
+      }
+    },
+    init: function (dt, node, config) {
+      node.attr('id', 'add-form');
+      node.attr('data-toggle', 'modal');
+      node.attr('data-target', '#view-add-form');
+      node.click(function () {
+        $('#view-add-form').removeClass('hidden').removeAttr('style');
+        $('form').validator('update');
+      });
     }
   });
 }
 
 
-function get_delete_button(delete_url) {
+function get_delete_button(row_infos) {
   let delete_button = $('<a>', {
-    'href': delete_url,
+    'href': row_infos.delete_url,
     'class': 'btn btn-xs btn-default delete-entry',
-    'title': $('#table-data-tooltip').attr('data-delete_tooltip'),
+    'title': row_infos.tooltips.delete,
     'onclick': "return confirm('Are you sure you want to delete this item?');"
   }).append($('<i>', {
       'class': 'fa fa-times'
@@ -317,12 +333,12 @@ function get_delete_button(delete_url) {
 }
 
 
-function build_column_actions() {
-  $('#table-data-tooltip').append("<th width='10'></th>");
-  $('.dataTable tbody tr').each(function() {
+function build_column_actions(datatable) {
+  $(datatable.nodes().to$()).find('thead tr').append("<th width='10'></th>");
+  $(datatable.nodes().to$()).find('tbody tr').each(function () {
     let row_infos = get_row_infos($(this));
     if (row_infos.delete_url) {
-      $(this).append('<td>' + get_delete_button(row_infos.delete_url) + '</td>');
+      $(this).append('<td>' + get_delete_button(row_infos) + '</td>');
     }
   });
 }
@@ -341,18 +357,18 @@ function create_table_serverside(config, actions_column=true) {
   if (actions_column) {
     config.columns.push({
       render: function(data, type, row) {
-        let delete_url;
-        if (row.uuid) {
-          delete_url = $('#table-data-tooltip').attr('data-delete_url') + row.uuid;
-        } else if(row.id)  {
-          delete_url = $('#table-data-tooltip').attr('data-delete_url') + row.id;
-        }
-        return get_delete_button(delete_url);
+        let row_infos = get_row_infos(row);
+        return get_delete_button(row_infos);
       }
     });
   }
 
   let Table = $('#table-list-serverside').DataTable(config);
+  init_events_on_datatable(Table);
+  init_datatable_buttons(Table);
+  if (actions_column) {
+    $(Table.nodes().to$()).find('thead tr').append("<th width='10'></th>");
+  }
   // search only on 'enter', not on typing
   $('#table-list-serverside_filter input').unbind();
   $('#table-list-serverside_filter input').bind('keypress', function(e) {
@@ -380,18 +396,26 @@ function get_data_infos() {
 
 
 function get_row_infos(row) {
-  let result = {};
-  let data_uuid = row.attr('data-uuid');
-  let data_id = row.attr('data-id');
+  let data_uuid, data_id;
+  if (row.uuid) {
+    data_uuid = row.uuid;
+  } else {
+    data_uuid = row.attr('data-uuid');
+  }
+  if (row.id) {
+    data_id = row.id;
+  } else {
+    data_id = row.attr('data-id');
+  }
   let data_infos = get_data_infos();
 
   if (data_uuid) {
-    result.get_url = data_infos.get_url + data_uuid;
-    result.delete_url = data_infos.delete_url + data_uuid;
+    data_infos.get_url = data_infos.get_url + data_uuid;
+    data_infos.delete_url = data_infos.delete_url + data_uuid;
   } else if(data_id) {
-    result.get_url = data_infos.get_url + data_id;
-    result.delete_url = data_infos.delete_url + data_id;
+    data_infos.get_url = data_infos.get_url + data_id;
+    data_infos.delete_url = data_infos.delete_url + data_id;
   }
 
-  return result
+  return data_infos
 }
