@@ -339,6 +339,8 @@ function build_column_actions(datatable) {
     let row_infos = get_row_infos($(this));
     if (row_infos.delete_url) {
       $(this).append('<td>' + get_delete_button(row_infos) + '</td>');
+    } else {
+      $(this).append('<td></td>');
     }
   });
 }
@@ -415,6 +417,9 @@ function get_row_infos(row) {
   } else if(data_id) {
     data_infos.get_url = data_infos.get_url + data_id;
     data_infos.delete_url = data_infos.delete_url + data_id;
+  } else {
+    delete data_infos.get_url
+    delete data_infos.delete_url
   }
 
   return data_infos
