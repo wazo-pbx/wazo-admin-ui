@@ -8,7 +8,7 @@ babel==2.3.4
 cheroot==5.5.0
 flask-babel==0.11.1
 flask-classful==0.13.1
-flask-login==0.4.0
+flask-login==0.4.1
 flask-menu==0.5.1
 flask-session==0.3.0
 flask-wtf==0.14.2
