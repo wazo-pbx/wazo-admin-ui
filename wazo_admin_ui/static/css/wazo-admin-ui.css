@@ -12,18 +12,6 @@
   max-height: 27px;
 }
 
-#Patch AdminLTE
-.select2-selection__rendered {
-  padding-left: 0;
-  padding-right: 0;
-  height: auto;
-  #margin-top: -4px
-}
-
-.select2-selection {
-  margin-top: 4px
-}
-
 .dataTable tbody tr {
   cursor: pointer;
 }
