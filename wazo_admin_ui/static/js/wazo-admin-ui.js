@@ -412,11 +412,19 @@ function get_row_infos(row) {
   let data_infos = get_data_infos();
 
   if (data_uuid) {
-    data_infos.get_url = data_infos.get_url + data_uuid;
-    data_infos.delete_url = data_infos.delete_url + data_uuid;
+    if (data_infos.get_url) {
+      data_infos.get_url = data_infos.get_url + data_uuid;
+    }
+    if (data_infos.delete_url) {
+      data_infos.delete_url = data_infos.delete_url + data_uuid;
+    }
   } else if(data_id) {
-    data_infos.get_url = data_infos.get_url + data_id;
-    data_infos.delete_url = data_infos.delete_url + data_id;
+    if (data_infos.get_url) {
+      data_infos.get_url = data_infos.get_url + data_id;
+    }
+    if (data_infos.delete_url) {
+      data_infos.delete_url = data_infos.delete_url + data_id;
+    }
   } else {
     delete data_infos.get_url
     delete data_infos.delete_url
