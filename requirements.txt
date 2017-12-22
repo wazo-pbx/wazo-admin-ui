@@ -10,9 +10,9 @@ flask-babel==0.11.1
 flask-classful==0.13.1
 flask-login==0.4.1
 flask-menu==0.7.0
-flask-session==0.3.0
+flask-session==0.3.1
 flask-wtf==0.14.2
-flask==0.10.1
-pyyaml==3.11  # from xivo-lib-python
-requests==2.4.3
+flask==0.12.1
+pyyaml==3.12  # from xivo-lib-python
+requests==2.12.4
 stevedore==1.17.1
