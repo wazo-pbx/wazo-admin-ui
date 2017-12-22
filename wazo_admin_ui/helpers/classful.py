@@ -77,7 +77,8 @@ class NewViewMixin(object):
     def _new(self, form=None):
         form = form or self.form()
         return render_template(self._get_template('add'),
-                               form=form)
+                               form=form,
+                               listing_urls=listing_urls)
 
 
 class BaseView(LoginRequiredView):
