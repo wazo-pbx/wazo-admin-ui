@@ -30,3 +30,10 @@ To enable live-edit of bootstrap.min.css, you will need to add the following lin
 bootstrap.min.css file:
 
     /*# sourceMappingURL=bootstrap.min.css.map */
+
+
+## Integration tests
+
+### Environment variables
+
+* VIRTUAL_DISPLAY=0: do not show the window containing the testing browser
