@@ -49,6 +49,7 @@ class Server(object):
         app.config['confd'] = global_config.get('confd', {})
         app.config['call_logd'] = global_config.get('call_logd', {})
         app.config['plugind'] = global_config.get('plugind', {})
+        app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 #16 megabytes
 
         configure_error_handlers(app)
         self._override_url_for()
