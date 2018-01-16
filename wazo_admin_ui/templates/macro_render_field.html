@@ -68,7 +68,7 @@
         {{ render_field_form_list(field, class_=class_) }}
       {% elif field.type == 'FormField' %}
         {{ render_field_form(field, class_=class_) }}
-      {% elif field.type == 'DestinationField' %}
+      {% elif field.type == 'DestinationField' or field.type == 'FuncKeyDestinationField' %}
         {{ render_field_destination(field, class_=class_) }}
       {% else %}
         {{ field(class_=class_, placeholder=placeholder, **kwargs_) }}
@@ -187,6 +187,10 @@
       {% elif destination.type == 'DestinationField' %}
         <div class="destination-{{ destination.short_name }} hidden">
           {{ render_field(destination, class_=class_, with_label=False, **kwargs) }}
+        </div>
+      {% elif destination.type == 'FuncKeyDestinationField' %}
+        <div class="destination-{{ destination.short_name }} hidden">
+          {{ _render_fields_destination(destination, class_=class_, **kwargs) }}
         </div>
       {% endif %}
     {% endfor %}
