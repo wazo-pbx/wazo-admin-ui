@@ -1,4 +1,4 @@
-# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2017-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 import logging
@@ -47,19 +47,19 @@ class BaseConfdExtensionService(BaseConfdService):
         return extensions[0]
 
     def create(self, resource):
-        resource_created = super(BaseConfdExtensionService, self).create(resource)
+        resource_created = super().create(resource)
         extension = self._extract_main_extension(resource)
         self.create_extension(extension, resource_created)
         return resource_created
 
     def update(self, resource):
-        super(BaseConfdExtensionService, self).update(resource)
+        super().update(resource)
         extension = self._extract_main_extension(resource)
         self.update_extension(extension, resource)
 
     def delete(self, resource_id):
         self.delete_extension(resource_id)
-        super(BaseConfdExtensionService, self).delete(resource_id)
+        super().delete(resource_id)
 
     def create_extension(self, extension, resource):
         if resource and extension:

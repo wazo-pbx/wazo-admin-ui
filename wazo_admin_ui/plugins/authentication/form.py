@@ -1,4 +1,4 @@
-# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2017-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 import requests
@@ -11,7 +11,6 @@ from wtforms.validators import InputRequired, ValidationError
 
 from wazo_admin_ui.auth import AuthClient
 from wazo_admin_ui.user import UserUI
-
 
 USERNAME_PASSWORD_ERROR = l_('Wrong username and/or password')
 
@@ -28,7 +27,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField(l_('Login'))
 
     def validate(self):
-        super(LoginForm, self).validate()
+        super().validate()
         try:
             response = AuthClient(username=self.username.data,
                                   password=self.password.data).token.new('xivo_admin', expiration=60*60*12)

@@ -1,4 +1,4 @@
-# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2017-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 from flask_babel import lazy_gettext as l_
@@ -7,7 +7,6 @@ from wtforms.fields import SelectField, FormField, HiddenField, StringField
 from wtforms.utils import unset_value
 
 from .form import BaseForm
-
 
 _destination_choices = []
 listing_urls = {}
@@ -32,13 +31,13 @@ class BaseDestinationForm(BaseForm):
 
     def __init__(self, *args, **kwargs):
         self.added_dynamic_choice = ()
-        super(BaseDestinationForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def to_dict(self):
         if not self.select_field or not getattr(self, self.select_field, False):
             return {}
 
-        data = super(BaseDestinationForm, self).to_dict()
+        data = super().to_dict()
 
         selected_value = data.get(self.select_field)
         if not selected_value:
@@ -73,7 +72,7 @@ class BaseDestinationForm(BaseForm):
             if not getattr(self, selected_value, False):
                 self._create_dynamic_destination_form(kwargs)
 
-        super(BaseDestinationForm, self).process(formdata, obj, data, **kwargs)
+        super().process(formdata, obj, data, **kwargs)
 
     def _create_dynamic_destination_form(self, destination):
         class DynamicForm(BaseForm):
@@ -96,7 +95,7 @@ class DestinationForm(BaseDestinationForm):
     type = SelectField(l_('Destination'), choices=[])
 
     def __init__(self, *args, **kwargs):
-        super(DestinationForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.type.choices = _destination_choices
         self.listing_urls = listing_urls
 
@@ -106,10 +105,10 @@ class DestinationField(FormField):
     def __init__(self, *args, **kwargs):
         self.destination_label = kwargs.pop('destination_label', None)
         self.destination_form = kwargs.pop('destination_form', DestinationForm)
-        super(DestinationField, self).__init__(self.destination_form, *args, **kwargs)
+        super().__init__(self.destination_form, *args, **kwargs)
 
     def process(self, formdata, data=unset_value):
-        super(DestinationField, self).process(formdata, data)
+        super().process(formdata, data)
         if self.destination_label is not None:
             self.form.type.label.text = self.destination_label
 
@@ -121,7 +120,7 @@ class FallbacksForm(BaseForm):
     noanswer_destination = DestinationField(l_('No answer'))
 
     def to_dict(self):
-        data = super(FallbacksForm, self).to_dict()
+        data = super().to_dict()
 
         for key, val in data.items():
             if val.get('type') == 'none':
@@ -134,4 +133,4 @@ class DestinationHiddenField(HiddenField):
     def __init__(self, *args, **kwargs):
         def remove_none(value):
             return value or ''
-        super(DestinationHiddenField, self).__init__(filters=[remove_none], *args, **kwargs)
+        super().__init__(filters=[remove_none], *args, **kwargs)
