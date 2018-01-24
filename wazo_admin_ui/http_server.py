@@ -51,6 +51,10 @@ class Server(object):
         app.config['plugind'] = global_config.get('plugind', {})
         app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 #16 megabytes
 
+        if global_config['debug'] == True:
+            app.jinja_env.auto_reload = True
+            app.config['TEMPLATES_AUTO_RELOAD'] = True
+
         configure_error_handlers(app)
         self._override_url_for()
         self._configure_jinja()
