@@ -8,7 +8,7 @@ from wazo_admin_ui.helpers.confd import confd
 logger = logging.getLogger(__name__)
 
 
-class BaseConfdService(object):
+class BaseConfdService():
     resource_confd = None
 
     def list(self, limit=None, order=None, direction=None, offset=None, search=None, **kwargs):

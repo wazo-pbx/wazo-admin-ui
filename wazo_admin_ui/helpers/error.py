@@ -1,4 +1,4 @@
-# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2017-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 import ast
@@ -123,7 +123,7 @@ RESOURCES = {
 logger = logging.getLogger(__name__)
 
 
-class ErrorTranslator(object):
+class ErrorTranslator():
     generic_messages = {}
     specific_messages = {}
     resources = {}
@@ -160,7 +160,7 @@ class ErrorTranslator(object):
 RESOURCE_REGEX = r'^/[^/]+/([^/]+)(?:/[^/]+)?$'
 
 
-class ErrorExtractor(object):
+class ErrorExtractor():
 
     generic_patterns = {}
     specific_patterns = {}

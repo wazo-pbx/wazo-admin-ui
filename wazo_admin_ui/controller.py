@@ -1,4 +1,4 @@
-# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2017-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 import logging
@@ -9,7 +9,7 @@ from .http_server import Server
 logger = logging.getLogger(__name__)
 
 
-class Controller(object):
+class Controller():
 
     def __init__(self, config):
         self.server = Server(config)

@@ -1,23 +1,24 @@
-# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2017-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 import logging
 
-from flask import (flash,
-                   jsonify,
-                   redirect,
-                   render_template,
-                   request,
-                   url_for)
+from flask import (
+    flash,
+    jsonify,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 from flask_babel import gettext as _
-from flask_classful import FlaskView
-from flask_classful import route
+from flask_classful import FlaskView, route
 from flask_login import login_required
 from requests.exceptions import HTTPError
 
-from wazo_admin_ui.helpers.error import ConfdErrorExtractor as e_extractor
-from wazo_admin_ui.helpers.error import ErrorTranslator as e_translator
-from wazo_admin_ui.helpers.destination import listing_urls
+from .error import ConfdErrorExtractor as e_extractor
+from .error import ErrorTranslator as e_translator
+from .destination import listing_urls
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +38,7 @@ class LoginRequiredView(FlaskView):
     decorators = [login_required]
 
 
-class IndexAjaxViewMixin(object):
+class IndexAjaxViewMixin():
 
     def _index(self, form=None):
         form = form or self.form()
@@ -69,7 +70,7 @@ class IndexAjaxViewMixin(object):
         })
 
 
-class NewViewMixin(object):
+class NewViewMixin():
 
     def new(self):
         return self._new()

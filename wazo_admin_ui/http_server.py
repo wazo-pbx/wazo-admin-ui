@@ -1,4 +1,4 @@
-# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2017-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 import logging
@@ -23,8 +23,8 @@ from xivo import http_helpers
 from xivo.http_helpers import ReverseProxied
 from xivo.auth_verifier import AuthVerifier
 
-from .errors import configure_error_handlers
 from .auth import AuthClient
+from .errors import configure_error_handlers
 from .user import UserUI
 
 TRANSLATION_DIRECTORY = 'translations'
@@ -35,7 +35,7 @@ app = Flask('wazo_admin_ui')
 auth_verifier = AuthVerifier()
 
 
-class Server(object):
+class Server():
 
     def __init__(self, global_config):
         self.config = global_config['https']
@@ -49,9 +49,9 @@ class Server(object):
         app.config['confd'] = global_config.get('confd', {})
         app.config['call_logd'] = global_config.get('call_logd', {})
         app.config['plugind'] = global_config.get('plugind', {})
-        app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 #16 megabytes
+        app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 megabytes
 
-        if global_config['debug'] == True:
+        if global_config['debug']:
             app.jinja_env.auto_reload = True
             app.config['TEMPLATES_AUTO_RELOAD'] = True
 
