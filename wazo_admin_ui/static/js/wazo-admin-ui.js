@@ -346,16 +346,16 @@ function build_column_actions(datatable) {
 }
 
 
-function create_table_serverside(config, actions_column=true) {
+function create_table_serverside(config, actions_column=true, init_buttons=true, init_events=true) {
   let list_url = $('#table-list-serverside').attr('data-list_url');
 
   config.serverSide = true;
   config.processing = true;
   config.ajax = list_url;
-  config.createdRow = function(row, data, dataIndex) {
-    $(row).attr('data-uuid', data.uuid);
-    $(row).attr('data-id', data.id);
-  };
+    config.createdRow = function(row, data, dataIndex) {
+      $(row).attr('data-uuid', data.uuid);
+      $(row).attr('data-id', data.id);
+    };
   if (actions_column) {
     config.columns.push({
       render: function(data, type, row) {
@@ -366,8 +366,12 @@ function create_table_serverside(config, actions_column=true) {
   }
 
   let Table = $('#table-list-serverside').DataTable(config);
-  init_events_on_datatable(Table);
-  init_datatable_buttons(Table);
+  if (init_events) {
+    init_events_on_datatable(Table);
+  }
+  if (init_buttons) {
+    init_datatable_buttons(Table);
+  }
   if (actions_column) {
     $(Table.nodes().to$()).find('thead tr').append("<th width='10'></th>");
   }
