@@ -8,8 +8,7 @@ from .form import (
     ApplicationDestination,
     CustomDestination,
     HangupDestination,
-    NoneDestination,
-    SoundDestination,
+    NoneDestination
 )
 
 
@@ -20,4 +19,3 @@ class Plugin():
         register_destination_form('hangup', l_('Hangup'), HangupDestination)
         register_destination_form('custom', l_('Custom'), CustomDestination)
         register_destination_form('none', l_('None'), NoneDestination, position=0)
-        register_destination_form('sound', l_('Sound'), SoundDestination)
