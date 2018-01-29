@@ -34,3 +34,8 @@
 .help-block {
   padding-left: 13px;
 }
+
+.table .box {
+  margin-bottom: 0px;
+  color: #000;
+}
