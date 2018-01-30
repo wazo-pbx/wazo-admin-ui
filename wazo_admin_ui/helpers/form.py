@@ -1,8 +1,13 @@
-# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2017-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 from flask_wtf import FlaskForm
-from wtforms.fields import SubmitField, FormField, FieldList
+from wtforms.fields import (
+    FieldList,
+    FormField,
+    SelectField as WTFSelectField,
+    SubmitField,
+)
 
 
 class BaseForm(FlaskForm):
@@ -39,3 +44,14 @@ class BaseForm(FlaskForm):
                 form_value.errors = list(form_value.errors)
 
                 form_value.errors.append(resource[form_name])
+
+
+class SelectField(WTFSelectField):
+
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('coerce', self._coerce_str_unless_none)
+        super().__init__(*args, **kwargs)
+
+    # https://github.com/wtforms/wtforms/issues/324
+    def _coerce_str_unless_none(self, value):
+        return str(value) if value is not None else None

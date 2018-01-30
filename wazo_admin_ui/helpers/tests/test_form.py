@@ -1,21 +1,24 @@
-# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2017-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 import unittest
 from flask import Flask
 from wtforms.fields import FieldList, FormField, StringField, SubmitField
 
-from hamcrest import (assert_that,
-                      contains,
-                      empty,
-                      has_entries,
-                      has_key,
-                      has_properties,
-                      has_property,
-                      instance_of,
-                      not_)
+from hamcrest import (
+    assert_that,
+    contains,
+    equal_to,
+    empty,
+    has_entries,
+    has_key,
+    has_properties,
+    has_property,
+    instance_of,
+    not_,
+)
 
-from ..form import BaseForm
+from ..form import BaseForm, SelectField
 
 
 app = Flask('test_wazo_admin_ui')
@@ -224,3 +227,28 @@ class TestBaseForm(unittest.TestCase):
         assert_that(form, has_properties(
             attribute1=has_properties(errors=instance_of(list))
         ))
+
+
+class TestSelectField(unittest.TestCase):
+
+    def setUp(self):
+        app.config['TESTING'] = True
+        app.config['WTF_CSRF_ENABLED'] = False
+
+        class MyForm(BaseForm):
+            field = SelectField()
+
+        with app.test_request_context():
+            self.field = MyForm().field
+
+    def test_coerce_from_none(self):
+        self.field.process_data(None)
+        assert_that(self.field.data, equal_to(None))
+
+    def test_coerce_from_integer(self):
+        self.field.process_data(1)
+        assert_that(self.field.data, equal_to('1'))
+
+    def test_coerce_from_string(self):
+        self.field.process_data('string')
+        assert_that(self.field.data, equal_to('string'))
