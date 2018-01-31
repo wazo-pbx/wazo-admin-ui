@@ -84,10 +84,3 @@ class CustomDestination(BaseForm):
 
 class NoneDestination(BaseForm):
     pass
-
-
-class SoundDestination(BaseForm):
-
-    filename = StringField(l_('Filename'), [InputRequired(), Length(max=255)])
-    skip = BooleanField(l_('Skip'))
-    no_answer = BooleanField(l_('No Answer'))
