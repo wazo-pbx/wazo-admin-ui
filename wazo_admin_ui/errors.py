@@ -1,4 +1,4 @@
-# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2017-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 import logging
@@ -6,16 +6,18 @@ import logging
 from flask import redirect
 from flask import url_for
 from flask.helpers import flash
-from wazo_admin_ui.helpers.error import (ErrorExtractor,
-                                         ErrorTranslator,
-                                         GENERIC_MESSAGE_ERRORS,
-                                         GENERIC_PATTERN_ERRORS,
-                                         RESOURCES,
-                                         URL_TO_NAME_RESOURCES,
-                                         SPECIFIC_MESSAGE_ERRORS,
-                                         SPECIFIC_PATTERN_ERRORS)
-
 from requests.exceptions import ConnectionError
+
+from .helpers.error import (
+    ErrorExtractor,
+    ErrorTranslator,
+    GENERIC_MESSAGE_ERRORS,
+    GENERIC_PATTERN_ERRORS,
+    RESOURCES,
+    URL_TO_NAME_RESOURCES,
+    SPECIFIC_MESSAGE_ERRORS,
+    SPECIFIC_PATTERN_ERRORS,
+)
 
 
 logger = logging.getLogger(__name__)
