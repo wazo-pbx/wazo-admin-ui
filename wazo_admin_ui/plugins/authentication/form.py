@@ -30,7 +30,7 @@ class LoginForm(FlaskForm):
         super().validate()
         try:
             response = AuthClient(username=self.username.data,
-                                  password=self.password.data).token.new('xivo_admin', expiration=60*60*12)
+                                  password=self.password.data).token.new('xivo_admin', expiration=60 * 60 * 12)
         except HTTPError as e:
             if unauthorized(e):
                 self.username.errors.append(USERNAME_PASSWORD_ERROR)
