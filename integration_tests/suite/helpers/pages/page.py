@@ -1,4 +1,4 @@
-# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2017-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 import abc
@@ -159,7 +159,7 @@ class InputElement(WebElement):
 class ListPage(Page, metaclass=abc.ABCMeta):
 
     line_xpath = "//tr[td[contains(., '{name}')]]"
-    edit_xpath = "{}/td/a[@title='Edit']".format(line_xpath)
+    edit_xpath = "{}/td[1]".format(line_xpath)
     delete_xpath = "{}/td/a[@title='Delete']".format(line_xpath)
 
     list_selector = (By.CSS_SELECTOR, 'tbody tr')
@@ -203,7 +203,7 @@ class ListPage(Page, metaclass=abc.ABCMeta):
         self.wait().until(condition)
 
     def edit(self, name):
-        xpath = self.line_xpath.format(name=name)
+        xpath = self.edit_xpath.format(name=name)
 
         line = self.driver.find_element_by_xpath(xpath)
         line.click()
