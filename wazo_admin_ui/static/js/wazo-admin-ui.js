@@ -232,7 +232,8 @@ function init_select2() {
 
     $(this).select2(config);
 
-    if($(this).attr('multiple')) {
+    let disable_sort = this.hasAttribute('data-disable_sort');
+    if($(this).attr('multiple') && ! disable_sort) {
       select2_sortable($(this));
     }
   });
