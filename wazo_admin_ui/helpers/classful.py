@@ -77,6 +77,8 @@ class NewViewMixin():
 
     def _new(self, form=None):
         form = form or self.form()
+        form = self._populate_form(form)
+
         return render_template(self._get_template('add'),
                                form=form,
                                listing_urls=listing_urls)
