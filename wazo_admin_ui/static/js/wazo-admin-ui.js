@@ -45,7 +45,7 @@ $.extend(true, $.fn.dataTable.defaults, {
   },
 });
 
-$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not([type="hidden"], [type="submit"], [type="reset"], button, .hidden :input)';
+$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not([type="hidden"], [type="submit"], [type="reset"], [disabled], button, .hidden :input)';
 
 $(window).load(function() {
   setTimeout(function() {
