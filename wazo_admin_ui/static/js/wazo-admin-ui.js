@@ -220,6 +220,11 @@ function init_select2() {
       }
     }
 
+    let has_buttons_select_unselect_all = this.hasAttribute('data-select_unselect_all');
+    if (has_buttons_select_unselect_all) {
+     config['dropdownAdapter'] = $.fn.select2.amd.require('select2/selectAllAdapter')
+    }
+
     let allow_clear = this.hasAttribute('data-allow_clear');
     if($(this).attr('multiple') || allow_clear) {
       config['allowClear'] = true;
