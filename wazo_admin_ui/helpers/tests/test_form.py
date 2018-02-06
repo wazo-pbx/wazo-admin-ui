@@ -137,6 +137,16 @@ class TestBaseForm(unittest.TestCase):
 
         assert_that(result, has_entries(attribute=contains(has_entries(subattribute='subvalue'))))
 
+    def test_to_dict_with_default_empty_data(self):
+        class MyForm(BaseForm):
+            attribute1 = StringField(default='')
+
+        with app.test_request_context():
+            form = MyForm()
+        result = form.to_dict(empty_string=True)
+
+        assert_that(result, has_entries(attribute1=''))
+
     def test_populate_errors(self):
         class MyForm(BaseForm):
             attribute1 = StringField()

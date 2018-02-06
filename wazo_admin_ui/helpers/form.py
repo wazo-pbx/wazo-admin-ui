@@ -7,7 +7,7 @@ from wtforms.fields import SubmitField, FormField, FieldList
 
 class BaseForm(FlaskForm):
 
-    def to_dict(self):
+    def to_dict(self, empty_string=False):
         result = {}
         for name, f in self._fields.items():
             if name == 'csrf_token' or isinstance(f, SubmitField):
@@ -21,7 +21,7 @@ class BaseForm(FlaskForm):
             else:
                 default = f.default or f.data
                 data = f.data if f.data else default
-                result[name] = data if data != '' else None
+                result[name] = data if empty_string or data != '' else None
         return result
 
     def populate_errors(self, resource):
