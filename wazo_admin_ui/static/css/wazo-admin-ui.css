@@ -16,19 +16,23 @@
   cursor: pointer;
 }
 
+table.dataTable tbody tr td,
+table.dataTable tbody tr.selected a,
+table.dataTable tbody th.selected a,
+table.dataTable tbody td.selected a {
+  color: #111111;
+}
+
 .dataTable tbody tr.even:hover {
   background-color: #eeeeee;
-  color: #111111;
 }
 
 .dataTable tbody tr.odd:hover {
   background-color: #dddddd;
-  color: #111111;
 }
 
 .dataTable tbody tr.selected:hover {
   background-color: #00a1f2;
-  color: #eeeeee;
 }
 
 .help-block {
