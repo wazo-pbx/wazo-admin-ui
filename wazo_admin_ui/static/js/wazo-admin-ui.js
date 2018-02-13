@@ -57,6 +57,10 @@ $(window).load(function() {
 $(document).ready(function() {
   create_table_clientside();
 
+  $('[data-toggle=confirmation]').confirmation({
+    rootSelector: '[data-toggle=confirmation]',
+  });
+
   $('#error-details-show').click(function(event) {
       $('#error-details-show').hide();
       $('#error-details-hide').show();
