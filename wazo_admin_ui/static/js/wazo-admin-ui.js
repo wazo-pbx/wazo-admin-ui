@@ -59,6 +59,9 @@ $(document).ready(function() {
 
   $('[data-toggle=confirmation]').confirmation({
     rootSelector: '[data-toggle=confirmation]',
+    popout: true,
+    btnCancelClass: 'hidden',
+    btnOkClass: 'btn-xs btn-primary bg-green color-palette'
   });
 
   $('#error-details-show').click(function(event) {
