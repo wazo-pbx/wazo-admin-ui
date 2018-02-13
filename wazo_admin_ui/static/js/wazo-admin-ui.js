@@ -153,7 +153,7 @@ function init_events_on_datatable(datatable) {
   });
 
   let clicks = 0, delay = 400;
-  datatable.on('mousedown','tbody tr', function(event) {
+  datatable.on('mousedown','tbody tr td', function(event) {
     event.preventDefault();
     clicks++;
 
@@ -161,13 +161,10 @@ function init_events_on_datatable(datatable) {
         clicks = 0;
     }, delay);
 
-    let row_infos = get_row_infos($(this));
-    if (clicks === 2 && row_infos.get_url) {
+    let row_infos = get_row_infos($(this).parent('tr'));
+    let is_column_actions = $(this).is('#data-column-actions');
+    if (! is_column_actions && clicks === 2 && row_infos.get_url) {
         window.location.href = row_infos.get_url;
-        clicks = 0;
-        return;
-    } else {
-        // mousedown event handler should be here
     }
   });
 }
@@ -351,7 +348,7 @@ function build_column_actions(datatable) {
   $(datatable.nodes().to$()).find('tbody tr').each(function () {
     let row_infos = get_row_infos($(this));
     if (row_infos.delete_url) {
-      $(this).append('<td>' + get_delete_button(row_infos) + '</td>');
+      $(this).append('<td id="data-column-actions">' + get_delete_button(row_infos) + '</td>');
     } else {
       $(this).append('<td></td>');
     }
