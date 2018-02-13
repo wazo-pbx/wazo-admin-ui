@@ -50,7 +50,7 @@
 {% endmacro %}
 
 
-{% macro build_breadcrumb(name, description, icon, path) %}
+{% macro build_breadcrumb(name, description, icon, path, url='#') %}
   <section class="content-header">
     <h1>
       <i class="fa fa-{{ icon }}"></i> {{ name }}
@@ -61,7 +61,7 @@
     {% if path %}
       <ol class="breadcrumb">
         <li>
-          <a href="#"><i class="fa fa-{{ icon }}"></i> {{ name }}</a>
+          <a href="{{ url }}"><i class="fa fa-{{ icon }}"></i> {{ name }}</a>
         </li>
         {% for link in path %}
           <li class="active">{{ link }}</li>
