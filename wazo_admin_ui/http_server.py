@@ -44,7 +44,7 @@ class Server():
         app.after_request(http_helpers.log_request_hide_token)
 
         app.secret_key = os.urandom(24)
-        app.permanent_session_lifetime = timedelta(minutes=60)
+        app.permanent_session_lifetime = timedelta(seconds=global_config['session_lifetime'])
         AuthClient.set_config(global_config['auth'])
         app.config['confd'] = global_config.get('confd', {})
         app.config['call_logd'] = global_config.get('call_logd', {})
