@@ -9,9 +9,13 @@
 <script src="{{ url_for('static', filename='js/select2.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/select2-adapter.js') }}"></script>
 <script src="{{ url_for('static', filename='js/adminlte.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/wazo-websocket.js') }}"></script>
 <script src="{{ url_for('static', filename='js/wazo-admin-ui.js') }}"></script>
 {% from "translations.html" import datatable_language, bootstrap_validator_language %}
 <script type="text/javascript">
+  $(window).on('load', function() {
+    connect("{{ current_user.get_id() }}");
+  });
   $.extend(true, $.fn.dataTable.defaults, {
       language: $.parseJSON({{ datatable_language()|tojson }})
   });
