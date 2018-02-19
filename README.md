@@ -1,7 +1,7 @@
 Wazo admin ui
 =============
 
-[![Build Status](https://travis-ci.org/wazo-pbx/wazo-admin-ui.png?branch=master)](https://travis-ci.org/wazo-pbx/wazo-admin-ui)
+[![Build Status](https://jenkins.wazo.community/buildStatus/icon?job=wazo-admin-ui)](https://jenkins.wazo.community/job/wazo-admin-ui)
 
 ## Translations
 
