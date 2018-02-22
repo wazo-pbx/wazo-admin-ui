@@ -11,20 +11,30 @@
     "processing":     "{{ _("Processing...") }}",
     "search":         "{{ _("Search:") }}",
     "zeroRecords":    "{{ _("No matching records found") }}",
-      "buttons": {
-        "selectAll":  "{{ _("Select all") }}",
-        "selectNone": "{{ _("Deselect all") }}"
+    "buttons": {
+      "selectAll":  "{{ _("Select all") }}",
+      "selectNone": "{{ _("Deselect all") }}",
+      "copy":       "{{ _("Copy") }}",
+      "copyTitle":  "{{ _("Copy to clipboard") }}",
+      "copySuccess": {
+        "_": "{{ _("Copied %%d rows to clipboard") }}",
+        "1": "{{ _("Copied 1 row to clipboard") }}"
       },
-      "paginate": {
-        "first":    "{{ _("First") }}",
-        "last":     "{{ _("Last") }}",
-        "next":     "{{ _("Next") }}",
-        "previous": "{{ _("Previous") }}"
-      },
-      "aria": {
-        "sortAscending":  "{{ _(": activate to sort column ascending") }}",
-        "sortDescending": "{{ _(": activate to sort column descending") }}"
-      }
+      "csv":        "{{ _("CSV") }}",
+      "excel":      "{{ _("Excel") }}",
+      "pdf":        "{{ _("PDF") }}",
+      "print":      "{{ _("Print") }}"
+    },
+    "paginate": {
+      "first":    "{{ _("First") }}",
+      "last":     "{{ _("Last") }}",
+      "next":     "{{ _("Next") }}",
+      "previous": "{{ _("Previous") }}"
+    },
+    "aria": {
+      "sortAscending":  "{{ _(": activate to sort column ascending") }}",
+      "sortDescending": "{{ _(": activate to sort column descending") }}"
+    }
   }
 {% endmacro %}
 {% macro bootstrap_validator_language() %}
