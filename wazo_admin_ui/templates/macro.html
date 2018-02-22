@@ -172,7 +172,7 @@
 {% macro add_default_fields(form, submit_value) %}
   {% from "macro_render_field.html" import render_field %}
   <div class="box-body">
-    {{ form.hidden_tag() }}
+    {{ form.csrf_token }}
     {{ caller() }}
   </div>
   {% if submit_value %}
