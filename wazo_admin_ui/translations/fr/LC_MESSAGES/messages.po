@@ -1,19 +1,20 @@
 # Translations template for wazo-admin-ui.
-# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2018 The Wazo Authors  (see the AUTHORS file)
 # This file is distributed under the same license as the wazo-admin-ui
 # project.
-# Wazo Dev Team <dev@wazo.community>, 2017.
+# Wazo Dev Team <dev@wazo.community>, 2018.
 # 
 # Translators:
 # Francois Blackburn <fblackburn@wazo.community>, 2017
 # Sébastien Duthil <sduthil@wazo.community>, 2017
+# Cedric Abunar <cabunar@wazo.io>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: wazo-admin-ui 0.1\n"
 "Report-Msgid-Bugs-To: dev@wazo.community\n"
-"POT-Creation-Date: 2017-05-11 07:44-0400\n"
-"PO-Revision-Date: 2017-11-30 13:36-0500\n"
-"Last-Translator: Sébastien Duthil <sduthil@wazo.community>, 2017\n"
+"POT-Creation-Date: 2018-02-22 09:47-0500\n"
+"PO-Revision-Date: 2018-02-22 09:47-0500\n"
+"Last-Translator: Cedric Abunar <cabunar@wazo.io>, 2018\n"
 "Language-Team: French (https://www.transifex.com/wazo/teams/69545/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -22,40 +23,40 @@ msgstr ""
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: wazo_admin_ui/helpers/classful.py:122
+#: wazo_admin_ui/helpers/classful.py:126
 #, python-format
 msgid "%(resource)s: Resource has been created"
 msgstr "%(resource)s: La ressource a été créée"
 
-#: wazo_admin_ui/helpers/classful.py:170
+#: wazo_admin_ui/helpers/classful.py:174
 #, python-format
 msgid "%(resource)s: Resource has been updated"
 msgstr "%(resource)s: La ressource a été modifiée"
 
-#: wazo_admin_ui/helpers/classful.py:198
+#: wazo_admin_ui/helpers/classful.py:202
 #, python-format
 msgid "%(resource)s: Resource %(id)s has been deleted"
 msgstr "%(resource)s: La ressource  %(id)s a été supprimée"
 
-#: wazo_admin_ui/helpers/destination.py:96
+#: wazo_admin_ui/helpers/destination.py:95 wazo_admin_ui/helpers/funckey.py:27
 msgid "Destination"
 msgstr "Destination"
 
-#: wazo_admin_ui/helpers/destination.py:118
+#: wazo_admin_ui/helpers/destination.py:117
 #: wazo_admin_ui/plugins/destination/form.py:31
 msgid "Busy"
 msgstr "Occupé"
 
-#: wazo_admin_ui/helpers/destination.py:119
+#: wazo_admin_ui/helpers/destination.py:118
 #: wazo_admin_ui/plugins/destination/form.py:32
 msgid "Congestion"
 msgstr "Saturé"
 
-#: wazo_admin_ui/helpers/destination.py:120
+#: wazo_admin_ui/helpers/destination.py:119
 msgid "Fail"
 msgstr "Échoué"
 
-#: wazo_admin_ui/helpers/destination.py:121
+#: wazo_admin_ui/helpers/destination.py:120
 msgid "No answer"
 msgstr "Aucune réponse"
 
@@ -244,34 +245,34 @@ msgstr "utilisateur"
 msgid "voicemail"
 msgstr "boîte vocale"
 
-#: wazo_admin_ui/plugins/authentication/form.py:16
+#: wazo_admin_ui/plugins/authentication/form.py:15
 msgid "Wrong username and/or password"
 msgstr "Mauvais identifiant et/ou mot de passe"
 
-#: wazo_admin_ui/plugins/authentication/form.py:25
+#: wazo_admin_ui/plugins/authentication/form.py:24
 #: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:17
 msgid "Username"
 msgstr "Identifiant"
 
-#: wazo_admin_ui/plugins/authentication/form.py:26
+#: wazo_admin_ui/plugins/authentication/form.py:25
 #: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:18
 msgid "Password"
 msgstr "Mot de passe"
 
-#: wazo_admin_ui/plugins/authentication/form.py:27
+#: wazo_admin_ui/plugins/authentication/form.py:26
 msgid "Language"
 msgstr "Langue"
 
-#: wazo_admin_ui/plugins/authentication/form.py:28
+#: wazo_admin_ui/plugins/authentication/form.py:27
 msgid "Login"
 msgstr "Connexion"
 
-#: wazo_admin_ui/plugins/authentication/form.py:40
+#: wazo_admin_ui/plugins/authentication/form.py:39
 #, python-format
 msgid "Error with Wazo authentication server: %(error)s"
 msgstr "Erreur avec le serveur d'authentification Wazo:  %(error)s"
 
-#: wazo_admin_ui/plugins/authentication/form.py:42
+#: wazo_admin_ui/plugins/authentication/form.py:41
 msgid "Wazo authentication server connection error"
 msgstr "Erreur de connexion avec le serveur d'authentification Wazo"
 
@@ -311,7 +312,7 @@ msgid "Email"
 msgstr "Email"
 
 #: wazo_admin_ui/plugins/destination/form.py:68
-#: wazo_admin_ui/plugins/destination/plugin.py:13
+#: wazo_admin_ui/plugins/destination/plugin.py:18
 msgid "Application"
 msgstr "Application"
 
@@ -335,43 +336,27 @@ msgstr "Fax to mail"
 msgid "Voicemail"
 msgstr "Messagerie vocale"
 
-#: wazo_admin_ui/plugins/destination/form.py:91
-msgid "Filename"
-msgstr "Nom du fichier"
-
-#: wazo_admin_ui/plugins/destination/form.py:92
-msgid "Skip"
-msgstr "Passer"
-
-#: wazo_admin_ui/plugins/destination/form.py:93
-msgid "No Answer"
-msgstr "Aucune réponse"
-
-#: wazo_admin_ui/plugins/destination/plugin.py:14
+#: wazo_admin_ui/plugins/destination/plugin.py:19
 msgid "Hangup"
 msgstr "Raccrocher"
 
-#: wazo_admin_ui/plugins/destination/plugin.py:15
+#: wazo_admin_ui/plugins/destination/plugin.py:20
 msgid "Custom"
 msgstr "Personnalisée"
 
-#: wazo_admin_ui/plugins/destination/plugin.py:16
+#: wazo_admin_ui/plugins/destination/plugin.py:21
 msgid "None"
 msgstr "Aucune"
 
-#: wazo_admin_ui/plugins/destination/plugin.py:17
-msgid "Sound"
-msgstr "Son"
-
-#: wazo_admin_ui/templates/macro.html:229
+#: wazo_admin_ui/templates/macro.html:230
 msgid "Add"
 msgstr "Ajouter"
 
-#: wazo_admin_ui/templates/macro.html:229
+#: wazo_admin_ui/templates/macro.html:230
 msgid "Edit"
 msgstr "Modifier"
 
-#: wazo_admin_ui/templates/macro.html:229
+#: wazo_admin_ui/templates/macro.html:230
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -419,34 +404,67 @@ msgstr "Tout sélectionner"
 msgid "Deselect all"
 msgstr "Tout désélectionner"
 
-#: wazo_admin_ui/templates/translations.html:19
+#: wazo_admin_ui/templates/translations.html:17
+msgid "Copy"
+msgstr "Copier"
+
+#: wazo_admin_ui/templates/translations.html:18
+msgid "Copy to clipboard"
+msgstr "Copié dans le presse-papier"
+
+#: wazo_admin_ui/templates/translations.html:20
+#, python-format
+msgid "Copied %%d rows to clipboard"
+msgstr "%%d lignes copiées dans le presse-papier"
+
+#: wazo_admin_ui/templates/translations.html:21
+msgid "Copied 1 row to clipboard"
+msgstr "1 ligne copiée dans le presse papier"
+
+#: wazo_admin_ui/templates/translations.html:23
+msgid "CSV"
+msgstr "CSV"
+
+#: wazo_admin_ui/templates/translations.html:24
+msgid "Excel"
+msgstr "Excel"
+
+#: wazo_admin_ui/templates/translations.html:25
+msgid "PDF"
+msgstr "PDF"
+
+#: wazo_admin_ui/templates/translations.html:26
+msgid "Print"
+msgstr "Imprimer"
+
+#: wazo_admin_ui/templates/translations.html:29
 msgid "First"
 msgstr "Premier"
 
-#: wazo_admin_ui/templates/translations.html:20
+#: wazo_admin_ui/templates/translations.html:30
 msgid "Last"
 msgstr "Dernier"
 
-#: wazo_admin_ui/templates/translations.html:21
+#: wazo_admin_ui/templates/translations.html:31
 msgid "Next"
 msgstr "Suivant"
 
-#: wazo_admin_ui/templates/translations.html:22
+#: wazo_admin_ui/templates/translations.html:32
 msgid "Previous"
 msgstr "Précédent"
 
-#: wazo_admin_ui/templates/translations.html:25
+#: wazo_admin_ui/templates/translations.html:35
 msgid ": activate to sort column ascending"
 msgstr ": activer pour trier la colonne par ordre croissant"
 
-#: wazo_admin_ui/templates/translations.html:26
+#: wazo_admin_ui/templates/translations.html:36
 msgid ": activate to sort column descending"
 msgstr ": activer pour trier la colonne par ordre décroissant"
 
-#: wazo_admin_ui/templates/translations.html:32
+#: wazo_admin_ui/templates/translations.html:42
 msgid "Does not match"
 msgstr "Ne correspond pas"
 
-#: wazo_admin_ui/templates/translations.html:33
+#: wazo_admin_ui/templates/translations.html:43
 msgid "Not long enough"
 msgstr "Pas assez long"
