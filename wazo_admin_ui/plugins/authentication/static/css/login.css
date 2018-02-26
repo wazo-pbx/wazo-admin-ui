@@ -7,18 +7,15 @@ html, body {
 
 input.login, select.login, .select2-container--bootstrap .select2-selection--single {
   margin-bottom: 15px;
-  color: white !important;
-  background-color: transparent !important;
-  border: white solid 1px !important;
+  color: white;
+  background-color: transparent;
+  border: white solid 1px;
 }
 
 .select2-container--bootstrap .select2-selection--single .select2-selection__rendered {
-  color: white !important;
+  color: white;
 }
 
-::placeholder {
-  color: white !important;
-}
 
 .btn.active.focus,
 .btn.active:focus,
@@ -26,7 +23,7 @@ input.login, select.login, .select2-container--bootstrap .select2-selection--sin
 .btn:active.focus,
 .btn:active:focus,
 .btn:active:hover {
-  background-color: #C0392B !important;
+  background-color: #C0392B;
 }
 
 .btn-flat {
