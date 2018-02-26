@@ -21,7 +21,6 @@ from werkzeug.contrib.fixers import ProxyFix
 
 from xivo import http_helpers
 from xivo.http_helpers import ReverseProxied
-from xivo.auth_verifier import AuthVerifier
 
 from .auth import AuthClient
 from .errors import configure_error_handlers
@@ -32,7 +31,6 @@ BABEL_DEFAULT_LOCALE = 'en'
 
 logger = logging.getLogger(__name__)
 app = Flask('wazo_admin_ui')
-auth_verifier = AuthVerifier()
 
 
 class Server():
