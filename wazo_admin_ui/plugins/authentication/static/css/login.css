@@ -1,16 +1,104 @@
-body {
-  background: #7f99b1;
-  background: linear-gradient(to left, #7f99b1, #7f99b1);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;      
+html, body {
+  height: 100%;
+  overflow: hidden;
+  --webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.login-footer {
-  text-align: center;
+input.login, select.login, .select2-container--bootstrap .select2-selection--single {
+  margin-bottom: 15px;
+  color: white;
+  background-color: transparent;
+  border: white solid 1px;
+}
+
+.select2-container--bootstrap .select2-selection--single .select2-selection__rendered {
   color: white;
 }
 
-a, a:focus, a:hover {
-  color: #fff;
-  text-decoration-line: underline;
+.input-group .input-group-addon {
+  background-color: #233e99;
+  color: white;
+}
+
+.form-group.has-error .help-block, .form-group.has-error {
+  color: #ef3e42;
+  border-color: #ef3e42;
+}
+
+.btn.active.focus,
+.btn.active:focus,
+.btn.active:hover,
+.btn:active.focus,
+.btn:active:focus,
+.btn:active:hover {
+  background-color: #C0392B;
+}
+
+.btn-flat {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  background-image: none;
+  background: #ef3e42;
+  border: 0;
+}
+
+.center {
+  margin: auto;
+  width: 70%;
+  margin-top: 30%;
+}
+
+.one {
+  background: #233e99;
+  z-index: 10;
+}
+
+.two {
+  background: #c4e8fa;
+}
+
+.btn {
+  margin-top: 20px;
+}
+
+.wazo-logo {
+  display: block;
+  margin: auto;
+  width: 70%;
+  margin-bottom: 50px;
+}
+
+hr {
+  margin-top: 100px;
+}
+
+.alert {
+  margin-top: 20px;
+}
+
+.background {
+  width: auto;
+  height: 100vh;
+  margin-left: -120px;
+}
+
+.col {
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+}
+
+.login-footer {
+  color: white;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 3%;
+  z-index: 111;
+}
+
+.login-footer a {
+  color: #ef3e42;
 }
