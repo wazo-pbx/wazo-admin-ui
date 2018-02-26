@@ -17,7 +17,7 @@
             {{ form.hidden_tag() }}
             {{ render_field(form.username, with_icon="user", with_label=False, placeholder=_("Username"), class_="form-control login input-lg") }}
             {{ render_field(form.password, divclass='form-group', with_label=False, placeholder=_("Password"), data_toggle='password', class_="form-control login input-lg") }}
-            {{ render_field(form.language, divclass="form-group", with_label=False) }}
+            {{ render_field(form.language, divclass="form-group", with_label=False, placeholder=_("Language"), class_="form-control login input-lg") }}
             {{ render_field(form.submit, with_label=False, class_="btn btn-lg btn-primary btn-block btn-flat") }}
             <hr>
             <div id="messages" class="row">

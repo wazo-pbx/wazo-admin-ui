@@ -5,11 +5,15 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-input.login {
+input.login, select.login, .select2-container--bootstrap .select2-selection--single {
   margin-bottom: 15px;
   color: white !important;
   background-color: transparent !important;
   border: white solid 1px !important;
+}
+
+.select2-container--bootstrap .select2-selection--single .select2-selection__rendered {
+  color: white !important;
 }
 
 ::placeholder {
