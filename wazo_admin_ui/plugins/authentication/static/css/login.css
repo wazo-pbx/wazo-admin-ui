@@ -16,6 +16,10 @@ input.login, select.login, .select2-container--bootstrap .select2-selection--sin
   color: white;
 }
 
+.input-group .input-group-addon {
+  background-color: #233e99;
+  color: white;
+}
 
 .btn.active.focus,
 .btn.active:focus,
