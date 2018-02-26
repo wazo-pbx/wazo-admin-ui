@@ -91,14 +91,20 @@ hr {
 }
 
 .login-footer {
-  color: white;
-  display: block;
-  position: absolute;
-  bottom: 0;
-  left: 3%;
+  position: fixed;
+  left:0px;
+  bottom:0px;
+  height:25px;
+  width:100%;
   z-index: 111;
+  background: #233e99;
+}
+
+.login-footer p {
+  color: #b8c7ce;
+  text-align: center;
 }
 
 .login-footer a {
-  color: #ef3e42;
+  color: #c83337;
 }
