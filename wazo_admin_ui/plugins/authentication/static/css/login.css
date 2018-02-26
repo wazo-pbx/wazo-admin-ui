@@ -21,6 +21,11 @@ input.login, select.login, .select2-container--bootstrap .select2-selection--sin
   color: white;
 }
 
+.form-group.has-error .help-block, .form-group.has-error {
+  color: #ef3e42;
+  border-color: #ef3e42;
+}
+
 .btn.active.focus,
 .btn.active:focus,
 .btn.active:hover,
