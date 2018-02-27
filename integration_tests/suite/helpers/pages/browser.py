@@ -5,6 +5,7 @@ import logging
 
 from selenium import webdriver
 from selenium.webdriver.remote.remote_connection import LOGGER
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from easyprocess import log as easyprocess_logger
 from pyvirtualdisplay import Display
 
@@ -42,3 +43,19 @@ class Browser(object):
     def stop(self):
         self.driver.close()
         self.display.stop()
+
+
+class RemoteBrowser(Browser):
+
+    def __init__(self, remote_url, username, password):
+        self.remote_url = remote_url
+        self.username = username
+        self.password = password
+
+    def start(self):
+        self.driver = webdriver.Remote(command_executor=self.remote_url, desired_capabilities=DesiredCapabilities.FIREFOX)
+        self.driver.set_window_size(1920, 1080)
+        self._login()
+
+    def stop(self):
+        self.driver.close()

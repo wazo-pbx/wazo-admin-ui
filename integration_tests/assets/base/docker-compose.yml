@@ -3,8 +3,9 @@ sync:
   links:
     - admin-ui
     - auth
+    - browser
   environment:
-    PORTS: "9296 9497"
+    PORTS: "4444 9296 9497"
     TIMEOUT: "${INTEGRATION_TEST_TIMEOUT}"
 
 admin-ui:
@@ -23,3 +24,11 @@ auth:
   image: wazopbx/xivo-auth-mock
   ports:
     - "9497"
+
+browser:
+  image: selenium/standalone-firefox
+  ports:
+    - "4444"
+  links:
+    - admin-ui
+  shm_size: '2GB'

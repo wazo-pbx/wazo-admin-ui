@@ -1,11 +1,9 @@
 # Copyright 2017-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
-import os
-
 from xivo_test_helpers.asset_launching_test_case import AssetLaunchingTestCase
 
-from .pages.browser import Browser
+from .pages.browser import RemoteBrowser
 from .pages.page import Page
 
 
@@ -30,9 +28,11 @@ class AdminUIAssetLaunchingTestCase(AssetLaunchingTestCase):
 
     @classmethod
     def setup_browser(cls):
-        virtual = os.environ.get('VIRTUAL_DISPLAY', '1') == '1'
         username = 'xivo-auth-mock-doesnt-care-about-username'
         password = 'xivo-auth-mock-doesnt-care-about-password'
-        port = cls.service_port(9296, 'admin-ui')
-        Page.CONFIG['base_url'] = 'https://localhost:{port}'.format(port=port)
-        return Browser(username, password, virtual)
+        Page.CONFIG['base_url'] = 'https://admin-ui:9296'
+
+        browser_port = cls.service_port(4444, 'browser')
+        remote_url = 'http://localhost:{port}/wd/hub'.format(port=browser_port)
+        browser = RemoteBrowser(remote_url, username, password)
+        return browser

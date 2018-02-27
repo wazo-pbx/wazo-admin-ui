@@ -32,8 +32,22 @@ bootstrap.min.css file:
     /*# sourceMappingURL=bootstrap.min.css.map */
 
 
-## Integration tests
+Running unit tests
+------------------
 
-### Environment variables
+```
+pip install tox
+tox --recreate -e py3
+```
 
-* VIRTUAL_DISPLAY=0: do not show the window containing the testing browser
+Running integration tests
+-------------------------
+
+You need Docker installed.
+
+```
+cd integration_tests
+pip install -U -r test-requirements.txt
+make test-setup
+make test
+```

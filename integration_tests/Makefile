@@ -5,6 +5,7 @@ test-setup: docker-pull build-admin-ui egg-info
 docker-pull:
 	docker pull n3llyb0y/wait
 	docker pull wazopbx/xivo-auth-mock
+	docker pull selenium/standalone-firefox
 
 build-admin-ui:
 	docker build -t wazopbx/wazo-admin-ui ..
