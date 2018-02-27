@@ -8,18 +8,24 @@ from xivo_auth_client import Client as AuthClient
 from wazo_admin_ui.http_server import app
 
 
-def get_auth_client(username=None, password=None):
+def _get_auth_client(config):
     client = g.get('auth_client')
     if not client:
-        config = app.config['auth']
-        if username and password:
-            config['username'] = username
-            config['password'] = password
-        else:
-            token = current_user.get_id()
-            config['token'] = token
         client = g.auth_client = AuthClient(**config)
     return client
 
 
-auth = LocalProxy(get_auth_client)
+def get_auth_client_from_session():
+    config = app.config['auth']
+    config['token'] = current_user.get_id()
+    return _get_auth_client(config)
+
+
+def get_auth_client(username, password):
+    config = app.config['auth']
+    config['username'] = username
+    config['password'] = password
+    return _get_auth_client(config)
+
+
+auth = LocalProxy(get_auth_client_from_session)
