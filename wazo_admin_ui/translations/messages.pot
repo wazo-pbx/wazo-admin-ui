@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wazo_admin_ui 0.1\n"
 "Report-Msgid-Bugs-To: 'dev@wazo.community'\n"
-"POT-Creation-Date: 2018-02-27 11:49-0500\n"
+"POT-Creation-Date: 2018-02-27 14:03-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Wazo Authors <dev@wazo.community>\n"
 "Language-Team: en <dev@wazo.community>\n"
@@ -271,6 +271,7 @@ msgid "Wazo authentication server connection error"
 msgstr ""
 
 #: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:41
+#: wazo_admin_ui/templates/footer.html:5
 msgid "All rights reserved."
 msgstr ""
 
@@ -336,6 +337,10 @@ msgstr ""
 
 #: wazo_admin_ui/plugins/destination/plugin.py:21
 msgid "None"
+msgstr ""
+
+#: wazo_admin_ui/templates/footer.html:3
+msgid "Unified communications"
 msgstr ""
 
 #: wazo_admin_ui/templates/macro.html:230
@@ -427,35 +432,45 @@ msgstr ""
 msgid "Print"
 msgstr ""
 
-#: wazo_admin_ui/templates/translations.html:29
-msgid "First"
-msgstr ""
-
 #: wazo_admin_ui/templates/translations.html:30
-msgid "Last"
-msgstr ""
-
-#: wazo_admin_ui/templates/translations.html:31
-msgid "Next"
+#, python-format
+msgid "%%d rows selected"
 msgstr ""
 
 #: wazo_admin_ui/templates/translations.html:32
-msgid "Previous"
-msgstr ""
-
-#: wazo_admin_ui/templates/translations.html:35
-msgid ": activate to sort column ascending"
+#, python-format
+msgid "%%d row selected"
 msgstr ""
 
 #: wazo_admin_ui/templates/translations.html:36
-msgid ": activate to sort column descending"
+msgid "First"
+msgstr ""
+
+#: wazo_admin_ui/templates/translations.html:37
+msgid "Last"
+msgstr ""
+
+#: wazo_admin_ui/templates/translations.html:38
+msgid "Next"
+msgstr ""
+
+#: wazo_admin_ui/templates/translations.html:39
+msgid "Previous"
 msgstr ""
 
 #: wazo_admin_ui/templates/translations.html:42
-msgid "Does not match"
+msgid ": activate to sort column ascending"
 msgstr ""
 
 #: wazo_admin_ui/templates/translations.html:43
+msgid ": activate to sort column descending"
+msgstr ""
+
+#: wazo_admin_ui/templates/translations.html:49
+msgid "Does not match"
+msgstr ""
+
+#: wazo_admin_ui/templates/translations.html:50
 msgid "Not long enough"
 msgstr ""
 
