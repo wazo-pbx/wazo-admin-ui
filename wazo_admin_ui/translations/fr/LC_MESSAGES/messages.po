@@ -1,7 +1,7 @@
-# Translations template for wazo-admin-ui.
-# Copyright 2018 The Wazo Authors  (see the AUTHORS file)
-# This file is distributed under the same license as the wazo-admin-ui
-# project.
+# Translations template for wazo_admin_ui.
+# Copyright (C) 2018 The Wazo Authors  (see the AUTHORS file)
+# This file is distributed under the same license as the
+# wazo_admin_ui project.
 # Wazo Dev Team <dev@wazo.community>, 2018.
 # 
 # Translators:
@@ -10,16 +10,16 @@
 # Cedric Abunar <cabunar@wazo.io>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: wazo-admin-ui 0.1\n"
-"Report-Msgid-Bugs-To: dev@wazo.community\n"
-"POT-Creation-Date: 2018-02-22 09:47-0500\n"
-"PO-Revision-Date: 2018-02-22 09:47-0500\n"
+"Project-Id-Version: wazo_admin_ui 0.1\n"
+"Report-Msgid-Bugs-To: 'dev@wazo.community'\n"
+"POT-Creation-Date: 2018-02-27 14:03-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Cedric Abunar <cabunar@wazo.io>, 2018\n"
 "Language-Team: French (https://www.transifex.com/wazo/teams/69545/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.3.4\n"
+"Generated-By: Babel 2.5.3\n"
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
@@ -250,16 +250,17 @@ msgid "Wrong username and/or password"
 msgstr "Mauvais identifiant et/ou mot de passe"
 
 #: wazo_admin_ui/plugins/authentication/form.py:24
-#: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:17
+#: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:18
 msgid "Username"
 msgstr "Identifiant"
 
 #: wazo_admin_ui/plugins/authentication/form.py:25
-#: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:18
+#: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:19
 msgid "Password"
 msgstr "Mot de passe"
 
 #: wazo_admin_ui/plugins/authentication/form.py:26
+#: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:20
 msgid "Language"
 msgstr "Langue"
 
@@ -276,11 +277,8 @@ msgstr "Erreur avec le serveur d'authentification Wazo:  %(error)s"
 msgid "Wazo authentication server connection error"
 msgstr "Erreur de connexion avec le serveur d'authentification Wazo"
 
-#: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:12
-msgid "Authentication"
-msgstr "Authentification"
-
-#: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:34
+#: wazo_admin_ui/plugins/authentication/templates/authentication/login.html:41
+#: wazo_admin_ui/templates/footer.html:5
 msgid "All rights reserved."
 msgstr "Tous droits réservés."
 
@@ -347,6 +345,10 @@ msgstr "Personnalisée"
 #: wazo_admin_ui/plugins/destination/plugin.py:21
 msgid "None"
 msgstr "Aucune"
+
+#: wazo_admin_ui/templates/footer.html:3
+msgid "Unified communications"
+msgstr "Communications unifiés"
 
 #: wazo_admin_ui/templates/macro.html:230
 msgid "Add"
@@ -437,34 +439,44 @@ msgstr "PDF"
 msgid "Print"
 msgstr "Imprimer"
 
-#: wazo_admin_ui/templates/translations.html:29
+#: wazo_admin_ui/templates/translations.html:30
+#, python-format
+msgid "%%d rows selected"
+msgstr "%%d lignes sélectionnées"
+
+#: wazo_admin_ui/templates/translations.html:32
+#, python-format
+msgid "%%d row selected"
+msgstr "%%d ligne sélectionnée"
+
+#: wazo_admin_ui/templates/translations.html:36
 msgid "First"
 msgstr "Premier"
 
-#: wazo_admin_ui/templates/translations.html:30
+#: wazo_admin_ui/templates/translations.html:37
 msgid "Last"
 msgstr "Dernier"
 
-#: wazo_admin_ui/templates/translations.html:31
+#: wazo_admin_ui/templates/translations.html:38
 msgid "Next"
 msgstr "Suivant"
 
-#: wazo_admin_ui/templates/translations.html:32
+#: wazo_admin_ui/templates/translations.html:39
 msgid "Previous"
 msgstr "Précédent"
 
-#: wazo_admin_ui/templates/translations.html:35
+#: wazo_admin_ui/templates/translations.html:42
 msgid ": activate to sort column ascending"
 msgstr ": activer pour trier la colonne par ordre croissant"
 
-#: wazo_admin_ui/templates/translations.html:36
+#: wazo_admin_ui/templates/translations.html:43
 msgid ": activate to sort column descending"
 msgstr ": activer pour trier la colonne par ordre décroissant"
 
-#: wazo_admin_ui/templates/translations.html:42
+#: wazo_admin_ui/templates/translations.html:49
 msgid "Does not match"
 msgstr "Ne correspond pas"
 
-#: wazo_admin_ui/templates/translations.html:43
+#: wazo_admin_ui/templates/translations.html:50
 msgid "Not long enough"
 msgstr "Pas assez long"
