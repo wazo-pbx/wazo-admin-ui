@@ -1,4 +1,4 @@
-# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2017-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 import logging
@@ -8,7 +8,7 @@ from flask import url_for, render_template, redirect, session
 from flask_babel import Locale, get_locale
 from flask_classful import FlaskView
 from flask_login import login_user, logout_user, current_user
-from wazo_admin_ui.auth import AuthClient
+from wazo_admin_ui.helpers.auth import auth
 
 from .form import LoginForm
 
@@ -57,7 +57,7 @@ class Logout(FlaskView):
         token = current_user.get_id()
         logout_user()
         try:
-            AuthClient(host='fsa').token.revoke(token)
+            auth.token.revoke(token)
         except requests.HTTPError as e:
             logger.warning('Error with Wazo authentication server: %(error)s', error=e.message)
         except requests.ConnectionError:

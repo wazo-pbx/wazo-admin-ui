@@ -21,9 +21,8 @@ from werkzeug.contrib.fixers import ProxyFix
 
 from xivo import http_helpers
 from xivo.http_helpers import ReverseProxied
-from xivo.auth_verifier import AuthVerifier
+from xivo_auth_client import Client as AuthClient
 
-from .auth import AuthClient
 from .errors import configure_error_handlers
 from .user import UserUI
 
@@ -32,7 +31,6 @@ BABEL_DEFAULT_LOCALE = 'en'
 
 logger = logging.getLogger(__name__)
 app = Flask('wazo_admin_ui')
-auth_verifier = AuthVerifier()
 
 
 class Server():
@@ -45,7 +43,7 @@ class Server():
 
         app.secret_key = os.urandom(24)
         app.permanent_session_lifetime = timedelta(seconds=global_config['session_lifetime'])
-        AuthClient.set_config(global_config['auth'])
+        app.config['auth'] = global_config.get('auth', {})
         app.config['confd'] = global_config.get('confd', {})
         app.config['call_logd'] = global_config.get('call_logd', {})
         app.config['plugind'] = global_config.get('plugind', {})
@@ -58,7 +56,7 @@ class Server():
         configure_error_handlers(app)
         self._override_url_for()
         self._configure_jinja()
-        self._configure_login()
+        self._configure_login(global_config['auth'])
         self._configure_menu()
         self._configure_session(global_config['session_file_dir'])
         self._configure_babel(global_config['enabled_plugins'])
@@ -101,14 +99,14 @@ class Server():
         app.jinja_env.trim_blocks = True
         app.jinja_env.add_extension('jinja2.ext.do')
 
-    def _configure_login(self):
+    def _configure_login(self, auth_config):
         login_manager = LoginManager()
         login_manager.init_app(app)
 
         @login_manager.user_loader
         def load_token(token):
             try:
-                response = AuthClient().token.get(token)
+                response = AuthClient(**auth_config).token.get(token)
             except HTTPError:
                 return None
             except requests.ConnectionError:

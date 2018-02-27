@@ -9,7 +9,7 @@ from flask_wtf import FlaskForm
 from wtforms.fields import PasswordField, StringField, SubmitField, SelectField
 from wtforms.validators import InputRequired, ValidationError
 
-from wazo_admin_ui.auth import AuthClient
+from wazo_admin_ui.helpers.auth import get_auth_client
 from wazo_admin_ui.user import UserUI
 
 USERNAME_PASSWORD_ERROR = l_('Wrong username and/or password')
@@ -29,8 +29,8 @@ class LoginForm(FlaskForm):
     def validate(self):
         super().validate()
         try:
-            response = AuthClient(username=self.username.data,
-                                  password=self.password.data).token.new('xivo_admin', expiration=60 * 60 * 12)
+            auth_client = get_auth_client(self.username.data, self.password.data)
+            response = auth_client.token.new('xivo_admin', expiration=60 * 60 * 12)
         except HTTPError as e:
             if unauthorized(e):
                 self.username.errors.append(USERNAME_PASSWORD_ERROR)
