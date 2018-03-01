@@ -240,9 +240,15 @@ function init_select2() {
     if($(this).attr('multiple') && ! disable_sort) {
       select2_sortable($(this));
     }
+
+    fix_select2_placeholder_width_cutting_off_text($(this));
   });
 }
 
+// https://github.com/select2/select2/issues/3817
+function fix_select2_placeholder_width_cutting_off_text() {
+  $('.select2-search__field').removeAttr('style');
+}
 
 // https://github.com/select2/select2/issues/3004
 function select2_sortable($select2){
