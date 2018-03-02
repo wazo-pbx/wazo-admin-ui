@@ -45,7 +45,8 @@ $.extend(true, $.fn.dataTable.defaults, {
   },
 });
 
-$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not([type="hidden"], [type="submit"], [type="reset"], [disabled], button, .hidden :input)';
+$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not([type="hidden"], [type="submit"], [type="reset"],' +
+  ' [disabled], button, .hidden :input, .select2-search__field)';
 
 $(document).ready(function() {
   create_table_clientside();
