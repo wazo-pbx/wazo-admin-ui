@@ -45,7 +45,8 @@ $.extend(true, $.fn.dataTable.defaults, {
   },
 });
 
-$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not([type="hidden"], [type="submit"], [type="reset"], [disabled], button, .hidden :input)';
+$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not([type="hidden"], [type="submit"], [type="reset"],' +
+  ' [disabled], button, .hidden :input, .select2-search__field)';
 
 $(document).ready(function() {
   create_table_clientside();
@@ -73,34 +74,7 @@ $(document).ready(function() {
 
   $('.add-row-entry').click(function(e) {
     e.preventDefault();
-    let context = $(this).closest('.row')[0];
-    let template_row = $(".row-template", context)
-    let row = template_row.clone();
-    let element_total = $('.dynamic-table', context).find("tr").length;  // including template
-
-    template_row.trigger("row:cloned", row);
-
-    // Update name/id
-    row.find(":input[id]").not(":button").each(function() {
-      id = $(this).attr('id').replace(/-template-/, '-' + element_total + '-');
-      $(this).attr('name', id).attr('id', id);
-    });
-
-    let last_tr = $('.dynamic-table', context).find("tr").last()
-    row.removeClass("row-template hidden");
-    row.insertAfter(last_tr);
-    init_destination_select.call(row);
-    init_select2.call(row);
-    $(':input[type=password]', row).password();
-
-    $('form').validator('update');
-    $('form').validator('validate');
-
-    $('.delete-row-entry', context).click(function(e) {
-      e.preventDefault();
-      $(this).closest("tr").remove();
-      $('form').validator('update');
-    });
+    clone_row.call(this)
   });
 
   // Update name/id of template row
@@ -114,6 +88,36 @@ $(document).ready(function() {
     $(this).closest("tr").remove();
   });
 });
+
+
+function clone_row() {
+  let context = $(this).closest('.row')[0];
+  let template_row = $(".row-template", context)
+  let row = template_row.clone();
+  let element_total = $('.dynamic-table', context).find("tr").length;  // including template
+
+  // Update name/id
+  row.find(":input[id]").not(":button").each(function() {
+    id = $(this).attr('id').replace(/-template-/, '-' + element_total + '-');
+    $(this).attr('name', id).attr('id', id);
+  });
+
+  row.removeClass("row-template hidden");
+  $('.dynamic-table', context).append(row);
+  init_destination_select.call(row);
+  init_select2.call(row);
+  $(':input[type=password]', row).password();
+
+  $('form').validator('update').validator('validate');
+
+  template_row.trigger("row:cloned", row);
+
+  $('.delete-row-entry', context).click(function(e) {
+    e.preventDefault();
+    $(this).closest("tr").remove();
+    $('form').validator('update');
+  });
+}
 
 
 function create_table_clientside() {
