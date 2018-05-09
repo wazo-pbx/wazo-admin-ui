@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wazo_admin_ui 0.1\n"
 "Report-Msgid-Bugs-To: 'dev@wazo.community'\n"
-"POT-Creation-Date: 2018-02-27 14:03-0500\n"
+"POT-Creation-Date: 2018-03-01 14:59-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Cedric Abunar <cabunar@wazo.io>, 2018\n"
 "Language-Team: French (https://www.transifex.com/wazo/teams/69545/fr/)\n"
@@ -346,9 +346,17 @@ msgstr "Personnalisée"
 msgid "None"
 msgstr "Aucune"
 
+#: wazo_admin_ui/plugins/index/templates/index.html:9
+msgid "Welcome"
+msgstr "Bienvenue"
+
 #: wazo_admin_ui/templates/footer.html:3
 msgid "Unified communications"
 msgstr "Communications unifiés"
+
+#: wazo_admin_ui/templates/head.html:2
+msgid "Wazo administration"
+msgstr "Administration Wazo"
 
 #: wazo_admin_ui/templates/macro.html:230
 msgid "Add"

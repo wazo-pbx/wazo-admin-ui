@@ -6,13 +6,14 @@
 # 
 # Translators:
 # Rafał Perczyński, 2017
+# Ania P., 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: wazo_admin_ui 0.1\n"
 "Report-Msgid-Bugs-To: 'dev@wazo.community'\n"
-"POT-Creation-Date: 2018-02-27 14:03-0500\n"
+"POT-Creation-Date: 2018-03-01 14:59-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Rafał Perczyński, 2017\n"
+"Last-Translator: Ania P., 2018\n"
 "Language-Team: Polish (https://www.transifex.com/wazo/teams/69545/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -24,39 +25,39 @@ msgstr ""
 #: wazo_admin_ui/helpers/classful.py:126
 #, python-format
 msgid "%(resource)s: Resource has been created"
-msgstr ""
+msgstr "%(resource)s: Zasób został utworzony"
 
 #: wazo_admin_ui/helpers/classful.py:174
 #, python-format
 msgid "%(resource)s: Resource has been updated"
-msgstr ""
+msgstr "%(resource)s: Zasób został zaktualizowany"
 
 #: wazo_admin_ui/helpers/classful.py:202
 #, python-format
 msgid "%(resource)s: Resource %(id)s has been deleted"
-msgstr ""
+msgstr "%(resource)s: Zasób %(id)s został usunięty "
 
 #: wazo_admin_ui/helpers/destination.py:95 wazo_admin_ui/helpers/funckey.py:27
 msgid "Destination"
-msgstr ""
+msgstr "Przeznaczenie"
 
 #: wazo_admin_ui/helpers/destination.py:117
 #: wazo_admin_ui/plugins/destination/form.py:31
 msgid "Busy"
-msgstr ""
+msgstr "Zajęty"
 
 #: wazo_admin_ui/helpers/destination.py:118
 #: wazo_admin_ui/plugins/destination/form.py:32
 msgid "Congestion"
-msgstr ""
+msgstr "Przeciążenie"
 
 #: wazo_admin_ui/helpers/destination.py:119
 msgid "Fail"
-msgstr ""
+msgstr "Nie udało się"
 
 #: wazo_admin_ui/helpers/destination.py:120
 msgid "No answer"
-msgstr ""
+msgstr "Brak odpowiedzi"
 
 #: wazo_admin_ui/helpers/error.py:16
 msgid "Resource not found"
@@ -177,15 +178,15 @@ msgstr "konferencje"
 
 #: wazo_admin_ui/helpers/error.py:104
 msgid "context"
-msgstr ""
+msgstr "kontekst"
 
 #: wazo_admin_ui/helpers/error.py:105
 msgid "endpoint"
-msgstr ""
+msgstr "punkt końcowy"
 
 #: wazo_admin_ui/helpers/error.py:106
 msgid "entity"
-msgstr ""
+msgstr "jednostka"
 
 #: wazo_admin_ui/helpers/error.py:107
 msgid "extension"
@@ -193,11 +194,11 @@ msgstr "numer wewnętrzny"
 
 #: wazo_admin_ui/helpers/error.py:108
 msgid "function keys"
-msgstr ""
+msgstr "klawisze funkcyjne"
 
 #: wazo_admin_ui/helpers/error.py:109
 msgid "group"
-msgstr ""
+msgstr "grupa"
 
 #: wazo_admin_ui/helpers/error.py:110
 msgid "incall"
@@ -209,11 +210,11 @@ msgstr ""
 
 #: wazo_admin_ui/helpers/error.py:112
 msgid "line"
-msgstr ""
+msgstr "linia"
 
 #: wazo_admin_ui/helpers/error.py:113
 msgid "music on hold"
-msgstr ""
+msgstr "muzyka na czekanie"
 
 #: wazo_admin_ui/helpers/error.py:114
 msgid "outcall"
@@ -221,7 +222,7 @@ msgstr ""
 
 #: wazo_admin_ui/helpers/error.py:115
 msgid "paging"
-msgstr ""
+msgstr "stronicowanie"
 
 #: wazo_admin_ui/helpers/error.py:116
 msgid "parking lot"
@@ -283,34 +284,34 @@ msgstr "Wszystkie prawa zastrzeżone"
 #: wazo_admin_ui/plugins/destination/form.py:15
 #: wazo_admin_ui/plugins/destination/form.py:20
 msgid "Timeout"
-msgstr ""
+msgstr "Koniec czasu"
 
 #: wazo_admin_ui/plugins/destination/form.py:30
 msgid "Cause"
-msgstr ""
+msgstr "Przyczyna"
 
 #: wazo_admin_ui/plugins/destination/form.py:30
 msgid "Normal"
-msgstr ""
+msgstr "Normalne"
 
 #: wazo_admin_ui/plugins/destination/form.py:40
 msgid "PIN"
-msgstr ""
+msgstr "PIN"
 
 #: wazo_admin_ui/plugins/destination/form.py:43
 #: wazo_admin_ui/plugins/destination/form.py:52
 #: wazo_admin_ui/plugins/destination/form.py:62
 msgid "Context"
-msgstr ""
+msgstr "Kontekst"
 
 #: wazo_admin_ui/plugins/destination/form.py:57
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: wazo_admin_ui/plugins/destination/form.py:68
 #: wazo_admin_ui/plugins/destination/plugin.py:18
 msgid "Application"
-msgstr ""
+msgstr "Aplikacja"
 
 #: wazo_admin_ui/plugins/destination/form.py:68
 msgid "CallBack DISA"
@@ -318,19 +319,19 @@ msgstr ""
 
 #: wazo_admin_ui/plugins/destination/form.py:69
 msgid "Directory"
-msgstr ""
+msgstr "Katalog"
 
 #: wazo_admin_ui/plugins/destination/form.py:70
 msgid "DISA"
-msgstr ""
+msgstr "DISA"
 
 #: wazo_admin_ui/plugins/destination/form.py:71
 msgid "Fax To Mail"
-msgstr ""
+msgstr "Fax do e-mail"
 
 #: wazo_admin_ui/plugins/destination/form.py:72
 msgid "Voicemail"
-msgstr ""
+msgstr "Poczta głosowa"
 
 #: wazo_admin_ui/plugins/destination/plugin.py:19
 msgid "Hangup"
@@ -338,27 +339,35 @@ msgstr ""
 
 #: wazo_admin_ui/plugins/destination/plugin.py:20
 msgid "Custom"
-msgstr ""
+msgstr "Własne"
 
 #: wazo_admin_ui/plugins/destination/plugin.py:21
 msgid "None"
-msgstr ""
+msgstr "Żaden"
+
+#: wazo_admin_ui/plugins/index/templates/index.html:9
+msgid "Welcome"
+msgstr "Witaj"
 
 #: wazo_admin_ui/templates/footer.html:3
 msgid "Unified communications"
-msgstr ""
+msgstr "Ujednolicona komunikacja"
+
+#: wazo_admin_ui/templates/head.html:2
+msgid "Wazo administration"
+msgstr "Administracja Wazo"
 
 #: wazo_admin_ui/templates/macro.html:230
 msgid "Add"
-msgstr ""
+msgstr "Dodaj"
 
 #: wazo_admin_ui/templates/macro.html:230
 msgid "Edit"
-msgstr ""
+msgstr "Edytuj"
 
 #: wazo_admin_ui/templates/macro.html:230
 msgid "Delete"
-msgstr ""
+msgstr "Usuń"
 
 #: wazo_admin_ui/templates/translations.html:3
 msgid "No data available in table"
@@ -398,54 +407,54 @@ msgstr "Brak pasujących rekordów"
 
 #: wazo_admin_ui/templates/translations.html:15
 msgid "Select all"
-msgstr ""
+msgstr "Zaznacz wszystko"
 
 #: wazo_admin_ui/templates/translations.html:16
 msgid "Deselect all"
-msgstr ""
+msgstr "Odznacz wszystko"
 
 #: wazo_admin_ui/templates/translations.html:17
 msgid "Copy"
-msgstr ""
+msgstr "Kopiuj"
 
 #: wazo_admin_ui/templates/translations.html:18
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "Kopiuj do schowka"
 
 #: wazo_admin_ui/templates/translations.html:20
 #, python-format
 msgid "Copied %%d rows to clipboard"
-msgstr ""
+msgstr "Skopiowano %% wierszy do schowka"
 
 #: wazo_admin_ui/templates/translations.html:21
 msgid "Copied 1 row to clipboard"
-msgstr ""
+msgstr "Skopiowano 1 wiersz do schowka"
 
 #: wazo_admin_ui/templates/translations.html:23
 msgid "CSV"
-msgstr ""
+msgstr "CSV"
 
 #: wazo_admin_ui/templates/translations.html:24
 msgid "Excel"
-msgstr ""
+msgstr "Excel"
 
 #: wazo_admin_ui/templates/translations.html:25
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #: wazo_admin_ui/templates/translations.html:26
 msgid "Print"
-msgstr ""
+msgstr "Drukuj"
 
 #: wazo_admin_ui/templates/translations.html:30
 #, python-format
 msgid "%%d rows selected"
-msgstr ""
+msgstr "Zaznaczono %% wiersz"
 
 #: wazo_admin_ui/templates/translations.html:32
 #, python-format
 msgid "%%d row selected"
-msgstr ""
+msgstr "Wybrano %% wiersz"
 
 #: wazo_admin_ui/templates/translations.html:36
 msgid "First"
@@ -473,8 +482,8 @@ msgstr ":włącz sortowanie kolumny malejąco"
 
 #: wazo_admin_ui/templates/translations.html:49
 msgid "Does not match"
-msgstr ""
+msgstr "Nie pasuje"
 
 #: wazo_admin_ui/templates/translations.html:50
 msgid "Not long enough"
-msgstr ""
+msgstr "Za krótkie"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wazo_admin_ui 0.1\n"
 "Report-Msgid-Bugs-To: 'dev@wazo.community'\n"
-"POT-Creation-Date: 2018-02-27 14:03-0500\n"
+"POT-Creation-Date: 2018-03-01 14:59-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Language-Team: Italian (https://www.transifex.com/wazo/teams/69545/it/)\n"
 "MIME-Version: 1.0\n"
@@ -340,8 +340,16 @@ msgstr ""
 msgid "None"
 msgstr ""
 
+#: wazo_admin_ui/plugins/index/templates/index.html:9
+msgid "Welcome"
+msgstr ""
+
 #: wazo_admin_ui/templates/footer.html:3
 msgid "Unified communications"
+msgstr ""
+
+#: wazo_admin_ui/templates/head.html:2
+msgid "Wazo administration"
 msgstr ""
 
 #: wazo_admin_ui/templates/macro.html:230
