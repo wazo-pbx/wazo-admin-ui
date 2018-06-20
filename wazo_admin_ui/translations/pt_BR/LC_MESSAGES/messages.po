@@ -24,17 +24,17 @@ msgstr ""
 #: wazo_admin_ui/helpers/classful.py:126
 #, python-format
 msgid "%(resource)s: Resource has been created"
-msgstr "%(resource)sRecurso foi criado"
+msgstr "%(resource)s: Recurso foi criado"
 
 #: wazo_admin_ui/helpers/classful.py:174
 #, python-format
 msgid "%(resource)s: Resource has been updated"
-msgstr "%(resource)sRecurso foi atualizado"
+msgstr "%(resource)s: Recurso foi atualizado"
 
 #: wazo_admin_ui/helpers/classful.py:202
 #, python-format
 msgid "%(resource)s: Resource %(id)s has been deleted"
-msgstr "%(resource)sRecurso %(id)s foi deletado"
+msgstr "%(resource)s: Recurso %(id)s foi deletado"
 
 #: wazo_admin_ui/helpers/destination.py:95 wazo_admin_ui/helpers/funckey.py:27
 msgid "Destination"
@@ -369,7 +369,7 @@ msgstr "Deletar"
 
 #: wazo_admin_ui/templates/translations.html:3
 msgid "No data available in table"
-msgstr "Sem dados disponíveis na tabela"
+msgstr "Nenhum dado disponível na tabela"
 
 #: wazo_admin_ui/templates/translations.html:4
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
