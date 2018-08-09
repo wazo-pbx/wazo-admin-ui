@@ -5,7 +5,7 @@
 # Wazo Dev Team <dev@wazo.community>, 2018.
 # 
 # Translators:
-# Francois Blackburn <fblackburn@wazo.community>, 2017
+# Francois Blackburn <fblackburn@wazo.io>, 2017
 # Sébastien Duthil <sduthil@wazo.community>, 2017
 # Cedric Abunar <cabunar@wazo.io>, 2018
 msgid ""
